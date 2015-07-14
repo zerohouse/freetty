@@ -21,17 +21,15 @@ module.exports = function (grunt) {
         concat: {
             client: {
                 src: [
-                    'dev/client/*.js',
-                    'dev/**/*.cjs'
+                    '**/*.cjs'
                 ],
                 dest: 'dist/js.js'
             },
             server: {
                 src: [
-                    'dev/server/*.js',
-                    'dev/**/*.sjs'
+                    '**/*.sjs'
                 ],
-                dest: 'dist/server.js'
+                dest: 'app.js'
             }
         },
 
@@ -41,7 +39,7 @@ module.exports = function (grunt) {
             },
             all: {
                 src: [
-                    "dev/**/*.css"
+                    "**/*.scs"
                 ],
                 dest: "dist/css.css"
             }
@@ -50,7 +48,9 @@ module.exports = function (grunt) {
         watch: {
             scripts: {
                 files: [
-                    'dev/**/*'
+                    '**/*.cjs',
+                    '**/*.sjs',
+                    '**/*.scs'
                 ],
                 tasks: ['concat', 'uglify', 'concat_css'],
                 options: {

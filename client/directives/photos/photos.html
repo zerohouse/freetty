@@ -1,0 +1,13 @@
+<div class='img-wrapper'>
+    <img ng-src="{{photos[select]}}">
+
+    <div ng-show='loading' class='img-loading'>
+        <div class='double-bounce1'></div>
+        <div class='double-bounce2'></div>
+    </div>
+
+    <div ng-click="left()" class="arrow"><i class="fa fa-angle-left"></i></div>
+    <div ng-click="right()" class="arrow"><i class="fa fa-angle-left"></i></div>
+
+    <div ng-show='loading' class='img-wall'></div>
+</div>
