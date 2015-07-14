@@ -4,7 +4,7 @@ var logger = new (winston.Logger)({
             level: 'debug'
         }),
         new (winston.transports.File)({
-            filename: '/log/log.log'
+            filename: './log/log.log'
         })
     ]
 });

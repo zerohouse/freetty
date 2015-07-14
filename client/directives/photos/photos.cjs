@@ -30,12 +30,6 @@ app.directive('photos', function ($compile) {
             });
 
 
-        },
-        link: function (scope, element, attrs) {
-            element.children('img').bind('load', function () {
-                scope.loading = false;
-                console.log(1);
-            });
         }
     };
 });
