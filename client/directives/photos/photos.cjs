@@ -11,14 +11,16 @@ app.directive('photos', function ($compile) {
 
             $scope.left = function () {
                 if ($scope.select == 0) {
-                    $scope.select = $scope.photos.length;
+                    $scope.select = $scope.photos.length - 1;
+                    return;
                 }
                 $scope.select--;
             };
 
             $scope.right = function () {
-                if ($scope.select == $scope.photos.length) {
+                if ($scope.select == $scope.photos.length - 1) {
                     $scope.select = 0;
+                    return;
                 }
                 $scope.select++;
             };
@@ -29,6 +31,9 @@ app.directive('photos', function ($compile) {
                 $scope.loading = true;
             });
 
+            $scope.selectPhoto = function (photo) {
+                $scope.select = $scope.photos.indexOf(photo);
+            }
 
         }
     };

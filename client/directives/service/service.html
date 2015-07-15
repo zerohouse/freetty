@@ -1,7 +1,15 @@
 <div class="service">
-    <div photos="service.photos"></div>
+    <div photos="service.photos">
+    </div>
+    <div class="price"><i class="fa fa-krw"></i>{{service.price.moneyFormat()}}</div>
 
-    <h1>{{service.title}}</h1>
+    <div class="info">
+        <div class="title">{{service.title}}</div>
+        <div>
+            <span>헤어</span>
+            <span>후기 23개</span>
+        </div>
+    </div>
 
-    <div class="price">{{service.price}}</div>
+
 </div>

@@ -32,3 +32,12 @@ Array.prototype.contains = function (val) {
 String.prototype.newLine = function () {
     return this.replace(/\n/g, '<br>');
 };
+
+String.prototype.moneyFormat = function () {
+    return this.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+};
+
+
+Number.prototype.moneyFormat = function () {
+    return this.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+};

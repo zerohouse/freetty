@@ -7,3 +7,29 @@
     height: auto;
 }
 
+.service .price {
+    position: absolute;
+    margin-top: -90px;
+    background-color: rgba(60, 63, 64, 0.9);
+    color: white;
+    padding: 5px 15px 5px 40px;
+    font-size: 30px;
+}
+
+.price > i {
+    position: absolute;
+    top: 13px;
+    left: 20px;
+    font-size: 60%;
+}
+
+.service .info {
+    padding: 20px;
+    padding-top: 10px;
+    color: #777;
+    font-size: 90%;
+}
+
+.info .title {
+    font-size: 20px;
+}
