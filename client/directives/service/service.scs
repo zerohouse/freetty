@@ -9,7 +9,7 @@
 
 .service .price {
     position: absolute;
-    margin-top: -90px;
+    margin-top: -70px;
     background-color: rgba(60, 63, 64, 0.9);
     color: white;
     padding: 5px 15px 5px 40px;
@@ -28,8 +28,19 @@
     padding-top: 10px;
     color: #777;
     font-size: 90%;
+    position: relative;
 }
 
 .info .title {
     font-size: 20px;
+}
+
+.service small {
+    font-size: 70%;
+}
+
+.service user-photo {
+    right: 20px;
+    top: -45px;
+    z-index: 3;
 }

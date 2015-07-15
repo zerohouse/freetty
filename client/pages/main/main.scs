@@ -1,0 +1,12 @@
+.half {
+    width: 49%;
+    margin: 0.5%;
+    display: inline-block;
+}
+
+@media screen and (max-width: 500px) {
+    .half {
+        width: 98%;
+        margin: 1%;
+    }
+}

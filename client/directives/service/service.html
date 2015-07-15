@@ -4,12 +4,11 @@
     <div class="price"><i class="fa fa-krw"></i>{{service.price.moneyFormat()}}</div>
 
     <div class="info">
-        <div class="title">{{service.title}}</div>
+        <user-photo user="service.provider"></user-photo>
+
+        <div class="title">{{service.title}} <small>헤어</small></div>
         <div>
-            <span>헤어</span>
-            <span>후기 23개</span>
+            <i class="fa fa-heart-o"></i> 23 <i class="fa fa-comment-o"></i> 23
         </div>
     </div>
-
-
 </div>

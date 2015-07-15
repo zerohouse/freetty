@@ -1,4 +1,4 @@
-app.directive('service', function () {
+app.directive('service', function (users) {
     return {
         restrict: 'A',
         scope: {
@@ -6,7 +6,7 @@ app.directive('service', function () {
         },
         templateUrl: "/client/directives/service/service.html",
         controller: function ($scope) {
-
+            $scope.users = users;
         }
 
     }

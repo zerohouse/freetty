@@ -13,5 +13,5 @@
            ng-class="{'fa-circle select':select == photos.indexOf(photo)}" ng-click="selectPhoto(photo)"></i>
     </div>
 
-    <div class='img-wall'></div>
+    <div class='img-wall' ng-class="{'dark':loading}"></div>
 </div>

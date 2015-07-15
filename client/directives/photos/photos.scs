@@ -12,12 +12,15 @@
     position: absolute;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: #000;
+    opacity: 0.1;
     top: 0;
+    -webkit-transition: all linear 0.5s;
+    transition: all linear 0.5s;
 }
 
 .img-wall.dark {
-    background-color: rgba(0, 0, 0, 0.3);
+    opacity: 0.3;
 }
 
 .img-handle > i {
@@ -38,7 +41,7 @@
     position: absolute;
     left: 50px;
     right: 50px;
-    bottom: 0;
+    top: 0;
     padding-bottom: 10px;
     padding-top: 7px;
 }
