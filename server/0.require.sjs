@@ -9,5 +9,11 @@ var express = require('express'),
     winston = require('winston'),
     sessionStore = new session.MemoryStore(),
     multer = require('multer'),
-    mongoDB = require('mongodb'),
-    ObjectID = mongoDB.ObjectID;
+    bodyParser = require('body-parser');
+
+var mongoDB = require('mongodb'),
+    ObjectID = mongoDB.ObjectID,
+    mongoose = require('mongoose');
+
+mongoose.connect('mongodb://localhost:27017/freetty');
+

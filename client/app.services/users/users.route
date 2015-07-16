@@ -1,0 +1,12 @@
+app.get('/api/user', function (req, res) {
+    db.user.findOne(req.passed, function (err, result) {
+        res.send(result);
+    });
+});
+
+app.post('/api/user', function (req, res) {
+    var user = new User(req.passed);
+    user.save(function (err, result) {
+        res.send(err);
+    });
+});

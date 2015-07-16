@@ -1,0 +1,9 @@
+var User = mongoose.model('user', mongoose.Schema({
+    email: {type: String, index: true, unique: true},
+    password: String,
+    name: String
+}));
+
+User.schema.path('email').validate(function (value) {
+    return /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i.test(value);
+}, 'Invalid email');

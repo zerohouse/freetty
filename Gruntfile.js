@@ -27,7 +27,11 @@ module.exports = function (grunt) {
             },
             server: {
                 src: [
-                    '**/*.sjs'
+                    '**/*.sjs',
+                    '!server/end.sjs',
+                    '**/*.model',
+                    '**/*.route',
+                    'server/end.sjs'
                 ],
                 dest: 'app.js'
             }
@@ -48,8 +52,10 @@ module.exports = function (grunt) {
         watch: {
             scripts: {
                 files: [
-                    '**/*.cjs',
                     '**/*.sjs',
+                    '**/*.cjs',
+                    '**/*.route',
+                    '**/*.model',
                     '**/*.scs'
                 ],
                 tasks: ['concat', 'uglify', 'concat_css'],
