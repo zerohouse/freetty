@@ -46,6 +46,7 @@ app.use(function (req, res, next) {
 //app.use('/socket.io', express.static('node_modules/socket.io/node_modules/socket.io-client'));
 
 var User = mongoose.model('user', mongoose.Schema({
+    id: {type: String, index: true, unique: true},
     email: {type: String, index: true, unique: true},
     password: String,
     name: String
@@ -54,9 +55,18 @@ var User = mongoose.model('user', mongoose.Schema({
 User.schema.path('email').validate(function (value) {
     return /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i.test(value);
 }, 'Invalid email');
+
+
+
 app.get('/api/user', function (req, res) {
-    db.user.findOne(req.passed, function (err, result) {
-        res.send(result);
+    User.findOne(req.passed, function (er, result) {
+        res.send(result)
+    });
+});
+
+app.get('/api/user/list', function (req, res) {
+    User.findOne(req.passed, function (er, result) {
+        res.send(result)
     });
 });
 

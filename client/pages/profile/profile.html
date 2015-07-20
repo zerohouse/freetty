@@ -1,0 +1,19 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <img ng-show="!files" ngf-accept="'image/*'" ng-model="files" ngf-select="true" ngf-drop="true"
+                 ng-src="{{user.profile||'http://cfile29.uf.tistory.com/image/23315D3F53808A931FB5E9'}}">
+            <img ng-show="files" ng-repeat="file in files" ngf-src="file">
+        </div>
+        <div class="col-md-8">
+
+            {{file}}{{files}}
+            <h1>안녕하세요 !! ㅇㅇ 입니다.</h1>
+
+            <p>awefkawhjefljawe flkajew flkaejw f</p>
+        </div>
+
+    </div>
+</div>
+
+{{user}}

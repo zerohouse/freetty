@@ -1,6 +1,12 @@
 app.get('/api/user', function (req, res) {
-    db.user.findOne(req.passed, function (err, result) {
-        res.send(result);
+    User.findOne(req.passed, function (er, result) {
+        res.send(result)
+    });
+});
+
+app.get('/api/user/list', function (req, res) {
+    User.findOne(req.passed, function (er, result) {
+        res.send(result)
     });
 });
 
