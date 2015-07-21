@@ -96,13 +96,6 @@ app.get('/api/user/list', function (req, res) {
     });
 });
 
-app.post('/api/user', function (req, res) {
-    var user = new User(req.passed);
-    user.save(function (err, result) {
-        res.send(err);
-    });
-});
-
 app.put('/api/user', function (req, res) {
     User.update(req.passed.query, req.passed.update, function (err, result) {
         res.send(err);
@@ -141,6 +134,13 @@ app.post('/api/service/upload', function (req, res) {
             files.push(file.name);
         });
     res.send(files);
+});
+
+app.post('/api/user', function (req, res) {
+    var user = new User(req.passed);
+    user.save(function (err, result) {
+        res.send(err);
+    });
 });
 
 app.get('/*', function (req, res) {

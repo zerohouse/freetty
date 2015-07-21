@@ -1,6 +1,6 @@
 app.factory('users', function (req) {
     var users = {};
-    var fn = function (id, callback) {
+    return function (id, callback) {
         if (users[id] != undefined) {
             callback(users[id]);
             return;
@@ -21,13 +21,5 @@ app.factory('users', function (req) {
         )
 
     };
-
-    fn.register = function (user) {
-        req.post('/api/user', user).success(function (res) {
-            console.log(res);
-        });
-    };
-
-    return fn;
 
 });
