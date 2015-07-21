@@ -12,6 +12,11 @@ app.directive('userPhoto', function (users) {
                 $scope.user = user;
                 console.log($scope.user);
             });
+
+            $scope.$watch('user', function () {
+                $scope.photo = $scope.user.photo == undefined ? 'http://cfile29.uf.tistory.com/image/23315D3F53808A931FB5E9' : '/uploads/' + $scope.user.photo;
+            });
+
         }
 
     }

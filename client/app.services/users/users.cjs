@@ -7,8 +7,18 @@ app.factory('users', function (req) {
         }
 
         req.get('/api/user', {id: id}).success(function (res) {
-            callback(res);
-        });
+                if (res == "") {
+                    var result = {};
+                    result.profile = {};
+                    result.profile.head = "없는 아이디입니다.";
+                    result.profile.body = " ";
+                    users[id] = result;
+                    callback(result);
+                    return;
+                }
+                callback(res);
+            }
+        )
 
     };
 
@@ -20,4 +30,5 @@ app.factory('users', function (req) {
 
     return fn;
 
-});
+})
+;

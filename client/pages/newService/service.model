@@ -1,0 +1,11 @@
+var Service = mongoose.model('service', mongoose.Schema({
+    head: String,
+    body: String,
+    provider: String,
+    date: Date,
+    price: String,
+    photos: {type: Array}
+}));
+
+
+

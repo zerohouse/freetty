@@ -1,0 +1,18 @@
+app.post('/api/service', function (req, res) {
+    var service = new Service(req.passed);
+    service.date = new Date();
+    service.save(function (err, result) {
+        res.send(err);
+    });
+});
+
+app.post('/api/service/upload', function (req, res) {
+    var files = [];
+    if (req.files.file.forEach == undefined)
+        files.push(req.files.file.name);
+    else
+        req.files.file.forEach(function (file) {
+            files.push(file.name);
+        });
+    res.send(files);
+});

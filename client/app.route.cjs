@@ -17,6 +17,16 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             url: "/user/register",
             controller: "register",
             templateUrl: "/client/pages/register/register.html"
+        })
+        .state('login', {
+            url: "/user/login",
+            controller: "login",
+            templateUrl: "/client/pages/login/login.html"
+        })
+        .state('newService', {
+            url: "/service/newService",
+            controller: "newService",
+            templateUrl: "/client/pages/newService/newService.html"
         });
 
 });

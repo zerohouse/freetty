@@ -1,6 +1,7 @@
 app.get('/api/user', function (req, res) {
+    req.passed.password = undefined;
     User.findOne(req.passed, function (er, result) {
-        res.send(result)
+        res.send(result);
     });
 });
 
@@ -14,5 +15,19 @@ app.post('/api/user', function (req, res) {
     var user = new User(req.passed);
     user.save(function (err, result) {
         res.send(err);
+    });
+});
+
+app.put('/api/user', function (req, res) {
+    User.update(req.passed.query, req.passed.update, function (err, result) {
+        res.send(err);
+    });
+});
+
+app.post('/api/user/upload', function (req, res) {
+    var filename = req.files.file.name;
+    var update = {photo: filename};
+    User.update(JSON.parse(req.passed.data), update, function (err, result) {
+        res.send(filename);
     });
 });

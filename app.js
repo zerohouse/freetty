@@ -35,6 +35,7 @@ app.use(function (req, res, next) {
 app.use('/node_modules', express.static('node_modules'));
 app.use('/dist', express.static('dist'));
 app.use('/client', express.static('client'));
+app.use('/uploads', express.static('uploads'));
 app.use(bodyParser.json());
 app.use(function (req, res, next) {
     if (req.method == "GET")
@@ -45,11 +46,24 @@ app.use(function (req, res, next) {
 });
 //app.use('/socket.io', express.static('node_modules/socket.io/node_modules/socket.io-client'));
 
+
+app.use(multer({
+    dest: './uploads/',
+    rename: function (fieldname, filename) {
+        return Date.now();
+    },
+    onFileUploadStart: function (file) {
+    },
+    onFileUploadComplete: function (file) {
+    }
+}));
 var User = mongoose.model('user', mongoose.Schema({
     id: {type: String, index: true, unique: true},
     email: {type: String, index: true, unique: true},
     password: String,
-    name: String
+    name: String,
+    photo: String,
+    profile: {type: Object}
 }));
 
 User.schema.path('email').validate(function (value) {
@@ -58,9 +72,22 @@ User.schema.path('email').validate(function (value) {
 
 
 
+var Service = mongoose.model('service', mongoose.Schema({
+    head: String,
+    body: String,
+    provider: String,
+    date: Date,
+    price: String,
+    photos: {type: Array}
+}));
+
+
+
+
 app.get('/api/user', function (req, res) {
+    req.passed.password = undefined;
     User.findOne(req.passed, function (er, result) {
-        res.send(result)
+        res.send(result);
     });
 });
 
@@ -75,6 +102,44 @@ app.post('/api/user', function (req, res) {
     user.save(function (err, result) {
         res.send(err);
     });
+});
+
+app.put('/api/user', function (req, res) {
+    User.update(req.passed.query, req.passed.update, function (err, result) {
+        res.send(err);
+    });
+});
+
+app.post('/api/user/upload', function (req, res) {
+    var filename = req.files.file.name;
+    var update = {photo: filename};
+    User.update(JSON.parse(req.passed.data), update, function (err, result) {
+        res.send(filename);
+    });
+});
+
+app.get('/api/service', function (req, res) {
+    req.passed.query;
+});
+
+
+app.post('/api/service', function (req, res) {
+    var service = new Service(req.passed);
+    service.date = new Date();
+    service.save(function (err, result) {
+        res.send(err);
+    });
+});
+
+app.post('/api/service/upload', function (req, res) {
+    var files = [];
+    if (req.files.file.forEach == undefined)
+        files.push(req.files.file.name);
+    else
+        req.files.file.forEach(function (file) {
+            files.push(file.name);
+        });
+    res.send(files);
 });
 
 app.get('/*', function (req, res) {

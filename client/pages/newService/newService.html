@@ -1,0 +1,13 @@
+<div class="container">
+    <div ng-click="save();">저장</div>
+    <input ng-model="service.head" class="form-control" type="text">
+    <input ng-model="service.price" class="form-control" type="number">
+    <textarea ng-model="service.body" class="form-control"></textarea>
+
+
+    <div ngf-drop ng-model="files" class="drop-box" ngf-select
+         ngf-drag-over-class="dragover" ngf-multiple="true" ngf-allow-dir="true"
+         ngf-accept="'image/*'"><i class="fa fa-picture-o"></i> 사진 첨부
+    </div>
+    <div><img ng-repeat="file in files" class="thumbnail" ngf-src="file" ngf-accept="'image/*'"></div>
+</div>
