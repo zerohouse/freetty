@@ -1,0 +1,3 @@
+app.get('/api/user/session', function (req, res) {
+    res.send(req.session.user);
+});

@@ -32,7 +32,6 @@ app.directive('photos', function ($compile) {
                     return;
                 $scope.loading = true;
                 $scope.photoUrl = $scope.photos[$scope.select] == undefined ? undefined : '/uploads/' + $scope.photos[$scope.select];
-                console.log($scope.photos);
             });
 
             $scope.selectPhoto = function (photo) {

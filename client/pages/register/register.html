@@ -1,14 +1,19 @@
 <div class="container">
     <div class="row">
         <div class="input-group">
-            <input class="form-control" placeholder="이메일" ng-model="user.email" regex="^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$" message="이메일 형식이 맞지 않습니다.">
+            <input class="form-control" placeholder="이메일" ng-model="user.email" check="email"
+                   regex="^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$"
+                   message="이메일 형식이 맞지 않습니다.">
+            <span ng-show="exist">이미 존재하는 아이디입니다.</span>
         </div>
         <div class="input-group">
-            <input class="form-control" placeholder="패스워드" type="password" ng-model="user.password">
+            <input class="form-control" regex=".{6,}" message="패스워드는 6글자이상입니다." check="regex" placeholder="패스워드" type="password" ng-model="user.password">
         </div>
         <div class="input-group">
-            <input class="form-control" placeholder="이름" ng-model="user.name">
+            <input class="form-control" regex=".{2,}" message="이름은 두글자 이상입니다." check="regex" placeholder="이름" ng-model="user.name">
         </div>
         <div class="btn btn-default" ng-click="register();">회원가입</div>
+        <div>이미 가입하셨나요? <span ui-sref="login({email:user.email})">여기</span>를 눌러 로그인</div>
+
     </div>
 </div>

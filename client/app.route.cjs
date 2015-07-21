@@ -14,12 +14,12 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             templateUrl: "/client/pages/profile/profile.html"
         })
         .state('register', {
-            url: "/user/register",
+            url: "/user/register?email",
             controller: "register",
             templateUrl: "/client/pages/register/register.html"
         })
         .state('login', {
-            url: "/user/login",
+            url: "/user/login?email",
             controller: "login",
             templateUrl: "/client/pages/login/login.html"
         })

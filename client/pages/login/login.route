@@ -1,0 +1,22 @@
+app.post('/api/user/login', function (req, res) {
+    var query = {};
+    query.email = req.passed.email;
+    User.findOne(query, function (er, result) {
+        var login = {};
+        if (result == null) {
+            login.err = "가입하지 않은 이메일입니다.";
+            res.send(login);
+            return;
+        }
+        if (result.password != req.passed.password) {
+            login.err = "패스워드가 다릅니다.";
+            res.send(login);
+            return;
+        }
+        result.password = undefined;
+        res.send(result);
+        req.session.user = result;
+        req.session.save(function (res) {
+        });
+    });
+});

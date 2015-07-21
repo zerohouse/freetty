@@ -1,15 +1,9 @@
 var express = require('express'),
     app = express(),
     http = require('http').Server(app),
-    io = require('socket.io')(http),
-    path = require('path'),
-    session = require('express-session'),
-    cookie = require('cookie'),
-    cookieParser = require('cookie-parser'),
-    winston = require('winston'),
-    sessionStore = new session.MemoryStore(),
-    multer = require('multer'),
-    bodyParser = require('body-parser');
+    //io = require('socket.io')(http),
+    path = require('path');
+
 
 var mongoDB = require('mongodb'),
     ObjectID = mongoDB.ObjectID,
@@ -18,6 +12,7 @@ var mongoDB = require('mongodb'),
 mongoose.connect('mongodb://localhost:27017/freetty');
 
 
+var winston = require('winston');
 var logger = new (winston.Logger)({
     transports: [
         new (winston.transports.Console)({
@@ -28,6 +23,9 @@ var logger = new (winston.Logger)({
         })
     ]
 });
+var bodyParser = require('body-parser'),
+    multer = require('multer');
+
 app.use(function (req, res, next) {
     res.charset = "utf-8";
     next();
@@ -36,6 +34,7 @@ app.use('/node_modules', express.static('node_modules'));
 app.use('/dist', express.static('dist'));
 app.use('/client', express.static('client'));
 app.use('/uploads', express.static('uploads'));
+
 app.use(bodyParser.json());
 app.use(function (req, res, next) {
     if (req.method == "GET")
@@ -45,7 +44,6 @@ app.use(function (req, res, next) {
     next();
 });
 //app.use('/socket.io', express.static('node_modules/socket.io/node_modules/socket.io-client'));
-
 
 app.use(multer({
     dest: './uploads/',
@@ -57,8 +55,30 @@ app.use(multer({
     onFileUploadComplete: function (file) {
     }
 }));
+var session = require('express-session'),
+    //cookie = require('cookie'),
+    sessionStore = new session.MemoryStore(),
+    cookieParser = require('cookie-parser'),
+    COOKIE_SECRET = 'secret',
+    COOKIE_NAME = 'sid';
+
+app.use(cookieParser(COOKIE_SECRET));
+app.use(session({
+    name: COOKIE_NAME,
+    store: sessionStore,
+    secret: COOKIE_SECRET,
+    saveUninitialized: true,
+    resave: true,
+    cookie: {
+        path: '/',
+        httpOnly: true,
+        secure: false,
+        maxAge: null
+    }
+}));
+
 var User = mongoose.model('user', mongoose.Schema({
-    id: {type: String, index: true, unique: true},
+    url: {type: String, index: true, unique: true},
     email: {type: String, index: true, unique: true},
     password: String,
     name: String,
@@ -83,9 +103,23 @@ var Service = mongoose.model('service', mongoose.Schema({
 
 
 
+app.get('/api/user/session', function (req, res) {
+    res.send(req.session.user);
+});
 app.get('/api/user', function (req, res) {
-    req.passed.password = undefined;
-    User.findOne(req.passed, function (er, result) {
+    var query = {};
+    if (req.passed.email)
+        query.email = req.passed.email;
+    if (req.passed._id)
+        query._id = req.passed._id;
+    if (req.passed.url)
+        query.url = req.passed.url;
+    User.findOne(query, function (er, result) {
+        if (result == null) {
+            res.send(false);
+            return;
+        }
+        result.password = undefined;
         res.send(result);
     });
 });
@@ -117,15 +151,47 @@ app.get('/api/service', function (req, res) {
 });
 
 
+app.post('/api/user/login', function (req, res) {
+    var query = {};
+    query.email = req.passed.email;
+    User.findOne(query, function (er, result) {
+        var login = {};
+        if (result == null) {
+            login.err = "가입하지 않은 이메일입니다.";
+            res.send(login);
+            return;
+        }
+        if (result.password != req.passed.password) {
+            login.err = "패스워드가 다릅니다.";
+            res.send(login);
+            return;
+        }
+        result.password = undefined;
+        res.send(result);
+        req.session.user = result;
+        req.session.save(function (res) {
+        });
+    });
+});
+
 app.post('/api/service', function (req, res) {
+    if (req.session.user == undefined) {
+        res.send('로그인이 필요한 서비스입니다.');
+        return;
+    }
     var service = new Service(req.passed);
     service.date = new Date();
+    service.provider = req.session.user._id;
     service.save(function (err, result) {
         res.send(err);
     });
 });
 
 app.post('/api/service/upload', function (req, res) {
+    if (req.session.user == undefined) {
+        res.send('로그인이 필요한 서비스입니다.');
+        return;
+    }
     var files = [];
     if (req.files.file.forEach == undefined)
         files.push(req.files.file.name);
@@ -139,7 +205,7 @@ app.post('/api/service/upload', function (req, res) {
 app.post('/api/user', function (req, res) {
     var user = new User(req.passed);
     user.save(function (err, result) {
-        res.send(err);
+        res.send(result);
     });
 });
 

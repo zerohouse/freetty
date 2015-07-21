@@ -1,6 +1,17 @@
 app.get('/api/user', function (req, res) {
-    req.passed.password = undefined;
-    User.findOne(req.passed, function (er, result) {
+    var query = {};
+    if (req.passed.email)
+        query.email = req.passed.email;
+    if (req.passed._id)
+        query._id = req.passed._id;
+    if (req.passed.url)
+        query.url = req.passed.url;
+    User.findOne(query, function (er, result) {
+        if (result == null) {
+            res.send(false);
+            return;
+        }
+        result.password = undefined;
         res.send(result);
     });
 });

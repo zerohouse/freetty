@@ -23,7 +23,7 @@ app.controller('profile', function ($scope, users, $stateParams, Upload, req) {
         });
     });
 
-    users($stateParams.id, function (user) {
+    users.getByUrl($stateParams.id, function (user) {
         $scope.user = user;
     });
 

@@ -1,12 +1,21 @@
 app.post('/api/service', function (req, res) {
+    if (req.session.user == undefined) {
+        res.send('로그인이 필요한 서비스입니다.');
+        return;
+    }
     var service = new Service(req.passed);
     service.date = new Date();
+    service.provider = req.session.user._id;
     service.save(function (err, result) {
         res.send(err);
     });
 });
 
 app.post('/api/service/upload', function (req, res) {
+    if (req.session.user == undefined) {
+        res.send('로그인이 필요한 서비스입니다.');
+        return;
+    }
     var files = [];
     if (req.files.file.forEach == undefined)
         files.push(req.files.file.name);
