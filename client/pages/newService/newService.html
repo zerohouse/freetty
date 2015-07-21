@@ -1,8 +1,9 @@
 <div class="container">
     <div ng-click="save();">저장</div>
-    <input ng-model="service.head" class="form-control" type="text">
-    <input ng-model="service.price" class="form-control" type="number">
-    <textarea ng-model="service.body" class="form-control"></textarea>
+    <input ng-model="service.head" placeholder="제목" class="form-control" type="text">
+    <input ng-model="service.price" placeholder="가격" class="form-control" type="number">
+    <input ng-model="service.provider" placeholder="작성자" class="form-control" type="text">
+    <textarea ng-model="service.body" placeholder="내용" class="form-control"></textarea>
 
 
     <div ngf-drop ng-model="files" class="drop-box" ngf-select

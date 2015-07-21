@@ -30,5 +30,4 @@ app.factory('users', function (req) {
 
     return fn;
 
-})
-;
+});

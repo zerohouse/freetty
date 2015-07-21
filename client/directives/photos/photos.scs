@@ -1,6 +1,8 @@
 .img-wrapper {
     position: relative;
     display: inline-block;
+    max-height: 300px;
+    overflow: hidden;
 }
 
 .img-wrapper:hover .arrow, .img-wrapper:hover .img-handle {

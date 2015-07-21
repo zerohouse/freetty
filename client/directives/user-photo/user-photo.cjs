@@ -7,10 +7,8 @@ app.directive('userPhoto', function (users) {
             user: '='
         },
         controller: function ($scope) {
-            console.log($scope.user);
             users($scope.user, function (user) {
                 $scope.user = user;
-                console.log($scope.user);
             });
 
             $scope.$watch('user', function () {

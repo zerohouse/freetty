@@ -1,4 +1,0 @@
-app.get('/api/service', function (req, res) {
-    req.passed.query;
-});
-

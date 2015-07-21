@@ -71,7 +71,6 @@ User.schema.path('email').validate(function (value) {
 }, 'Invalid email');
 
 
-
 var Service = mongoose.model('service', mongoose.Schema({
     head: String,
     body: String,
@@ -119,7 +118,9 @@ app.post('/api/user/upload', function (req, res) {
 });
 
 app.get('/api/service', function (req, res) {
-    req.passed.query;
+    Service.find(req.passed.query).sort({'date': -1}).limit(req.passed.limit).skip(req.passed.skip).exec(function (err, results) {
+        res.send(results);
+    });
 });
 
 

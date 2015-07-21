@@ -1,6 +1,6 @@
 app.controller('newService', function ($scope, Upload, req) {
 
-    $scope.service = {head: "", body: "", provider: "asdf"}
+    $scope.service = {head: "", body: "", provider: "asdf", price: 0}
 
     $scope.save = function () {
         if ($scope.service.body == "")
