@@ -53,6 +53,19 @@ app.controller('profile', function ($scope, users, user, $stateParams, Upload, r
         return $scope.user._id == user._id;
     }
 
+    $scope.remove = function (obj, k) {
+        if (!confirm(k + " 삭제합니다."))
+            return;
+        delete obj[k];
+        $scope.save();
+    }
+
+    $scope.add = function (obj, k) {
+        if (k == "")
+            return;
+        obj[k] = "";
+        $scope.save();
+    }
 
 
 });

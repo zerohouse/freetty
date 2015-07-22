@@ -1,6 +1,8 @@
-<div ng-show="!mod">{{modTextarea}}<small ng-click="mod = !mod" ng-show="modRight">수정</small></div>
-<div ng-show="mod">
+<span ng-show="!mod" ng-bind-html="modTextarea.newLine()">
+</span>
+<small ng-show="modRight&&!mod" ng-click="mod = !mod">수정</small>
+<span ng-show="mod" class="input-group">
     <textarea ng-model="modTextarea" class="form-control"></textarea>
 
-    <div class="btn btn-default" ng-click="modSave();mod = !mod">저장</div>
-</div>
+    <div class="input-group-addon btn btn-default" ng-click="modSave();mod = !mod">저장</div>
+</span>

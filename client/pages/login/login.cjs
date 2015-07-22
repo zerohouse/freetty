@@ -26,8 +26,10 @@ app.controller('login', function ($scope, $stateParams, $regex, req, alert, user
     });
 
     function existCheck() {
-        if (!$regex.email)
+        if (!$regex.email) {
+            $scope.exist = true;
             return;
+        }
         var query = {};
         query.email = $scope.user.email;
         req.get('/api/user', query).success(function (res) {

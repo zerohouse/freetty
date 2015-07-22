@@ -5,27 +5,62 @@
                  ng-src="{{photo}}" ng-show="isRootUser()">
             <img ng-src="{{photo}}" ng-show="!isRootUser()">
 
-            <div class="info">
-                <h1 mod-textarea="user.name" mod-save="save" mod-right="isRootUser()"></h1>
+            <div class="panel panel-primary info">
+                <div class="panel-heading"><i class="fa fa-user"></i> Profile</div>
+                <div class="panel-body profile">
+                    <div class="left-right">
+                        <span class="left">
+                            이름
+                        </span>
+                        <span class="right">
+                            <h4 mod-textarea="user.name" mod-save="save" mod-right="isRootUser()"></h4>
+                        </span>
+                    </div>
+                    <div class="left-right" ng-repeat="(k, v) in user.profile">
+                        <span class="left">
+                            {{k}}
+                        </span>
+                        <span class="right">
+                            <h4 mod-textarea="user.profile[k]" mod-save="save" mod-right="isRootUser()"></h4>
+                            <span ng-click="remove(user.profile, k)" ng-show="isRootUser()">삭제</span>
+                        </span>
+                    </div>
+                    <div class="left-right" ng-show="isRootUser()">
+                        <span class="left">
+                            <input type="text" placeholder="프로필 항목" class="form-control" ng-model="newKey"
+                                   ng-init="newKey=''">
+                        </span>
+                        <span class="right">
+                            <h4 ng-click="add(user.profile, newKey);newKey='';">추가하기+</h4>
+                        </span>
+                    </div>
 
-                <h1 mod-textarea="user.profile.location" mod-save="save" mod-right="isRootUser()"></h1>
+                </div>
             </div>
 
-            <div ng-controller="address">
-                <input ng-model="keyword">
-                <ul class="list-group">
-                    <li class="list-group-item" ng-repeat="result in results">
-                        {{result.formatted_address}}
-                    </li>
-                </ul>
-                <div id="map-canvas" style="height:300px;width:300px"></div>
+            <div class="panel panel-primary info">
+                <div class="panel-heading"><i class="fa fa-map-marker"></i> Location</div>
+                <div class="panel-body profile">
+                    <div ng-controller="address">
+                        <input ng-model="keyword" ng-keydown="keypress($event);">
+                        <ul class="list-group">
+                            <li class="list-group-item" ng-repeat="result in results"
+                                ng-mouseover="selectThis(result)" ng-click="showMap()"
+                                ng-class="{'selected':results.indexOf(result) == selected}">
+                                {{result.formatted_address}}
+                            </li>
+                        </ul>
+                        <div id="map-canvas" style="height:300px;width:300px"></div>
+                    </div>
+                </div>
             </div>
+
 
         </div>
         <div class="col-md-8">
-            <h1 mod-textarea="user.profile.head" mod-save="save" mod-right="isRootUser()"></h1>
+            <h1 mod-textarea="user.introduce.head" mod-save="save" mod-right="isRootUser()"></h1>
 
-            <p mod-textarea="user.profile.body" mod-save="save" mod-right="isRootUser()"></p>
+            <p mod-textarea="user.introduce.body" mod-save="save" mod-right="isRootUser()"></p>
         </div>
     </div>
 </div>

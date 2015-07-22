@@ -1,5 +1,4 @@
-app.controller('address', function ($scope, req) {
-
+app.controller('address', function ($scope, req, $timeout) {
     var mapOptions = {
         center: {lat: 37.476559, lng: 126.981633},
         zoom: 8
@@ -7,58 +6,68 @@ app.controller('address', function ($scope, req) {
     var map = new google.maps.Map(document.getElementById('map-canvas'),
         mapOptions);
 
-    var markers = [];
-
     $scope.keyword = "";
 
-    $scope.$watch('keyword', function () {
-        if ($scope.keyword == "") {
-            $scope.results = [];
+    $scope.selected = 0;
+
+    function moveSelect(point) {
+        $scope.selected += point;
+        if ($scope.selected < 0) {
+            $scope.selected = $scope.results.length - 1;
             return;
         }
+        if ($scope.selected > $scope.results.length - 1)
+            $scope.selected = 0;
+    }
 
-        req.get('http://maps.googleapis.com/maps/api/geocode/json?language=ko&sensor=false&address=' + $scope.keyword).success(function (res) {
-            deleteMarkers();
-            $scope.results = res.results;
-            res.results.forEach(function (each) {
-                addMarker(each);
+    $scope.selectThis = function (each) {
+        $scope.selected = $scope.results.indexOf(each);
+    };
+
+    $scope.keypress = function (e) {
+        switch (e.keyCode) {
+            case 38:
+                moveSelect(-1);
+                return;
+            case 40:
+                moveSelect(1);
+                return;
+            case 13:
+                $scope.showMap();
+                return;
+        }
+
+        var ajax = $timeout(function () {
+            $timeout.cancel(ajax);
+
+            if ($scope.keyword == "") {
+                $scope.results = [];
+                return;
+            }
+            req.get('http://maps.googleapis.com/maps/api/geocode/json?language=ko&sensor=false&address=' + $scope.keyword).success(function (res) {
+                $scope.results = res.results;
             });
-            setAllMap(map);
-            showMarkers();
-        });
-    });
+        }, 300);
+    };
 
-    function addMarker(result) {
-        var marker = new google.maps.Marker({
-            position: result.geometry.location,
-            map: map,
-            title: result.formatted_address
+
+    var marker;
+
+    $scope.showMap = function () {
+        var selected = $scope.results[$scope.selected];
+        if (marker != undefined)
+            marker.setMap(null);
+        marker = new google.maps.Marker({
+            position: selected.geometry.location,
+            map: map
         });
+        map.setZoom(14);
+        map.setCenter(marker.getPosition());
         google.maps.event.addListener(marker, 'click', function () {
             map.setZoom(14);
             map.setCenter(marker.getPosition());
         });
-        markers.push(marker);
-    }
+    };
 
-    function setAllMap(map) {
-        for (var i = 0; i < markers.length; i++) {
-            markers[i].setMap(map);
-        }
-    }
-
-
-    function clearMarkers() {
-        setAllMap(null);
-    }
-
-    function showMarkers() {
-        setAllMap(map);
-    }
-
-    function deleteMarkers() {
-        clearMarkers();
-        markers = [];
-    }
 
 });
