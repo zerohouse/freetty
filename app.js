@@ -104,6 +104,10 @@ var Service = mongoose.model('service', mongoose.Schema({
 
 
 app.get('/api/user/session', function (req, res) {
+    if (req.session.user == undefined) {
+        return;
+        res.send(false);
+    }
     res.send(req.session.user);
 });
 app.get('/api/user', function (req, res) {
@@ -130,11 +134,6 @@ app.get('/api/user/list', function (req, res) {
     });
 });
 
-app.put('/api/user', function (req, res) {
-    User.update(req.passed.query, req.passed.update, function (err, result) {
-        res.send(err);
-    });
-});
 
 app.post('/api/user/upload', function (req, res) {
     var filename = req.files.file.name;
@@ -202,6 +201,24 @@ app.post('/api/service/upload', function (req, res) {
     res.send(files);
 });
 
+app.put('/api/user', function (req, res) {
+    var result = {};
+    if (req.session.user == undefined) {
+        result.err = '권한이 없습니다.';
+        res.send(result);
+        return;
+    }
+    if (req.session.user._id = !req.passed._id) {
+        result.err = '권한이 없습니다.';
+        res.send(result);
+        return;
+    }
+    User.update({_id: req.session._id}, req.passed, function (err, result) {
+        req.session.user = req.passed;
+        req.session.save();
+        res.send(result);
+    });
+});
 app.post('/api/user', function (req, res) {
     var user = new User(req.passed);
     user.save(function (err, result) {

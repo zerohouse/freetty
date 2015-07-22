@@ -1,4 +1,4 @@
-app.controller('profile', function ($scope, users, $stateParams, Upload, req) {
+app.controller('profile', function ($scope, users, user, $stateParams, Upload, req, alert, $state) {
 
     $scope.$watch('user', function () {
         if ($scope.user == undefined)
@@ -23,18 +23,30 @@ app.controller('profile', function ($scope, users, $stateParams, Upload, req) {
         });
     });
 
-    users.getByUrl($stateParams.id, function (user) {
-        $scope.user = user;
-    });
+    init();
+    function init() {
+        if ($stateParams.url.length > 16) {
+            users($stateParams.url, function (user) {
+                $scope.user = user;
+            });
+            return;
+        }
+        users.getByUrl($stateParams.url, function (user) {
+            $scope.user = user;
+        });
+    }
 
     $scope.save = function () {
-        var parameter = {};
-        parameter.query = {};
-        parameter.query.id = $scope.user.id;
-        parameter.update = $scope.user;
-        req.put('/api/user', parameter).success(function (res) {
-            console.log(res);
+        req.put('/api/user', $scope.user).success(function (res) {
+            if (res.err) {
+                alert(res.err);
+                $state.go('login');
+            }
         });
+    }
+
+    $scope.isRootUser = function () {
+        return $scope.user._id == user._id;
     }
 
 });

@@ -1,3 +1,7 @@
 app.get('/api/user/session', function (req, res) {
+    if (req.session.user == undefined) {
+        return;
+        res.send(false);
+    }
     res.send(req.session.user);
 });

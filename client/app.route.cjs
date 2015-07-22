@@ -9,7 +9,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             templateUrl: "/client/pages/main/main.html"
         })
         .state('profile', {
-            url: "/:id",
+            url: "/:url",
             controller: "profile",
             templateUrl: "/client/pages/profile/profile.html"
         })

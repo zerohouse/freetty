@@ -12,14 +12,19 @@
 <nav class="navbar navbar-default navbar-background">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand">Freetty</a>
+            <a class="navbar-brand" ui-sref="main">Freetty</a>
         </div>
+
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <div user-photo="user._id" ng-click="auth()"></div>
+            </li>
+        </ul>
 
     </div>
 
 </nav>
 <div ui-view></div>
-asdasd{{user}}
 
 <script src="/node_modules/angular/angular.min.js"></script>
 <script src="/node_modules/angular-ui-router/build/angular-ui-router.min.js"></script>

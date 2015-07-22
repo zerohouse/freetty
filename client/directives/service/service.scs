@@ -38,7 +38,7 @@
     font-size: 70%;
 }
 
-.service user-photo {
+.service [user-photo] {
     right: 20px;
     top: -45px;
     z-index: 3;

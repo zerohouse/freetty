@@ -22,11 +22,6 @@ app.get('/api/user/list', function (req, res) {
     });
 });
 
-app.put('/api/user', function (req, res) {
-    User.update(req.passed.query, req.passed.update, function (err, result) {
-        res.send(err);
-    });
-});
 
 app.post('/api/user/upload', function (req, res) {
     var filename = req.files.file.name;
