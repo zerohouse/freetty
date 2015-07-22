@@ -3,9 +3,7 @@ app.controller('register', function ($scope, req, $regex, alert, $state, $stateP
     $scope.user = {name: "", email: $stateParams.email, password: ""};
 
     $scope.register = function () {
-        if (!$regex('regex'))
-            return;
-        if (!$regex('email'))
+        if (!$regex.$all())
             return;
         if ($scope.exist)
             return;
@@ -19,6 +17,7 @@ app.controller('register', function ($scope, req, $regex, alert, $state, $stateP
         });
     };
 
+
     $scope.$watch(function () {
         return $scope.user.email;
     }, function () {
@@ -26,7 +25,7 @@ app.controller('register', function ($scope, req, $regex, alert, $state, $stateP
     });
 
     function existCheck() {
-        if (!$regex('email'))
+        if (!$regex.email)
             return;
         var query = {};
         query.email = $scope.user.email;

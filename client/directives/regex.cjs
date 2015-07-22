@@ -1,20 +1,14 @@
 app.factory('$regex', function () {
-    var regex = function (name) {
-        if (regex.regex[name] == undefined)
-            return false;
-        var regs = regex.regex[name];
-        for (var i = 0; i < regs.length; i++) {
-            if (!regs[i]())
+    var regex = {};
+
+    regex.$all = function () {
+        for (var k in regex) {
+            if (k == undefined)
+                continue;
+            if (!regex[k])
                 return false;
         }
         return true;
-    };
-
-    regex.regex = {};
-    regex.register = function (name, fn) {
-        if (regex.regex[name] == undefined)
-            regex.regex[name] = [];
-        regex.regex[name].push(fn);
     };
 
     return regex;
@@ -35,15 +29,16 @@ app.directive('regex', function ($compile, $regex) {
             var regexTest = function () {
                 return regex.test(parent.$eval(attrs.ngModel));
             };
-            $regex.register(attrs.check, regexTest);
             parent.$watch(attrs.ngModel, function () {
                 if (parent.$eval(attrs.ngModel) == undefined || parent.$eval(attrs.ngModel) == "" || regexTest()) {
                     element.removeClass('waring');
                     scope.matched = true;
+                    $regex[attrs.name] = true;
                     return;
                 }
                 element.addClass('waring');
                 scope.matched = false;
+                $regex[attrs.name] = false;
             });
         }
     }

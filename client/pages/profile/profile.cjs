@@ -1,5 +1,14 @@
 app.controller('profile', function ($scope, users, user, $stateParams, Upload, req, alert, $state) {
 
+    $scope.save = function () {
+        req.put('/api/user', $scope.user).success(function (res) {
+            if (res.err) {
+                alert(res.err);
+                $state.go('login');
+            }
+        });
+    };
+
     $scope.$watch('user', function () {
         if ($scope.user == undefined)
             return;
@@ -20,6 +29,7 @@ app.controller('profile', function ($scope, users, user, $stateParams, Upload, r
             $scope.progress = parseInt(100.0 * evt.loaded / evt.total);
         }).success(function (data, status, headers, config) {
             $scope.user.photo = data;
+            $scope.save();
         });
     });
 
@@ -36,17 +46,13 @@ app.controller('profile', function ($scope, users, user, $stateParams, Upload, r
         });
     }
 
-    $scope.save = function () {
-        req.put('/api/user', $scope.user).success(function (res) {
-            if (res.err) {
-                alert(res.err);
-                $state.go('login');
-            }
-        });
-    }
 
     $scope.isRootUser = function () {
+        if ($scope.user._id == undefined)
+            return false;
         return $scope.user._id == user._id;
     }
+
+
 
 });

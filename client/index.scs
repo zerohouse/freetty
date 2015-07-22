@@ -4,10 +4,35 @@
 
 .nav [user-photo] {
     position: relative;
+    float: left;
+    display: inline-block;
     width: 50px;
     height: 50px;
 }
 
-nav .container {
-    padding: 10px;
+.login-profile .name {
+    display: block;
+    float: right;
+    line-height: 50px;
+    margin-left: 5px;
+}
+
+.login-profile .name > i {
+    font-size: 130%;
+    margin: 10px;
+    color: #ccc;
+}
+
+.login-profile ul {
+    display: none;
+    position: absolute;
+    right: 5px;
+    top: 45px;
+    z-index: 20;
+    min-width: 120px;
+
+}
+
+.login-profile:hover ul {
+    display: block;
 }

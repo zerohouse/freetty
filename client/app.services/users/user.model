@@ -1,5 +1,5 @@
 var User = mongoose.model('user', mongoose.Schema({
-    url: {type: String, index: true, unique: true},
+    url: {type: String, unique: true, sparse: true},
     email: {type: String, index: true, unique: true},
     password: String,
     name: String,

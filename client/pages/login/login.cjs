@@ -1,11 +1,9 @@
-app.controller('login', function ($scope, $stateParams, $regex, req, alert) {
+app.controller('login', function ($scope, $stateParams, $regex, req, alert, user, $state) {
 
     $scope.user = {email: $stateParams.email, password: ""};
 
     $scope.login = function () {
-        if (!$regex('regex'))
-            return;
-        if (!$regex('email'))
+        if (!$regex.$all())
             return;
         if (!$scope.exist)
             return;
@@ -15,6 +13,9 @@ app.controller('login', function ($scope, $stateParams, $regex, req, alert) {
                 return;
             }
             alert("로그인되었습니다..");
+            angular.copy(res, user);
+            user.logged = true;
+            $state.go('main');
         });
     };
 
@@ -25,12 +26,12 @@ app.controller('login', function ($scope, $stateParams, $regex, req, alert) {
     });
 
     function existCheck() {
-        if (!$regex('email'))
+        if (!$regex.email)
             return;
         var query = {};
         query.email = $scope.user.email;
         req.get('/api/user', query).success(function (res) {
-            if (res) {
+            if (res.result) {
                 $scope.exist = true;
                 return;
             }

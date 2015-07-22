@@ -1,6 +1,4 @@
-app.controller('root', function ($scope, user, $state) {
-    $scope.user = user;
-
+app.controller('nav', function (user, $scope, $state, req) {
     $scope.auth = function () {
         if (user.logged) {
             if (user.url) {
@@ -13,5 +11,11 @@ app.controller('root', function ($scope, user, $state) {
         $state.go('login');
 
     }
+
+    $scope.logout = function () {
+        req.get('/api/user/logout').success(function () {
+            angular.copy({}, user);
+        });
+    };
 
 });

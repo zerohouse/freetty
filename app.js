@@ -78,7 +78,7 @@ app.use(session({
 }));
 
 var User = mongoose.model('user', mongoose.Schema({
-    url: {type: String, index: true, unique: true},
+    url: {type: String, unique: true, sparse: true},
     email: {type: String, index: true, unique: true},
     password: String,
     name: String,
@@ -118,13 +118,13 @@ app.get('/api/user', function (req, res) {
         query._id = req.passed._id;
     if (req.passed.url)
         query.url = req.passed.url;
-    User.findOne(query, function (er, result) {
-        if (result == null) {
-            res.send(false);
-            return;
-        }
-        result.password = undefined;
-        res.send(result);
+    User.findOne(query, function (err, result) {
+        var resu = {};
+        resu.err = err;
+        if (result != null)
+            result.password = undefined;
+        resu.result = result;
+        res.send(resu);
     });
 });
 
@@ -143,6 +143,10 @@ app.post('/api/user/upload', function (req, res) {
     });
 });
 
+app.get('/api/user/logout', function (req, res) {
+    req.session.destroy();
+    res.send(true);
+});
 app.get('/api/service', function (req, res) {
     Service.find(req.passed.query).sort({'date': -1}).limit(req.passed.limit).skip(req.passed.skip).exec(function (err, results) {
         res.send(results);
@@ -222,7 +226,10 @@ app.put('/api/user', function (req, res) {
 app.post('/api/user', function (req, res) {
     var user = new User(req.passed);
     user.save(function (err, result) {
-        res.send(result);
+        var res = {};
+        res.result = result;
+        res.err = err;
+        res.send(res);
     });
 });
 

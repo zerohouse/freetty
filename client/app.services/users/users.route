@@ -6,13 +6,13 @@ app.get('/api/user', function (req, res) {
         query._id = req.passed._id;
     if (req.passed.url)
         query.url = req.passed.url;
-    User.findOne(query, function (er, result) {
-        if (result == null) {
-            res.send(false);
-            return;
-        }
-        result.password = undefined;
-        res.send(result);
+    User.findOne(query, function (err, result) {
+        var resu = {};
+        resu.err = err;
+        if (result != null)
+            result.password = undefined;
+        resu.result = result;
+        res.send(resu);
     });
 });
 

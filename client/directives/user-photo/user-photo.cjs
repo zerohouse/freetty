@@ -7,8 +7,12 @@ app.directive('userPhoto', function (users) {
             userPhoto: '='
         },
         controller: function ($scope) {
-            users($scope.userPhoto, function (user) {
-                $scope.user = user;
+            $scope.$watch('userPhoto', function () {
+                if ($scope.userPhoto == undefined)
+                    return;
+                users($scope.userPhoto, function (user) {
+                    $scope.user = user;
+                });
             });
 
             var defaultImg = 'http://cfile29.uf.tistory.com/image/23315D3F53808A931FB5E9';

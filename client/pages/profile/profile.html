@@ -2,11 +2,25 @@
     <div class="row profile">
         <div class="col-md-4">
             <img ngf-accept="'image/*'" ng-model="files" ngf-select="true" ngf-drop="true"
-                 ng-src="{{photo}}">
+                 ng-src="{{photo}}" ng-show="isRootUser()">
+            <img ng-src="{{photo}}" ng-show="!isRootUser()">
+
             <div class="info">
-                <div>이름</div>
-                <div>메일</div>
+                <h1 mod-textarea="user.name" mod-save="save" mod-right="isRootUser()"></h1>
+
+                <h1 mod-textarea="user.profile.location" mod-save="save" mod-right="isRootUser()"></h1>
             </div>
+
+            <div ng-controller="address">
+                <input ng-model="keyword">
+                <ul class="list-group">
+                    <li class="list-group-item" ng-repeat="result in results">
+                        {{result.formatted_address}}
+                    </li>
+                </ul>
+                <div id="map-canvas" style="height:300px;width:300px"></div>
+            </div>
+
         </div>
         <div class="col-md-8">
             <h1 mod-textarea="user.profile.head" mod-save="save" mod-right="isRootUser()"></h1>

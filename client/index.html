@@ -9,23 +9,29 @@
     <title>Freetty!</title>
 </head>
 <body ng-controller="root">
-<nav class="navbar navbar-default navbar-background">
+<nav class="navbar navbar-default navbar-background" ng-controller="nav">
     <div class="container">
         <div class="navbar-header">
             <a class="navbar-brand" ui-sref="main">Freetty</a>
         </div>
 
-        <ul class="nav navbar-nav navbar-right">
-            <li>
+        <ul class="nav navbar-nav">
+            <li ng-show="!user.logged"><a ui-sref="login">로그인</a></li>
+            <li ng-show="!user.logged"><a ui-sref="register">회원가입</a></li>
+            <li class="login-profile" ng-show="user.logged">
                 <div user-photo="user._id" ng-click="auth()"></div>
+                <span class="name">{{user.name}}<i class="fa fa-caret-down"></i></span>
+                <ul class="list-group">
+                    <li class="list-group-item" ng-click="logout()">로그아웃</li>
+                </ul>
             </li>
         </ul>
 
     </div>
-
 </nav>
 <div ui-view></div>
-
+<script type="text/javascript"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDjs11FmMMAlR5LamjEKMHVnXNmcO-Lpbw"></script>
 <script src="/node_modules/angular/angular.min.js"></script>
 <script src="/node_modules/angular-ui-router/build/angular-ui-router.min.js"></script>
 <script src="/node_modules/angular-animate/angular-animate.min.js"></script>
