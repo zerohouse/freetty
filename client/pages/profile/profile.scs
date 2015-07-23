@@ -28,3 +28,7 @@
     display: inline-block;
     width: 35%;
 }
+
+.profile .label {
+    margin: 3px;
+}

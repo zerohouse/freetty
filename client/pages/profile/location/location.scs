@@ -1,0 +1,14 @@
+
+#map-canvas {
+    height: 300px;
+    width: 100%;
+}
+
+.search {
+    position: absolute;
+    z-index: 1;
+}
+
+.margin-bottom {
+    margin-bottom: 10px;
+}

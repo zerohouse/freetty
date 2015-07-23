@@ -15,15 +15,15 @@ app.controller('profile', function ($scope, users, user, $stateParams, Upload, r
         $scope.photo = $scope.user.photo == undefined ? 'http://cfile29.uf.tistory.com/image/23315D3F53808A931FB5E9' : '/uploads/' + $scope.user.photo;
     }, true);
 
-    $scope.$watch('files', function () {
-        if ($scope.files == undefined)
+    $scope.$watch('files', function (files) {
+        if (files == undefined)
             return;
         var query = {};
         query.id = $scope.user.id;
 
         Upload.upload({
             url: '/api/user/upload',
-            file: $scope.files,
+            file: files,
             data: query
         }).progress(function (evt) {
             $scope.progress = parseInt(100.0 * evt.loaded / evt.total);

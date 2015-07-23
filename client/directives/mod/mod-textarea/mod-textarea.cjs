@@ -5,9 +5,9 @@ app.directive('modTextarea', function () {
         scope: {
             modTextarea: '=',
             modSave: '=',
-            modRight: '='
-        },
-        link: function (scope, element, attrs) {
+            modRight: '=',
+            modDefault: '@',
+            placeholder: '@'
         }
     }
 });

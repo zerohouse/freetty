@@ -1,9 +1,13 @@
 <div class="container">
     <div class="row profile">
         <div class="col-md-4">
-            <img ngf-accept="'image/*'" ng-model="files" ngf-select="true" ngf-drop="true"
-                 ng-src="{{photo}}" ng-show="isRootUser()">
-            <img ng-src="{{photo}}" ng-show="!isRootUser()">
+            <div class="panel panel-primary">
+                <div class="panel-body">
+                    <img ngf-accept="'image/*'" ng-model="files" ngf-select="true" ngf-drop="true"
+                         ng-src="{{photo}}" ng-show="isRootUser()">
+                    <img ng-src="{{photo}}" ng-show="!isRootUser()">
+                </div>
+            </div>
 
             <div class="panel panel-primary info">
                 <div class="panel-heading"><i class="fa fa-user"></i> Profile</div>
@@ -37,30 +41,39 @@
 
                 </div>
             </div>
-
-            <div class="panel panel-primary info">
+            <div class="panel panel-primary" ng-if="isRootUser() || user.location">
                 <div class="panel-heading"><i class="fa fa-map-marker"></i> Location</div>
-                <div class="panel-body profile">
-                    <div ng-controller="address">
-                        <input ng-model="keyword" ng-keydown="keypress($event);">
-                        <ul class="list-group">
-                            <li class="list-group-item" ng-repeat="result in results"
-                                ng-mouseover="selectThis(result)" ng-click="showMap()"
-                                ng-class="{'selected':results.indexOf(result) == selected}">
-                                {{result.formatted_address}}
-                            </li>
-                        </ul>
-                        <div id="map-canvas" style="height:300px;width:300px"></div>
-                    </div>
+                <div class="panel-body">
+                    <location user="user" mod-save="save" mod-right="isRootUser()"></location>
                 </div>
             </div>
 
-
         </div>
         <div class="col-md-8">
-            <h1 mod-textarea="user.introduce.head" mod-save="save" mod-right="isRootUser()"></h1>
+            <h1 mod-textarea="user.introduce.head" mod-default="안녕하세요!" placeholder="제목" mod-save="save"
+                mod-right="isRootUser()"></h1>
 
-            <p mod-textarea="user.introduce.body" mod-save="save" mod-right="isRootUser()"></p>
+            <div ng-if="user.introduce.type == 'markdown'" ng-bind-html="user.introduce.content.parseHtml()"></div>
+            <div ng-if="user.introduce.type == 'html'" ng-bind-html="user.introduce.content.newLine();"></div>
+            <div ng-if="isRootUser()">
+                <small ng-show="!mod" ng-click="mod = !mod">본문수정</small>
+                <div ng-show="mod">
+                    <div class="input-group">
+                        <textarea class="form-control" ng-model="user.introduce.content"></textarea>
+
+                        <div class="input-group-addon" ng-click="save();mod=!mod">저장</div>
+                    </div>
+                    <div class="label label-default" ng-class="{'label-primary':user.introduce.type == 'markdown'}"
+                         ng-click="user.introduce.type = 'markdown'">Markdown
+                    </div>
+                    <a target="_blank" href="https://ko.wikipedia.org/wiki/%EB%A7%88%ED%81%AC%EB%8B%A4%EC%9A%B4"><i
+                            class="fa fa-question"></i></a>
+
+                    <div class="label label-default" ng-class="{'label-primary':user.introduce.type == 'html'}"
+                         ng-click="user.introduce.type = 'html'">Html
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

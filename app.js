@@ -84,7 +84,8 @@ var User = mongoose.model('user', mongoose.Schema({
     name: String,
     photo: String,
     introduce: Object,
-    profile: Object
+    profile: Object,
+    location: Object
 }));
 
 User.schema.path('email').validate(function (value) {

@@ -33,7 +33,7 @@ app.controller('login', function ($scope, $stateParams, $regex, req, alert, user
         var query = {};
         query.email = $scope.user.email;
         req.get('/api/user', query).success(function (res) {
-            if (res.result) {
+            if (res.result != null) {
                 $scope.exist = true;
                 return;
             }
