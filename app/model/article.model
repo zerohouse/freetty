@@ -6,5 +6,6 @@ var Article = mongoose.model('article', mongoose.Schema({
     date: Date,
     price: String,
     tags: Array,
-    photos: Array
+    photos: Array,
+    location: Object
 }));

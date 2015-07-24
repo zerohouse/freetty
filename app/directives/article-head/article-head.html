@@ -8,7 +8,7 @@
 
         <div class="title">
             <span ui-sref="article({_id:article._id})">{{article.head}}</span>
-            <small>헤어</small>
+            <span class="label label-info" ng-repeat="tag in article.tags | limitTo:3">{{tag}}</span>
         </div>
         <div>
             <i class="fa fa-heart-o"></i> 23 <i class="fa fa-comment-o"></i> 23

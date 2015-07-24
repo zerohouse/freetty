@@ -1,38 +1,53 @@
-<div class="container article">
-    <div user-photo="article.provider" ui-sref="profile(article.provider)"></div>
-</div>
-<div class="container" ng-show="isRootUser()">
-    <a ng-show="!article.done" class="btn btn-primary" ng-click="done();">작성완료</a>
-    <a ng-show="article.done" class="btn btn-primary">게시 중인 서비스입니다.</a>
-</div>
-
 <div class="container">
-    <h1 mod-textarea="article.head" mod-save="save" mod-default="제목이 없습니다." mod-right="isRootUser()"
+
+    <a ng-show="isRootUser() && !mod" class="btn btn-primary" ng-click="mod =!mod;">수정하기</a>
+
+    <div ng-show="isRootUserAndMod()">
+        <a class="btn btn-primary" ng-click="mod =!mod;">수정완료</a>
+        <a ng-show="!article.done" class="btn btn-primary" ng-click="done();">작성이 완료되지 않은 게시물입니다.</a>
+        <a ng-show="article.done" class="btn btn-primary">게시 중 입니다.</a>
+    </div>
+
+    <h1 mod-textarea="article.head" mod-save="save" mod-default="제목이 없습니다." mod-right="isRootUserAndMod()"
         placeholder="제목"></h1>
 
-    <div class="btn btn-success" ng-repeat="tag in article.tags">{{tag}}
-        <i class="fa fa-times" ng-show="isRootUser()"></i></div>
-    <div class="btn btn-info" ng-show="isRootUser()">태그 추가하기</div>
-    <h4>
-        <i class="fa fa-krw"></i>
+    <div class="btn btn-info" ng-repeat="tag in article.tags">{{tag}}
+        <i class="fa fa-times" ng-click="remove(article.tags, tag)" ng-show="isRootUserAndMod()"></i></div>
+
+
+    <div class="btn btn-info" ng-show="isRootUserAndMod()" ng-click="addTag();tagging = !tagging"><input
+            ng-click="$event.stopPropagation()" ng-model="tag" ng-show="tagging"> 태그 추가하기
+    </div>
+
+    <div>
+        <h4>
+            <i class="fa fa-krw"></i>
         <span mod-format="article.price.moneyFormat()" mod-number="article.price" mod-save="save" mod-default="0"
-              mod-right="isRootUser()" placeholder="가격"></span>
-    </h4>
-    <span>{{article.date.toDate().toString()}}</span>
-</div>
-
-<div class="photos">
-    <div class="photo" ng-repeat="photo in article.photos">
-        <img ng-src="{{'/uploads/' + photo}}"><i ng-show="isRootUser()" class="fa fa-times"></i>
+              mod-right="isRootUserAndMod()" placeholder="가격"></span>
+        </h4>
     </div>
 
-    <div ng-show="isRootUser()" ng-show="true" ngf-drop ng-model="files" class="drop-box" ngf-select
-         ngf-drag-over-class="dragover" ngf-multiple="true" ngf-allow-dir="true"
-         ngf-accept="'image/*'"><i class="fa fa-picture-o"></i> 사진 추가
-    </div>
 </div>
 
 <div class="container">
-    <div mod-save="save" mod-content="article.body" mod-default="본문 내용이 없습니다." mod-right="isRootUser()"
+    <div mod-save="save" mod-content="article.body" mod-default="본문 내용이 없습니다." mod-right="isRootUserAndMod()"
          placeholder="제목"></div>
 </div>
+<div class="article-header">
+    <img class="article-back" ng-show="article.photos.length >0" ng-src="{{'/uploads/'+selectedPhoto}}">
+
+    <div class="photos">
+        <div class="photo" ng-repeat="photo in article.photos" ng-click="selectPhoto(photo)">
+            <img ng-src="{{'/uploads/' + photo}}">
+            <i ng-show="isRootUserAndMod()" ng-click="remove(article.photos, photo, true);$event.stopPropagation();"
+               class="fa fa-times"></i>
+        </div>
+
+        <div ng-show="isRootUserAndMod()" ng-show="true" ngf-drop ng-model="files" class="drop-box" ngf-select
+             ngf-drag-over-class="dragover" ngf-multiple="true" ngf-allow-dir="true"
+             ngf-accept="'image/*'"><i class="fa fa-picture-o"></i> 사진 추가
+        </div>
+    </div>
+
+</div>
+

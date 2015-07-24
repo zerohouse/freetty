@@ -24,7 +24,7 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             templateUrl: "/app/pages/login/login.html"
         })
         .state('article', {
-            url: "/article/:_id",
+            url: "/article/:_id?mod",
             controller: "article",
             templateUrl: "/app/pages/article/article.html"
         });

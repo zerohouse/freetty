@@ -94,7 +94,8 @@ var Article = mongoose.model('article', mongoose.Schema({
     date: Date,
     price: String,
     tags: Array,
-    photos: Array
+    photos: Array,
+    location: Object
 }));
 var User = mongoose.model('user', mongoose.Schema({
     url: {type: String, unique: true, sparse: true},
@@ -217,12 +218,13 @@ app.post('/api/article/upload', function (req, res) {
 });
 
 app.get('/api/article/new', function (req, res) {
+    var result = {};
     if (req.session.user == undefined) {
-        res.send('로그인이 필요한 서비스입니다.');
+        result.err = '로그인이 필요한 서비스입니다.';
+        res.send(result);
         return;
     }
     Article.findOne({provider: req.session.user._id, done: false}, function (err, result) {
-        console.log(err, result);
         if (result == null) {
             var article = new Article({provider: req.session.user._id, done: false});
             article.save(function (err, result) {
@@ -236,7 +238,11 @@ app.get('/api/article/new', function (req, res) {
 });
 
 app.get('/api/article/list', function (req, res) {
-    Article.find(req.passed.query).sort({'date': -1}).limit(req.passed.limit).skip(req.passed.skip).exec(function (err, results) {
+    var query = req.passed.query;
+    if (query == undefined)
+        query = {};
+    query.done = true;
+    Article.find(query).sort({'date': -1}).limit(req.passed.limit).skip(req.passed.skip).exec(function (err, results) {
         res.send(results);
     });
 });
