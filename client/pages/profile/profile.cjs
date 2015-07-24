@@ -1,5 +1,7 @@
 app.controller('profile', function ($scope, users, user, $stateParams, Upload, req, alert, $state) {
 
+    $scope.mod = false;
+
     $scope.save = function () {
         req.put('/api/user', $scope.user).success(function (res) {
             if (res.err) {
@@ -51,21 +53,20 @@ app.controller('profile', function ($scope, users, user, $stateParams, Upload, r
         if ($scope.user._id == undefined)
             return false;
         return $scope.user._id == user._id;
-    }
+    };
 
     $scope.remove = function (obj, k) {
         if (!confirm(k + " 삭제합니다."))
             return;
         delete obj[k];
         $scope.save();
-    }
+    };
 
     $scope.add = function (obj, k) {
         if (k == "")
             return;
         obj[k] = "";
         $scope.save();
-    }
-
+    };
 
 });
