@@ -1,0 +1,17 @@
+<div class="article">
+    <div photos="article.photos">
+    </div>
+    <div class="price"><i class="fa fa-krw"></i>{{article.price.moneyFormat()}}</div>
+
+    <div class="info">
+        <div user-photo="article.provider" ui-sref="profile(article.provider)"></div>
+
+        <div class="title">
+            <span ui-sref="article({_id:article._id})">{{article.head}}</span>
+            <small>헤어</small>
+        </div>
+        <div>
+            <i class="fa fa-heart-o"></i> 23 <i class="fa fa-comment-o"></i> 23
+        </div>
+    </div>
+</div>

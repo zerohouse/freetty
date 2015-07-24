@@ -1,0 +1,11 @@
+[mod-content] .full-width {
+    width: 100%
+}
+
+[mod-content] .color-white {
+    color: #777;
+}
+
+[mod-content] .label {
+    margin: 3px;
+}

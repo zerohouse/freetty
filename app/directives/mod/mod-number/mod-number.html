@@ -1,0 +1,7 @@
+<span ng-show="!mod" ng-bind-html="modFormat || modNumber || modDefault"></span>
+<small ng-show="modRight&&!mod" ng-click="mod = !mod">수정</small>
+<span ng-show="mod" class="input-group">
+    <input placeholder="{{placeholder}}" ng-model="modNumber" class="form-control">
+
+    <div class="input-group-addon btn btn-default" ng-click="saveClick()">저장</div>
+</span>

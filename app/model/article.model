@@ -1,0 +1,10 @@
+var Article = mongoose.model('article', mongoose.Schema({
+    done: Boolean,
+    head: String,
+    body: Object,
+    provider: String,
+    date: Date,
+    price: String,
+    tags: Array,
+    photos: Array
+}));

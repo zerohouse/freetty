@@ -32,7 +32,7 @@ app.use(function (req, res, next) {
 });
 app.use('/node_modules', express.static('node_modules'));
 app.use('/dist', express.static('dist'));
-app.use('/client', express.static('client'));
+app.use('/app', express.static('app'));
 app.use('/uploads', express.static('uploads'));
 
 app.use(bodyParser.json());
@@ -43,12 +43,21 @@ app.use(function (req, res, next) {
         req.passed = req.body;
     next();
 });
-//app.use('/socket.io', express.static('node_modules/socket.io/node_modules/socket.io-client'));
+//app.use('/socket.io', express.static('node_modules/socket.io/node_modules/socket.io-app'));
 
 app.use(multer({
     dest: './uploads/',
     rename: function (fieldname, filename) {
-        return Date.now();
+        function ran(length) {
+            var result = "";
+            var r = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+            for (var i = 0; i < length; i++) {
+                result += r.charAt(parseInt(Math.random() * r.length));
+            }
+            return result;
+        }
+
+        return Date.now() + ran(5);
     },
     onFileUploadStart: function (file) {
     },
@@ -77,6 +86,16 @@ app.use(session({
     }
 }));
 
+var Article = mongoose.model('article', mongoose.Schema({
+    done: Boolean,
+    head: String,
+    body: Object,
+    provider: String,
+    date: Date,
+    price: String,
+    tags: Array,
+    photos: Array
+}));
 var User = mongoose.model('user', mongoose.Schema({
     url: {type: String, unique: true, sparse: true},
     email: {type: String, index: true, unique: true},
@@ -93,22 +112,10 @@ User.schema.path('email').validate(function (value) {
 }, 'Invalid email');
 
 
-var Service = mongoose.model('service', mongoose.Schema({
-    head: String,
-    body: String,
-    provider: String,
-    date: Date,
-    price: String,
-    photos: {type: Array}
-}));
-
-
-
-
 app.get('/api/user/session', function (req, res) {
     if (req.session.user == undefined) {
-        return;
         res.send(false);
+        return;
     }
     res.send(req.session.user);
 });
@@ -149,8 +156,87 @@ app.get('/api/user/logout', function (req, res) {
     req.session.destroy();
     res.send(true);
 });
-app.get('/api/service', function (req, res) {
-    Service.find(req.passed.query).sort({'date': -1}).limit(req.passed.limit).skip(req.passed.skip).exec(function (err, results) {
+app.get('/api/article', function (req, res) {
+    try {
+        var _id = new ObjectID(req.passed._id);
+    }
+    catch (e) {
+        res.send(e);
+        return;
+    }
+    Article.findOne({_id: _id}, function (err, result) {
+        res.send(result);
+    });
+});
+
+app.post('/api/article', function (req, res) {
+    if (req.session.user == undefined) {
+        res.send('로그인이 필요한 서비스입니다.');
+        return;
+    }
+    var article = new Article(req.passed);
+    article.date = new Date();
+    article.provider = req.session.user._id;
+    article.save(function (err, result) {
+        res.send(err);
+    });
+});
+
+app.put('/api/article', function (req, res) {
+    if (req.session.user == undefined) {
+        res.send('로그인이 필요한 서비스입니다.');
+        return;
+    }
+    try {
+        var _id = new ObjectID(req.passed._id);
+    }
+    catch (e) {
+        res.send(e);
+        return;
+    }
+    req.passed.date = new Date();
+    Article.update({_id: _id, provider: req.session.user._id}, req.passed, function (err, result) {
+        res.send(result);
+    });
+
+});
+
+app.post('/api/article/upload', function (req, res) {
+    if (req.session.user == undefined) {
+        res.send('로그인이 필요한 서비스입니다.');
+        return;
+    }
+    var files = [];
+    if (req.files.file.forEach == undefined)
+        files.push(req.files.file.name);
+    else
+        req.files.file.forEach(function (file) {
+            files.push(file.name);
+        });
+    res.send(files);
+});
+
+app.get('/api/article/new', function (req, res) {
+    if (req.session.user == undefined) {
+        res.send('로그인이 필요한 서비스입니다.');
+        return;
+    }
+    Article.findOne({provider: req.session.user._id, done: false}, function (err, result) {
+        console.log(err, result);
+        if (result == null) {
+            var article = new Article({provider: req.session.user._id, done: false});
+            article.save(function (err, result) {
+                res.send(article._id);
+            });
+            return;
+        }
+        res.send(result._id);
+    });
+
+});
+
+app.get('/api/article/list', function (req, res) {
+    Article.find(req.passed.query).sort({'date': -1}).limit(req.passed.limit).skip(req.passed.skip).exec(function (err, results) {
         res.send(results);
     });
 });
@@ -179,34 +265,6 @@ app.post('/api/user/login', function (req, res) {
     });
 });
 
-app.post('/api/service', function (req, res) {
-    if (req.session.user == undefined) {
-        res.send('로그인이 필요한 서비스입니다.');
-        return;
-    }
-    var service = new Service(req.passed);
-    service.date = new Date();
-    service.provider = req.session.user._id;
-    service.save(function (err, result) {
-        res.send(err);
-    });
-});
-
-app.post('/api/service/upload', function (req, res) {
-    if (req.session.user == undefined) {
-        res.send('로그인이 필요한 서비스입니다.');
-        return;
-    }
-    var files = [];
-    if (req.files.file.forEach == undefined)
-        files.push(req.files.file.name);
-    else
-        req.files.file.forEach(function (file) {
-            files.push(file.name);
-        });
-    res.send(files);
-});
-
 app.put('/api/user', function (req, res) {
     var result = {};
     if (req.session.user == undefined) {
@@ -219,24 +277,34 @@ app.put('/api/user', function (req, res) {
         res.send(result);
         return;
     }
-    User.update({_id: req.session._id}, req.passed, function (err, result) {
+
+    try {
+        var _id = new ObjectID(req.passed._id);
+    }
+    catch (e) {
+        res.send(e);
+        return;
+    }
+
+    User.update({_id: _id}, req.passed, function (err, result) {
         req.session.user = req.passed;
         req.session.save();
         res.send(result);
     });
 });
 app.post('/api/user', function (req, res) {
+    req.passed.introduce = {type: 'text'};
     var user = new User(req.passed);
     user.save(function (err, result) {
-        var res = {};
-        res.result = result;
-        res.err = err;
-        res.send(res);
+        var resu = {};
+        resu.result = result;
+        resu.err = err;
+        res.send(resu);
     });
 });
 
 app.get('/*', function (req, res) {
-    res.sendFile(path.join(__dirname + '/client/index.html'));
+    res.sendFile(path.join(__dirname + '/app/index.html'));
 });
 
 http.listen(80, function () {

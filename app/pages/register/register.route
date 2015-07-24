@@ -1,0 +1,10 @@
+app.post('/api/user', function (req, res) {
+    req.passed.introduce = {type: 'text'};
+    var user = new User(req.passed);
+    user.save(function (err, result) {
+        var resu = {};
+        resu.result = result;
+        resu.err = err;
+        res.send(resu);
+    });
+});

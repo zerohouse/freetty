@@ -1,0 +1,30 @@
+.profile img {
+    width: 100%;
+}
+
+.selected {
+    background-color: #eee;
+}
+
+.right h4 {
+    display: inline-block;
+}
+
+.left-right {
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.left-right .left {
+    margin-right: 10px;
+}
+
+.panel-body.profile {
+    padding-bottom: 0;
+    padding-top: 0;
+}
+
+.left > .form-control {
+    display: inline-block;
+    width: 35%;
+}

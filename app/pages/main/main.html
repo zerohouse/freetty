@@ -1,0 +1,28 @@
+<div class="container">
+
+    <div class="input-group">
+        가격범위
+        <input class="form-control">
+    </div>
+    <div class="input-group">
+        <input class="form-control">
+    </div>
+    <div class="input-group">
+        <input class="form-control">
+    </div>
+    <div class="input-group">
+        <input class="form-control">
+    </div>
+
+    <div ng-click="get()">가져오기</div>
+
+    <div ng-click="newService()">새 서비스</div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="half" ng-repeat="article in articles" article-head="article"></div>
+    </div>
+</div>
+
+{{articles}}

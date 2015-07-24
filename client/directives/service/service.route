@@ -1,6 +1,0 @@
-app.get('/api/service', function (req, res) {
-    Service.find(req.passed.query).sort({'date': -1}).limit(req.passed.limit).skip(req.passed.skip).exec(function (err, results) {
-        res.send(results);
-    });
-});
-
