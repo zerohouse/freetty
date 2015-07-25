@@ -68,6 +68,7 @@ app.controller('profile', function ($scope, users, user, $stateParams, Upload, r
 
 
         function setUser(user) {
+            $scope.user = user;
             if ($scope.user.profile == undefined)
                 $scope.user.profile = {};
             if ($scope.user.introduce == undefined)
