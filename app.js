@@ -95,6 +95,8 @@ var Article = mongoose.model('article', mongoose.Schema({
     price: String,
     tags: Array,
     photos: Array,
+    likes: Array,
+    reply: Number,
     location: Object
 }));
 var Reply = mongoose.model('reply', mongoose.Schema({
@@ -250,7 +252,7 @@ app.get('/api/article/new', function (req, res) {
     }
     Article.findOne({provider: req.session.user._id, done: false}, function (err, result) {
         if (result == null) {
-            var article = new Article({provider: req.session.user._id, done: false});
+            var article = new Article({provider: req.session.user._id, done: false, reply: 0, likes: []});
             article.save(function (err, result) {
                 res.send(article._id);
             });
@@ -290,6 +292,7 @@ app.post('/api/reply', function (req, res) {
     reply.writer = req.session.user._id;
     reply.save(function (err, result) {
         res.send(reply);
+        Article.update({_id: new ObjectID(req.passed.articleId)}, {$inc: {reply: 1}}).exec();
     });
 });
 
@@ -309,6 +312,7 @@ app.post('/api/reply/delete', function (req, res) {
     }
     Reply.remove({_id: _id, writer: req.session.user._id}, function (err, result) {
         res.send(result);
+        Article.update({_id: new ObjectID(req.passed.articleId)}, {$inc: {reply: -1}}).exec();
     });
 
 });

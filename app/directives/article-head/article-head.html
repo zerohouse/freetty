@@ -11,7 +11,7 @@
             <span class="label label-info" ng-repeat="tag in article.tags | limitTo:3">{{tag}}</span>
         </div>
         <div>
-            <i class="fa fa-heart-o"></i> 23 <i class="fa fa-comment-o"></i> 23
+            <i class="fa fa-heart-o"></i> {{article.likes.length}} <i class="fa fa-comment-o"></i> {{article.reply}}
         </div>
     </div>
 </div>

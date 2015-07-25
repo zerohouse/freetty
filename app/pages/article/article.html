@@ -9,7 +9,7 @@
     </div>
 
     <div class="article-header">
-        <img class="article-back" ng-show="article.photos.length >0" ng-src="{{'/uploads/'+selectedPhoto}}">
+        <img class="article-back" ng-show="article.photos.length>0" ng-src="{{'/uploads/'+selectedPhoto}}">
 
         <div class="photos">
             <div class="photo" ng-repeat="photo in article.photos" ng-click="selectPhoto(photo)">
@@ -43,12 +43,20 @@
                     ng-click="$event.stopPropagation()" ng-model="tag" ng-show="tagging"> 태그 추가하기
             </div>
 
-            <div>
+            <div class="row">
                 <h4>
                     <i class="fa fa-krw"></i>
-        <span mod-format="article.price.moneyFormat()" mod-number="article.price" mod-save="save" mod-default="0"
-              mod-right="isRootUserAndMod()" placeholder="가격"></span>
+                 <span mod-format="article.price.moneyFormat()" mod-number="article.price" mod-save="save"
+                       mod-default="0"
+                       mod-right="isRootUserAndMod()" placeholder="가격"></span>
                 </h4>
+            </div>
+            <div class="row info-icons">
+                <i class="fa"
+                   ng-class="{'fa-heart':article.likes.contains(user._id), 'fa-heart-o':!article.likes.contains(user._id)}"
+                   ng-click="likeToggle()"></i>
+                {{article.likes.length}}
+                <i class="fa fa-comment-o"></i> {{replies.length}}
             </div>
         </div>
     </div>
@@ -61,9 +69,7 @@
     </div>
 </div>
 
-<div class="container" ng-controller="reply">
-    <div reply="reply" delete="delete" ng-repeat="reply in replies"></div>
-
+<div class="container" ng-controller="reply" ng-show="!mod">
     <div class="reply">
         <div class="left">
             <div user-info="user._id"></div>
@@ -76,4 +82,5 @@
             </div>
         </div>
     </div>
+    <div reply="reply" delete="delete" ng-repeat="reply in replies"></div>
 </div>

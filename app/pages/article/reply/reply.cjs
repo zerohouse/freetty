@@ -3,7 +3,7 @@ app.controller('reply', function ($scope, req, $stateParams, alert) {
     $scope.replies = [];
     $scope.getReplies = function () {
         req.get('/api/reply', {articleId: $stateParams._id}).success(function (res) {
-            $scope.replies = res.concat($scope.replies);
+            $scope.$parent.replies = $scope.replies = res.concat($scope.replies);
         });
     };
 

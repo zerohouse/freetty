@@ -69,3 +69,7 @@
     position: relative;
     margin-bottom: 50px;
 }
+
+.info-icons {
+    font-size: 180%;
+}

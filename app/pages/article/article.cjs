@@ -11,7 +11,6 @@ app.controller('article', function ($scope, Upload, req, $stateParams, user, ale
     });
 
 
-
     $scope.remove = function (arr, el, con) {
         if (con) {
             if (!confirm('삭제하시겠습니까?'))
@@ -54,6 +53,7 @@ app.controller('article', function ($scope, Upload, req, $stateParams, user, ale
             photos.forEach(function (photo) {
                 $scope.article.photos.push(photo);
             });
+            $scope.selectedPhoto = $scope.article.photos[0];
             $scope.save();
         });
     });
@@ -102,11 +102,23 @@ app.controller('article', function ($scope, Upload, req, $stateParams, user, ale
             alert('제목이' + $scope.article.head.length + '자 입니다. 제목을 5자이상 작성해주세요.');
             return false;
         }
-        if ($scope.article.price == 0) {
+        if ($scope.article.price == undefined || $scope.article.price == 0 || $scope.article.price == "") {
             alert('서비스 가격을 설정해주세요.');
             return false;
         }
         return true;
     }
+
+    $scope.likeToggle = function () {
+        if ($scope.article.likes.contains(user._id)) {
+            $scope.article.likes.splice($scope.article.likes.indexOf(user._id), 1);
+            return;
+        }
+        $scope.article.likes.push(user._id);
+
+        $scope.save();
+
+    }
+
 
 });

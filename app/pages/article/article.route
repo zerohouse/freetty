@@ -66,7 +66,7 @@ app.get('/api/article/new', function (req, res) {
     }
     Article.findOne({provider: req.session.user._id, done: false}, function (err, result) {
         if (result == null) {
-            var article = new Article({provider: req.session.user._id, done: false});
+            var article = new Article({provider: req.session.user._id, done: false, reply: 0, likes: []});
             article.save(function (err, result) {
                 res.send(article._id);
             });

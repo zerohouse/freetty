@@ -7,5 +7,7 @@ var Article = mongoose.model('article', mongoose.Schema({
     price: String,
     tags: Array,
     photos: Array,
+    likes: Array,
+    reply: Number,
     location: Object
 }));
