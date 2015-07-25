@@ -11,6 +11,15 @@ app.controller('profile', function ($scope, users, user, $stateParams, Upload, r
         });
     };
 
+    $scope.urlSave = function () {
+        req.put('/api/user', $scope.user).success(function (res) {
+            if (res.err) {
+                alert('이미 존재하는 url입니다.');
+            }
+        });
+    };
+
+
     $scope.$watch('user', function () {
         if ($scope.user == undefined)
             return;
@@ -41,24 +50,29 @@ app.controller('profile', function ($scope, users, user, $stateParams, Upload, r
             return false;
         return $scope.user._id == user._id;
     };
-
     init();
+
     function init() {
         if ($stateParams.url.length > 16) {
             users($stateParams.url, function (user) {
-                $scope.user = user;
-                if ($scope.isRootUser()) {
-                    if ($scope.user.profile == undefined)
-                        $scope.user.profile = {};
-                    if ($scope.user.introduce == undefined)
-                        $scope.user.introduce = {}
+                setUser(user);
+                if (user.url != undefined) {
+                    $state.go('profile', {url: user.url}, {notify: false, reload: false});
                 }
             });
             return;
         }
         users.getByUrl($stateParams.url, function (user) {
-            $scope.user = user;
+            setUser(user);
         });
+
+
+        function setUser(user) {
+            if ($scope.user.profile == undefined)
+                $scope.user.profile = {};
+            if ($scope.user.introduce == undefined)
+                $scope.user.introduce = {};
+        }
     }
 
 

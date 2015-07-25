@@ -1,5 +1,5 @@
 <div class="container">
-    <div class="btn btn-default" ng-click="newService()">새 서비스 등록하기</div>
+    <div class="btn btn-default" ng-click="newService()" ng-show='user.logged'>새 서비스 등록하기</div>
 
     <div class="panel">
         <div class="panel-body">
@@ -35,7 +35,7 @@
     <div class="row">
         <div class="half" ng-repeat="article in articles" article-head="article"></div>
     </div>
-    <div ng-show="!noMore" class="alert alert-info" ng-click="get()">더보기</div>
-    <div ng-show="noMore" class="alert alert-info">더이상 게시물이 없습니다.</div>
+    <div ng-show="!noMore" class="badge" ng-click="get()">더보기</div>
+    <div ng-show="noMore" class="badge">더이상 게시물이 없습니다.</div>
 </div>
 

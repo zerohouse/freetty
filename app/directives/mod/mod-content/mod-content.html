@@ -1,5 +1,5 @@
 <div ng-show="modContent.type == 'markdown'" ng-bind-html="modContent.content.parseHtml()"></div>
-<div ng-show="modContent.type == 'html'" ng-bind-html="modContent.content.newLine()"></div>
+<div ng-show="modContent.type == 'html'" ng-bind-html="modContent.content"></div>
 <div ng-show="modContent.type == 'text' && !mod" ng-bind-html="trust(modContent.content)"></div>
 <div ng-show="(modContent.content == undefined || modContent.content == '') && !mod">{{modDefault}}</div>
 <div ng-show="modContent.type == 'text' && mod">
