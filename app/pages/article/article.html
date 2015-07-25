@@ -8,46 +8,72 @@
         <a ng-show="article.done" class="btn btn-primary">게시 중 입니다.</a>
     </div>
 
-    <h1 mod-textarea="article.head" mod-save="save" mod-default="제목이 없습니다." mod-right="isRootUserAndMod()"
-        placeholder="제목"></h1>
+    <div class="article-header">
+        <img class="article-back" ng-show="article.photos.length >0" ng-src="{{'/uploads/'+selectedPhoto}}">
 
-    <div class="btn btn-info" ng-repeat="tag in article.tags">{{tag}}
-        <i class="fa fa-times" ng-click="remove(article.tags, tag)" ng-show="isRootUserAndMod()"></i></div>
+        <div class="photos">
+            <div class="photo" ng-repeat="photo in article.photos" ng-click="selectPhoto(photo)">
+                <img ng-src="{{'/uploads/' + photo}}">
+                <i ng-show="isRootUserAndMod()"
+                   ng-click="remove(article.photos, photo, true);$event.stopPropagation();"
+                   class="fa fa-times"></i>
+            </div>
 
+            <div ng-show="isRootUserAndMod()" ng-show="true" ngf-drop ng-model="files" class="drop-box" ngf-select
+                 ngf-drag-over-class="dragover" ngf-multiple="true" ngf-allow-dir="true"
+                 ngf-accept="'image/*'"><i class="fa fa-picture-o"></i> 사진 추가
+            </div>
+        </div>
 
-    <div class="btn btn-info" ng-show="isRootUserAndMod()" ng-click="addTag();tagging = !tagging"><input
-            ng-click="$event.stopPropagation()" ng-model="tag" ng-show="tagging"> 태그 추가하기
     </div>
 
-    <div>
-        <h4>
-            <i class="fa fa-krw"></i>
+    <div class="row">
+        <div class="user-left">
+            <div user-info="article.provider"></div>
+        </div>
+        <div class="col-sm-9">
+            <h1 mod-textarea="article.head" mod-save="save" mod-default="제목이 없습니다." mod-right="isRootUserAndMod()"
+                placeholder="제목"></h1>
+
+            <div class="btn btn-info" ng-repeat="tag in article.tags">{{tag}}
+                <i class="fa fa-times" ng-click="remove(article.tags, tag)" ng-show="isRootUserAndMod()"></i></div>
+
+
+            <div class="btn btn-info" ng-show="isRootUserAndMod()" ng-click="addTag();tagging = !tagging"><input
+                    ng-click="$event.stopPropagation()" ng-model="tag" ng-show="tagging"> 태그 추가하기
+            </div>
+
+            <div>
+                <h4>
+                    <i class="fa fa-krw"></i>
         <span mod-format="article.price.moneyFormat()" mod-number="article.price" mod-save="save" mod-default="0"
               mod-right="isRootUserAndMod()" placeholder="가격"></span>
-        </h4>
-    </div>
-
-</div>
-
-<div class="container">
-    <div mod-save="save" mod-content="article.body" mod-default="본문 내용이 없습니다." mod-right="isRootUserAndMod()"
-         placeholder="제목"></div>
-</div>
-<div class="article-header">
-    <img class="article-back" ng-show="article.photos.length >0" ng-src="{{'/uploads/'+selectedPhoto}}">
-
-    <div class="photos">
-        <div class="photo" ng-repeat="photo in article.photos" ng-click="selectPhoto(photo)">
-            <img ng-src="{{'/uploads/' + photo}}">
-            <i ng-show="isRootUserAndMod()" ng-click="remove(article.photos, photo, true);$event.stopPropagation();"
-               class="fa fa-times"></i>
-        </div>
-
-        <div ng-show="isRootUserAndMod()" ng-show="true" ngf-drop ng-model="files" class="drop-box" ngf-select
-             ngf-drag-over-class="dragover" ngf-multiple="true" ngf-allow-dir="true"
-             ngf-accept="'image/*'"><i class="fa fa-picture-o"></i> 사진 추가
+                </h4>
+            </div>
         </div>
     </div>
 
 </div>
+<div class="jumbotron">
+    <div class="container">
+        <div mod-save="save" mod-content="article.body" mod-default="본문 내용이 없습니다." mod-right="isRootUserAndMod()"
+             placeholder="제목"></div>
+    </div>
+</div>
 
+<div class="container" ng-controller="reply">
+    <div reply="reply" delete="delete" ng-repeat="reply in replies"></div>
+
+    <div class="reply">
+        <div class="left">
+            <div user-info="user._id"></div>
+        </div>
+        <div class="right">
+            <div class="input-group">
+                <textarea placeholder="내용을 작성해주세요." class="form-control" ng-model="newReply"></textarea>
+
+                <div class="input-group-addon btn btn-default" ng-click="writeReply()">댓글달기</div>
+            </div>
+        </div>
+    </div>
+</div>

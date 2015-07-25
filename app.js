@@ -97,6 +97,12 @@ var Article = mongoose.model('article', mongoose.Schema({
     photos: Array,
     location: Object
 }));
+var Reply = mongoose.model('reply', mongoose.Schema({
+    articleId: {type: String, index: true},
+    reply: String,
+    writer: String,
+    date: Date
+}));
 var User = mongoose.model('user', mongoose.Schema({
     url: {type: String, unique: true, sparse: true},
     email: {type: String, index: true, unique: true},
@@ -157,6 +163,25 @@ app.get('/api/user/logout', function (req, res) {
     req.session.destroy();
     res.send(true);
 });
+app.put('/api/reply', function (req, res) {
+    if (req.session.user == undefined) {
+        res.send('로그인이 필요한 서비스입니다.');
+        return;
+    }
+    try {
+        var _id = new ObjectID(req.passed._id);
+    }
+    catch (e) {
+        res.send(e);
+        return;
+    }
+    req.passed.date = new Date();
+    Reply.update({_id: _id, writer: req.session.user._id}, req.passed, function (err, result) {
+        res.send(result);
+    });
+
+});
+
 app.get('/api/article', function (req, res) {
     try {
         var _id = new ObjectID(req.passed._id);
@@ -199,7 +224,6 @@ app.put('/api/article', function (req, res) {
     Article.update({_id: _id, provider: req.session.user._id}, req.passed, function (err, result) {
         res.send(result);
     });
-
 });
 
 app.post('/api/article/upload', function (req, res) {
@@ -247,6 +271,47 @@ app.get('/api/article/list', function (req, res) {
     });
 });
 
+
+app.get('/api/reply', function (req, res) {
+    Reply.find({articleId: req.passed.articleId}).sort({'date': -1}).limit(req.passed.limit).skip(req.passed.skip).exec(function (err, results) {
+        res.send(results);
+    });
+});
+
+app.post('/api/reply', function (req, res) {
+    if (req.session.user == undefined) {
+        var response = {};
+        response.err = '로그인이 필요한 서비스입니다.';
+        res.send(response);
+        return;
+    }
+    var reply = new Reply(req.passed);
+    reply.date = new Date();
+    reply.writer = req.session.user._id;
+    reply.save(function (err, result) {
+        res.send(reply);
+    });
+});
+
+app.post('/api/reply/delete', function (req, res) {
+    if (req.session.user == undefined) {
+        var response = {};
+        response.err = '로그인이 필요한 서비스입니다.';
+        res.send(response);
+        return;
+    }
+    try {
+        var _id = new ObjectID(req.passed._id);
+    }
+    catch (e) {
+        res.send(e);
+        return;
+    }
+    Reply.remove({_id: _id, writer: req.session.user._id}, function (err, result) {
+        res.send(result);
+    });
+
+});
 
 app.post('/api/user/login', function (req, res) {
     var query = {};

@@ -1,0 +1,27 @@
+.reply {
+    border-bottom: 1px solid #eee;
+    padding-top: 0;
+    padding-bottom: 30px;
+    overflow: auto;
+    text-align: center;
+}
+
+.reply .left {
+    width: 20%;
+    min-width: 180px;
+    position: relative;
+    margin-bottom: 20px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.reply .right {
+    width: 74%;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: left;
+}
+
+[reply] {
+    margin: 10px;
+}

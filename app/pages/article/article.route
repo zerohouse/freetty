@@ -40,7 +40,6 @@ app.put('/api/article', function (req, res) {
     Article.update({_id: _id, provider: req.session.user._id}, req.passed, function (err, result) {
         res.send(result);
     });
-
 });
 
 app.post('/api/article/upload', function (req, res) {

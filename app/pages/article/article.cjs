@@ -2,12 +2,15 @@ app.controller('article', function ($scope, Upload, req, $stateParams, user, ale
 
     $scope.mod = $stateParams.mod;
 
+
     req.get('/api/article', {_id: $stateParams._id}).success(function (res) {
         $scope.article = res;
         $scope.selectedPhoto = $scope.article.photos[0];
         if ($scope.article.body == undefined)
             $scope.article.body = {type: 'text'};
     });
+
+
 
     $scope.remove = function (arr, el, con) {
         if (con) {
@@ -104,6 +107,6 @@ app.controller('article', function ($scope, Upload, req, $stateParams, user, ale
             return false;
         }
         return true;
-    };
+    }
 
 });

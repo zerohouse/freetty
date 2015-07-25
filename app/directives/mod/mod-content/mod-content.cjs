@@ -27,7 +27,7 @@ app.directive('modContent', function () {
                 ['font-color', 'hilite-color'],
                 ['ordered-list', 'unordered-list', 'outdent', 'indent'],
                 ['left-justify', 'center-justify', 'right-justify'],
-                ['code', 'quote', 'paragraph'],
+                ['code', 'quote', 'paragraph'], ['badge', 'panel', 'btn'],
                 ['remove-format']
             ];
         }

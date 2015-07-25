@@ -1,0 +1,18 @@
+app.put('/api/reply', function (req, res) {
+    if (req.session.user == undefined) {
+        res.send('로그인이 필요한 서비스입니다.');
+        return;
+    }
+    try {
+        var _id = new ObjectID(req.passed._id);
+    }
+    catch (e) {
+        res.send(e);
+        return;
+    }
+    req.passed.date = new Date();
+    Reply.update({_id: _id, writer: req.session.user._id}, req.passed, function (err, result) {
+        res.send(result);
+    });
+
+});

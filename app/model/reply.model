@@ -1,0 +1,6 @@
+var Reply = mongoose.model('reply', mongoose.Schema({
+    articleId: {type: String, index: true},
+    reply: String,
+    writer: String,
+    date: Date
+}));

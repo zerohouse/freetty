@@ -1,0 +1,13 @@
+<div class="reply">
+    <div class="left">
+        <div user-info="reply.writer" ui-sref="profile({url:reply.writer})"></div>
+    </div>
+    <div class="right">
+        <span mod-textarea="reply.reply" mod-save="save" placeholder="내용을 작성해주세요." mod-right="isMyReply()"
+              mod="mod"></span>
+        <small ng-show="!mod" ng-click="delete(reply)" ng-show="isMyReply()">삭제</small>
+        <div ng-show="!mod">
+            <small>{{reply.date.toDate().toString()}}</small>
+        </div>
+    </div>
+</div>
