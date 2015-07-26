@@ -24,6 +24,10 @@ app.get('/api/user/list', function (req, res) {
 
 
 app.post('/api/user/upload', function (req, res) {
+    if (req.files.file == undefined) {
+        res.send('err');
+        return;
+    }
     var filename = req.files.file.name;
     var update = {photo: filename};
     User.update(JSON.parse(req.passed.data), update, function (err, result) {

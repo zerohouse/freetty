@@ -1,5 +1,6 @@
 app.directive('reply', function () {
     return {
+        restrict: 'A',
         templateUrl: '/app/directives/reply/reply.html',
         scope: {
             reply: '=',

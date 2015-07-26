@@ -73,6 +73,8 @@ app.controller('profile', function ($scope, users, user, $stateParams, Upload, r
                 $scope.user.profile = {};
             if ($scope.user.introduce == undefined)
                 $scope.user.introduce = {};
+            if ($scope.user.fields == undefined)
+                $scope.user.fields = [];
         }
     }
 

@@ -113,7 +113,8 @@ var User = mongoose.model('user', mongoose.Schema({
     photo: String,
     introduce: Object,
     profile: Object,
-    location: Object
+    location: Object,
+    fields: Array
 }));
 
 User.schema.path('email').validate(function (value) {
@@ -154,6 +155,10 @@ app.get('/api/user/list', function (req, res) {
 
 
 app.post('/api/user/upload', function (req, res) {
+    if (req.files.file == undefined) {
+        res.send('err');
+        return;
+    }
     var filename = req.files.file.name;
     var update = {photo: filename};
     User.update(JSON.parse(req.passed.data), update, function (err, result) {
@@ -234,6 +239,10 @@ app.post('/api/article/upload', function (req, res) {
         return;
     }
     var files = [];
+    if (req.files.file == undefined) {
+        res.send('no files');
+        return;
+    }
     if (req.files.file.forEach == undefined)
         files.push(req.files.file.name);
     else
@@ -361,6 +370,9 @@ app.put('/api/user', function (req, res) {
         return;
     }
 
+    if (req.passed.url == "")
+        delete req.passed.url;
+
     User.update({_id: _id}, req.passed, function (err, result) {
         req.session.user = req.passed;
         req.session.save();
@@ -379,7 +391,7 @@ app.post('/api/user', function (req, res) {
 });
 
 app.get('/*', function (req, res) {
-    res.sendFile(path.join(__dirname + '/app/index.html'));
+    res.sendFile(path.join(__dirname + '/app/pages/index/index.html'));
 });
 
 http.listen(80, function () {

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html ng-app="freetty">
+<head lang="ko">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/app/lib/flat/css/flat-ui.min.css">
+    <link rel="stylesheet" href="/node_modules/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/app/lib/colorpicker.css">
+    <link rel="stylesheet" href="/dist/css.css">
+    <title>Freetty!</title>
+</head>
+<body ng-controller="root">
+<help scroll-hide="learnMore"></help>
+<div class="nav-block"></div>
+<nav class="navbar navbar-default navbar-background" scroll-condition="this.pageYOffset >= element[0].offsetHeight"
+     ng-class="{'navbar-fixed-top':!learnMore,'navbar-white':!learnMore &&scrollCondition}" ng-controller="nav">
+    <div class="container">
+        <div class="navbar-header">
+            <div class="navbar-brand">
+                <a ui-sref="services">Freetty</a>
+            </div>
+            <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#bs-navbar"
+                    aria-controls="bs-navbar" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div id="bs-navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li ng-show="!user.logged"><a ui-sref="register">회원가입</a></li>
+                <li ng-show="!user.logged"><a ui-sref="login">로그인</a></li>
+                <li class="login-profile" ng-show="user.logged">
+                    <div user-photo="user._id" ng-click="auth()"></div>
+                    <span class="name">{{user.name}}<i class="fa fa-caret-down"></i></span>
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-click="logout()">로그아웃</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="jumbotron jumbo navbar-collapse collapse">
+    <div class="container">
+        <h2>뷰티아티스트</h2>
+
+        <h3>'찾지말고', '선택하세요'</h3>
+
+        <p> 600,000명 이상의 뷰티아티스트가 당신을 기다립니다.</p>
+
+        <a ng-click="learnMore=true;" smooth-scroll target="help" class="btn btn-primary">LEARN MORE</a>
+    </div>
+</div>
+
+<div class="jumbotron search-bar navbar-collapse collapse"
+     scroll-condition="this.pageYOffset >= (document.querySelector('[ui-view]').offsetTop - element[0].offsetHeight)"
+     ng-class="{'navbar-fixed-top':scrollCondition}">
+    <div class="container">
+        <div class="input-group">
+            <input placeholder="서비스 검색" type="text" class="form-control search">
+            <input placeholder="지역 (접속위치)" type="text" class="form-control search">
+            <input placeholder="날짜 (Any date)" type="text" class="form-control search">
+            <input placeholder="시간 (Any time)" type="text" class="form-control search">
+
+            <div class="input-group-addon" ng-click="get()">검색</div>
+        </div>
+    </div>
+</div>
+
+
+<div ui-view></div>
+
+<script data-require="jquery@*" data-semver="2.0.3" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+<script data-require="bootstrap@*" data-semver="3.1.1"
+        src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDjs11FmMMAlR5LamjEKMHVnXNmcO-Lpbw"></script>
+<script src="/node_modules/autosize/dist/autosize.min.js"></script>
+<script src="/node_modules/angular/angular.min.js"></script>
+<script src="/node_modules/angular-ui-router/build/angular-ui-router.min.js"></script>
+<script src="/node_modules/angular-animate/angular-animate.min.js"></script>
+<script src="/node_modules/angular-sanitize/angular-sanitize.min.js"></script>
+<script src="/node_modules/ng-file-upload/dist/ng-file-upload-all.min.js"></script>
+<script src="/app/lib/angular-wysiwyg.js"></script>
+<script src="/app/lib/bootstrap-colorpicker-module.js"></script>
+<script src="/node_modules/markdown/lib/markdown.js"></script>
+<script src="/dist/js.js"></script>
+</body>
+</html>

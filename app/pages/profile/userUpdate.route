@@ -19,6 +19,9 @@ app.put('/api/user', function (req, res) {
         return;
     }
 
+    if (req.passed.url == "")
+        delete req.passed.url;
+
     User.update({_id: _id}, req.passed, function (err, result) {
         req.session.user = req.passed;
         req.session.save();

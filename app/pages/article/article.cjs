@@ -94,12 +94,12 @@ app.controller('article', function ($scope, Upload, req, $stateParams, user, ale
             alert('사진이 한장이상 있어야 합니다.');
             return false;
         }
-        if ($scope.article.body.content.length < 100) {
-            alert('본문이' + $scope.article.body.content.length + '자 입니다. 본문을 100자이상 작성해주세요.');
+        if ($scope.article.body.content == undefined || $scope.article.body.content.length < 100) {
+            alert('본문을 100자이상 작성해주세요.');
             return false;
         }
-        if ($scope.article.head.length < 5) {
-            alert('제목이' + $scope.article.head.length + '자 입니다. 제목을 5자이상 작성해주세요.');
+        if ($scope.article.head == undefined || $scope.article.head.length < 5) {
+            alert('제목을 5자이상 작성해주세요.');
             return false;
         }
         if ($scope.article.price == undefined || $scope.article.price == 0 || $scope.article.price == "") {

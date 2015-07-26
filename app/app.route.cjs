@@ -3,10 +3,10 @@ app.config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/");
 
     $stateProvider
-        .state('main', {
+        .state('services', {
             url: "/",
-            controller: "main",
-            templateUrl: "/app/pages/main/main.html"
+            controller: "services",
+            templateUrl: "/app/pages/services/services.html"
         })
         .state('profile', {
             url: "/:url",

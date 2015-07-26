@@ -29,6 +29,10 @@ Array.prototype.contains = function (val) {
     return false;
 };
 
+Array.prototype.remove = function (val) {
+    this.splice(this.indexOf(val), 1);
+};
+
 String.prototype.newLine = function () {
     return this.replace(/\n/g, '<br>');
 };

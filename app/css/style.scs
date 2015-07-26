@@ -1,2 +1,10 @@
-body {
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+@import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
+
+body, html {
+    font-family: 'Nanum Gothic', sans-serif;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: 'Jeju Gothic', sans-serif;
 }

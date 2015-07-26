@@ -1,0 +1,11 @@
+<div class="container">
+
+    <div class="btn btn-default" ng-click="newService()" ng-show='user.logged'>새 서비스 등록하기</div>
+
+    <div class="row">
+        <div class="half" ng-repeat="article in articles" article-head="article"></div>
+    </div>
+    <div ng-show="!noMore" class="badge" ng-click="get()">더보기</div>
+    <div ng-show="noMore" class="badge">마지막입니다.</div>
+</div>
+

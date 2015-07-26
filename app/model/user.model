@@ -6,7 +6,8 @@ var User = mongoose.model('user', mongoose.Schema({
     photo: String,
     introduce: Object,
     profile: Object,
-    location: Object
+    location: Object,
+    fields: Array
 }));
 
 User.schema.path('email').validate(function (value) {

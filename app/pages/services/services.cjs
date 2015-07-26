@@ -1,4 +1,4 @@
-app.controller('main', function ($scope, req, $state, alert) {
+app.controller('services', function ($scope, req, $state, alert) {
     $scope.articles = [];
 
     $scope.query = {limit: 6};

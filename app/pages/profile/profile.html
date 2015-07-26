@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row profile">
         <div class="col-md-4">
-            <div class="panel panel-primary">
+            <div class="panel">
                 <div class="panel-body">
                     <img ngf-accept="'image/*'" ng-model="files" ngf-select="true" ngf-drop="true"
                          ng-src="{{photo}}" ng-show="isRootUser()">
@@ -9,9 +9,10 @@
                 </div>
             </div>
 
-            <div class="alert alert-info">
-                http://freetty.com/<span mod-textarea="user.url" mod-default="url을 설정해주세요." placeholder="url"
-                                         mod-save="urlSave" mod-right="isRootUser()"></span>
+            <div class="alert alert-info" ng-show="user.url || isRootUser()">
+                <span ng-show="user.url || urlMod">http://freetty.com/</span><span
+                    mod-textarea="user.url" mod-default="url을 설정해주세요." placeholder="url"
+                    mod-save="urlSave" mod-right="isRootUser()" mod="urlMod"></span>
             </div>
 
             <div class="panel panel-primary info">
@@ -57,6 +58,12 @@
         <div class="col-md-8">
             <h1 mod-textarea="user.introduce.head" mod-default="안녕하세요!" placeholder="제목" mod-save="save"
                 mod-right="isRootUser()"></h1>
+
+            <span field="Hair" mod-right="isRootUser()" array="user.fields" save="save"></span>
+            <span field="Nail" mod-right="isRootUser()" array="user.fields" save="save"></span>
+            <span field="Lash" mod-right="isRootUser()" array="user.fields" save="save"></span>
+            <span field="Waxing" mod-right="isRootUser()" array="user.fields" save="save"></span>
+            <span field="Skincare" mod-right="isRootUser()" array="user.fields" save="save"></span>
 
             <div mod-content="user.introduce" mod-save="save" mod-right="isRootUser()"></div>
 
