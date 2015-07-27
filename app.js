@@ -114,6 +114,7 @@ var User = mongoose.model('user', mongoose.Schema({
     introduce: Object,
     profile: Object,
     location: Object,
+    types: Object,
     fields: Array
 }));
 
@@ -272,17 +273,6 @@ app.get('/api/article/new', function (req, res) {
 
 });
 
-app.get('/api/article/list', function (req, res) {
-    var query = req.passed.query;
-    if (query == undefined)
-        query = {};
-    query.done = true;
-    Article.find(query).sort({'date': -1}).limit(req.passed.limit).skip(req.passed.skip).exec(function (err, results) {
-        res.send(results);
-    });
-});
-
-
 app.get('/api/reply', function (req, res) {
     Reply.find({articleId: req.passed.articleId}).sort({'date': -1}).limit(req.passed.limit).skip(req.passed.skip).exec(function (err, results) {
         res.send(results);
@@ -349,6 +339,67 @@ app.post('/api/user/login', function (req, res) {
     });
 });
 
+app.post('/api/user', function (req, res) {
+    req.passed.introduce = {type: 'text'};
+    req.passed.date = new Date();
+    var user = new User(req.passed);
+    user.save(function (err, result) {
+        var resu = {};
+        resu.result = result;
+        resu.err = err;
+        res.send(resu);
+    });
+});
+(function () {
+    var wget = require('wget-improved');
+    var options = {
+        host: 'www.q-net.or.kr',
+        method: 'GET',
+        path: '/qlf006.do?id=qlf00601s01&gSite=Q&gId=&resdNo1=840417&hgulNm=%C3%D6%B9%CE%C1%A4&lcsNo=15501130081S&qualExpDt=20150427&lcsMngNo=1402008519',
+    };
+
+    app.get('/api/licence', function (req, res) {
+        function parse(obj) {
+            var str = [];
+            for (var p in obj)
+                str.push(encodeURIComponent(p) + "="
+                    + encodeURIComponent(obj[p]));
+            return str.join("&");
+        }
+
+        var params = {};
+        params.id = 'qlf00601s01';
+        params.resdNo1 = '840417';
+        params.hgulNm = '%C3%D6%B9%CE%C1%A4';
+        params.qualExpDt = '20150427';
+        params.lcsNo = '15501130081S';
+        params.lcsMngNo = '1402008519';
+
+        options.path = '/qlf006.do?id=qlf00601s01&gSite=Q&gId=&resdNo1=840417&hgulNm=%C3%D6%B9%CE%C1%A4&lcsNo=15501130081S&qualExpDt=20150427&lcsMngNo=1402008519';
+
+        console.log(options)
+
+        var req = wget.request(options, function (res) {
+            var content = '';
+            res.on('error', function (err) {
+                console.log(err);
+            });
+            res.on('data', function (chunk) {
+                content += chunk;
+            });
+            res.on('end', function () {
+                console.log(content);
+            });
+            console.log('Server respond ' + res.statusCode);
+        });
+        req.end();
+        req.on('error', function (err) {
+            console.log(err);
+        });
+
+
+    });
+})();
 app.put('/api/user', function (req, res) {
     var result = {};
     if (req.session.user == undefined) {
@@ -379,16 +430,38 @@ app.put('/api/user', function (req, res) {
         res.send(result);
     });
 });
-app.post('/api/user', function (req, res) {
-    req.passed.introduce = {type: 'text'};
-    var user = new User(req.passed);
-    user.save(function (err, result) {
-        var resu = {};
-        resu.result = result;
-        resu.err = err;
-        res.send(resu);
-    });
-});
+app.post('/api/article/list', function (req, res) {
+        var query = {done: true};
+        if (req.passed.query) {
+            if (req.passed.query.time) {
+                query.startTime = {$lte: req.passed.query.time};
+                query.endTime = {$gte: req.passed.query.time};
+            }
+            if (req.passed.location) {
+                query.location = {
+                    geometry: {
+                        lat: {$lte: 1, $gte: 1},
+                        lng: {$lte: 1, $gte: 1}
+                    }
+                };
+            }
+            if (req.passed.query.provider)
+                query.provider = req.passed.query.provider;
+        }
+
+        var limit = req.passed.limit;
+        if (limit == undefined)
+            limit = 6;
+        if (limit > 10)
+            limit = 6;
+
+        Article.find(query).sort({'date': -1}).limit(limit).skip(req.passed.skip).exec(function (err, results) {
+            res.send(results);
+        });
+    }
+)
+;
+
 
 app.get('/*', function (req, res) {
     res.sendFile(path.join(__dirname + '/app/pages/index/index.html'));

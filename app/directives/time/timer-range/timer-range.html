@@ -1,0 +1,7 @@
+<div ng-class="{'border-active':time}" type="text" class="form-control" ng-click="time=true;$event.stopPropagation()">
+    <span ng-show="timeStart && timeEnd">{{timeStart.toTime()}} ~ {{timeEnd.toTime()}}</span>
+    <span class="placeholder" ng-show="!(timeStart && timeEnd)">{{placeholder}}</span>
+</div>
+<div class="timer" ng-show="time && modRight" ng-click="$event.stopPropagation()">
+    <slider format="toTime" floor="{{floor}}" ceiling="{{ceiling}}" ng-model-low="timeStart" step="{{step}}" ng-model-high="timeEnd"></slider>
+</div>

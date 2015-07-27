@@ -30,7 +30,13 @@ app.directive('regex', function ($compile, $regex) {
                 return regex.test(parent.$eval(attrs.ngModel));
             };
             parent.$watch(attrs.ngModel, function () {
-                if (parent.$eval(attrs.ngModel) == undefined || parent.$eval(attrs.ngModel) == "" || regexTest()) {
+                if (parent.$eval(attrs.ngModel) == undefined || parent.$eval(attrs.ngModel) == "") {
+                    element.removeClass('waring');
+                    scope.matched = true;
+                    $regex[attrs.name] = false;
+                    return;
+                }
+                if (regexTest()) {
                     element.removeClass('waring');
                     scope.matched = true;
                     $regex[attrs.name] = true;

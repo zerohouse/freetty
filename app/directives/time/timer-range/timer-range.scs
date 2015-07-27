@@ -1,0 +1,25 @@
+.placeholder {
+    color: #bdc3c7;
+}
+
+.border-active {
+    border-color: #1ABC9C;
+}
+
+timer-range {
+    position: relative;
+    display: block;
+}
+
+timer-range .timer {
+    position: absolute;
+    width: 100%;
+    z-index: 10;
+    background-color: white;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #eee;
+    text-align: center;
+    font-size: 80%;
+    right: 0;
+}

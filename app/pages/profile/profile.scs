@@ -6,19 +6,6 @@
     background-color: #eee;
 }
 
-.right h4 {
-    display: inline-block;
-}
-
-.left-right {
-    padding: 15px 0;
-    border-bottom: 1px solid #eee;
-}
-
-.left-right .left {
-    margin-right: 10px;
-}
-
 .panel-body.profile {
     padding-bottom: 0;
     padding-top: 0;
@@ -27,4 +14,70 @@
 .left > .form-control {
     display: inline-block;
     width: 35%;
+}
+
+.profile .half {
+    width: 48%;
+    margin: 0.5%;
+    float: left;
+    padding: 2%;
+}
+
+.profile .full-width {
+    width: 100%;
+}
+
+.profile .top-border {
+    border-top: 1px solid #eee;
+}
+
+.profile .bottom-border {
+    border-bottom: 1px solid #eee;
+}
+
+.profile .top-space {
+    padding-top: 20px;
+    margin-top: 20px;
+}
+
+.profile .bottom-space {
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.profile .bottom-space-s {
+    margin-bottom: 10px;
+}
+
+.profile .row {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.profile .size {
+    color: #000;
+    float: right;
+}
+
+.profile .el {
+    margin-right: 10px;
+    font-size: 90%;
+}
+
+.profile .label {
+    margin-right: 10px;
+}
+
+.profile .font-small {
+    font-size: 80%;
+}
+
+.label input {
+    border: none;
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.profile .span {
+    display: inline-block;
+    margin-right: 20px;
 }

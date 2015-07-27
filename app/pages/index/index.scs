@@ -75,7 +75,3 @@
     margin-top: 53px;
     border-bottom: 1px solid #ccc;
 }
-
-.navbar-down.navbar-fixed-top {
-    display: none;
-}

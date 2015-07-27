@@ -1,0 +1,7 @@
+<div type="text" ng-click="time=true;$event.stopPropagation()">
+    <span ng-show="ngModel.toDuration()">{{ngModel.toDuration()}}</span>
+    <span class="placeholder" ng-show="!ngModel.toDuration()">소요시간</span>
+</div>
+<div class="timer" ng-show="time && modRight" ng-click="$event.stopPropagation()">
+    <slider floor="0" ceiling="32" format="toDuration" ng-model="ngModel" ng-mouseup="save()"></slider>
+</div>

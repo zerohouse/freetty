@@ -1,0 +1,19 @@
+.tabs > li {
+    float: left;
+    margin: 2.5%;
+    margin-bottom: -1px;
+    width: 20%;
+    text-align: center;
+}
+
+.tabs > li.active > a, .profile .tabs > li.active > a:focus, .profile .tabs > li.active > a:hover {
+    color: #555;
+    cursor: default;
+    background-color: #fff;
+    border: none;
+    border-bottom: 3px solid #000;
+}
+
+.tabs {
+    border-bottom: 1px solid #eee;
+}

@@ -80,14 +80,3 @@ app.get('/api/article/new', function (req, res) {
     });
 
 });
-
-app.get('/api/article/list', function (req, res) {
-    var query = req.passed.query;
-    if (query == undefined)
-        query = {};
-    query.done = true;
-    Article.find(query).sort({'date': -1}).limit(req.passed.limit).skip(req.passed.skip).exec(function (err, results) {
-        res.send(results);
-    });
-});
-

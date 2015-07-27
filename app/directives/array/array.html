@@ -1,0 +1,6 @@
+<div ng-class="elClass" ng-repeat="element in array">{{element}}
+    <i class="fa fa-times" ng-click="remove(element)" ng-show="modRight"></i></div>
+
+<div ng-class="elClass" ng-show="modRight" ng-click="addNew();adding = !adding">
+    <input ng-click="$event.stopPropagation()" ng-model="newEl" ng-show="adding"> 추가하기
+</div>

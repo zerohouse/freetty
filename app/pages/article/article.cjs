@@ -10,35 +10,8 @@ app.controller('article', function ($scope, Upload, req, $stateParams, user, ale
             $scope.article.body = {type: 'text'};
     });
 
-
-    $scope.remove = function (arr, el, con) {
-        if (con) {
-            if (!confirm('삭제하시겠습니까?'))
-                return;
-        }
-        arr.splice(arr.indexOf(el), 1);
-        $scope.save();
-    };
-
     $scope.selectPhoto = function (photo) {
         $scope.selectedPhoto = photo;
-    };
-
-    $scope.addTag = function () {
-        if ($scope.tag == undefined)
-            return;
-        if ($scope.tag == '')
-            return;
-        if ($scope.article.tags == undefined)
-            $scope.article.tags = [];
-        if ($scope.article.tags.contains($scope.tag)) {
-            alert('이미 있는 태그입니다.');
-            $scope.tag = '';
-            return;
-        }
-        $scope.article.tags.push($scope.tag);
-        $scope.tag = '';
-        $scope.save();
     };
 
     $scope.$watch('files', function (files) {

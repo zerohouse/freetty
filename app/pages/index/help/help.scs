@@ -11,7 +11,6 @@ help .close {
 }
 
 help .row:last-child {
-    margin-bottom: 50px;
     margin-top: 20px;
 }
 

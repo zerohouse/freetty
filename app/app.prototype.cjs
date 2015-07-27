@@ -1,3 +1,19 @@
+Date.prototype.toAmPm = function () {
+    var hours = this.getHours();
+    var minutes = this.getMinutes();
+    var ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    return hours + ':' + minutes + ampm;
+};
+
+Date.prototype.toDuration = function () {
+    if (isNaN(this.getHours()))
+        return false;
+    return this.getHours() + '시간 ' + this.getMinutes() + "분";
+};
+
 Date.prototype.toString = function () {
     var month = '' + (this.getMonth() + 1),
         day = '' + this.getDate(),
@@ -6,19 +22,7 @@ Date.prototype.toString = function () {
     if (month.length < 2) month = '0' + month;
     if (day.length < 2) day = '0' + day;
     var date = [year, month, day].join('.');
-    var time = formatAMPM(this);
-    return date + " " + time;
-
-    function formatAMPM(date) {
-        var hours = date.getHours();
-        var minutes = date.getMinutes();
-        var ampm = hours >= 12 ? 'pm' : 'am';
-        hours = hours % 12;
-        hours = hours ? hours : 12;
-        minutes = minutes < 10 ? '0' + minutes : minutes;
-        var strTime = hours + ':' + minutes + ampm;
-        return strTime;
-    }
+    return date + " " + this.toAmPm();
 };
 
 Array.prototype.contains = function (val) {
@@ -52,4 +56,30 @@ String.prototype.parseHtml = function () {
 
 Number.prototype.moneyFormat = function () {
     return this.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
+};
+
+Number.prototype.toTime = function () {
+    var time = this.toString() / 4;
+    var min = this.toString() % 4 * 15;
+    return new Date(0, 0, 0, time, min).toAmPm();
+};
+
+String.prototype.toTime = function () {
+    var time = this.toString() / 4;
+    var min = this.toString() % 4 * 15;
+    return new Date(0, 0, 0, time, min).toAmPm();
+};
+
+
+Number.prototype.toDuration = function () {
+    var time = this.toString() / 4;
+    var min = this.toString() % 4 * 15;
+    return new Date(0, 0, 0, time, min).toDuration();
+};
+
+
+String.prototype.toDuration = function () {
+    var time = this.toString() / 4;
+    var min = this.toString() % 4 * 15;
+    return new Date(0, 0, 0, time, min).toDuration();
 };

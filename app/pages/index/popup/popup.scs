@@ -1,0 +1,49 @@
+.popup {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    top: 0;
+    z-index: 3000;
+}
+
+.popup .window {
+    padding: 20px 40px 40px 40px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    width: 400px;
+    background-color: white;
+    text-align: center;
+}
+
+.login-popup .message {
+    font-size: 70%;
+    color: #B57676;
+}
+
+.login-popup .input-group {
+    width: 100%;
+}
+
+.login-popup .input-group input {
+    border-radius: 6px !important;
+}
+
+.login-popup .ng-hide-add {
+    opacity: 0;
+}
+
+.login-popup .ng-hide-remove {
+    opacity: 1;
+}
+
+.login-popup .form-control {
+    webkit-transition: inherit;
+    transition: inherit;
+}
+
+.login-popup .half {
+    width: 45%;
+}

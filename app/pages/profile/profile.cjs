@@ -1,4 +1,4 @@
-app.controller('profile', function ($scope, users, user, $stateParams, Upload, req, alert, $state) {
+app.controller('profile', function ($scope, users, user, $stateParams, Upload, req, alert, $state, popup, $timeout) {
 
     $scope.mod = false;
 
@@ -6,25 +6,50 @@ app.controller('profile', function ($scope, users, user, $stateParams, Upload, r
         req.put('/api/user', $scope.user).success(function (res) {
             if (res.err) {
                 alert(res.err);
-                $state.go('login');
+                popup('login');
             }
         });
     };
 
     $scope.urlSave = function () {
         req.put('/api/user', $scope.user).success(function (res) {
-            if (res.err) {
+            if (res.ok == 0) {
                 alert('이미 존재하는 url입니다.');
             }
         });
     };
 
+    $scope.validateLicence = function (name, birth, lno, date, inno) {
+        var params = {};
+        params.id = 'qlf00601s01';
+        params.resdNo1 = birth;
+        params.hgulNm = name;
+        params.qualExpDt = date;
+        params.lcsNo = lno;
+        params.lcsMngNo = inno;
+        params.callback = "jsonp_callback";
 
-    $scope.$watch('user', function () {
-        if ($scope.user == undefined)
-            return;
-        $scope.photo = $scope.user.photo == undefined ? 'http://cfile29.uf.tistory.com/image/23315D3F53808A931FB5E9' : '/uploads/' + $scope.user.photo;
-    }, true);
+        $.ajax({
+            url: "http://www.q-net.or.kr/qlf006.do"
+            , crossDomain: true
+            , dataType: "jsonp"
+            , type: 'GET'
+            , data: params
+            , error: function (jqXHR, textStatus, errorThrown) {
+                debugger;
+                alert(textStatus + ", " + errorThrown);
+            }
+
+        });
+
+
+        //req.get('http://www.q-net.or.kr/qlf006.do', params).success(function (res) {
+        //    console.log(res);
+        //});
+
+
+    };
+
 
     $scope.$watch('files', function (files) {
         if (files == undefined)
@@ -50,47 +75,55 @@ app.controller('profile', function ($scope, users, user, $stateParams, Upload, r
             return false;
         return $scope.user._id == user._id;
     };
+
+    $scope.isRootUserAndMod = function () {
+        return $scope.isRootUser() && $scope.mod;
+    };
     init();
 
     function init() {
-        if ($stateParams.url.length > 16) {
-            users($stateParams.url, function (user) {
-                setUser(user);
-                if (user.url != undefined) {
-                    $state.go('profile', {url: user.url}, {notify: false, reload: false});
-                }
-            });
-            return;
-        }
-        users.getByUrl($stateParams.url, function (user) {
-            setUser(user);
-        });
-
-
-        function setUser(user) {
+        users($stateParams.url, function (user) {
+            if (user == null) {
+                $state.go('services');
+                return;
+            }
             $scope.user = user;
-            if ($scope.user.profile == undefined)
-                $scope.user.profile = {};
-            if ($scope.user.introduce == undefined)
-                $scope.user.introduce = {};
-            if ($scope.user.fields == undefined)
-                $scope.user.fields = [];
-        }
+            if (user.url != undefined) {
+                $state.go('profile', {url: user.url}, {notify: false, reload: false});
+            }
+        });
     }
 
+    $scope.$watch(function () {
+        return $state.current.name;
+    }, function () {
+        $scope.state = $state.current.name;
+    });
 
-    $scope.remove = function (obj, k) {
-        if (!confirm(k + " 삭제합니다."))
-            return;
-        delete obj[k];
-        $scope.save();
+
+    var states = {
+        'portfolio': {
+            templateUrl: "/app/pages/profile/portfolio/portfolio.html"
+        },
+        'recommend': {
+            templateUrl: "/app/pages/profile/recommend/recommend.html"
+        },
+        'services': {
+            templateUrl: "/app/pages/profile/services/services.html"
+        }
     };
 
-    $scope.add = function (obj, k) {
-        if (k == "")
-            return;
-        obj[k] = "";
-        $scope.save();
+    $timeout(function () {
+        $scope.state = $stateParams.state == undefined ? states.portfolio : states[$stateParams.state];
+    });
+
+    $scope.setState = function (state) {
+        $scope.state = states[state];
+        $state.go($state.current, {url: $stateParams.url, state: state}, {notify: false});
+    };
+
+    $scope.isState = function (state) {
+        return $scope.state == states[state];
     };
 
 });

@@ -8,7 +8,7 @@
 
 .article .price {
     position: absolute;
-    margin-top: -70px;
+    top: 0;
     background-color: rgba(60, 63, 64, 0.9);
     color: white;
     padding: 5px 15px 5px 40px;
@@ -39,9 +39,10 @@
 }
 
 .article [user-photo] {
-    right: 20px;
     top: -45px;
     z-index: 3;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .title .label {

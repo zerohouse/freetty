@@ -1,18 +1,9 @@
 <div class="margin-bottom">
     <div ng-show="mod">
-        <div class="input-group" ng-click="search = true;$event.stopPropagation()">
-            <input ng-model="keyword" placeholder="주소찾기" class="form-control"
-                   ng-keydown="keyPress($event);">
-
+        <div class="input-group">
+            <location-search ng-model="user.location"></location-search>
             <div class="input-group-addon">검색</div>
         </div>
-        <ul ng-show="search" class="list-group search">
-            <li class="list-group-item" ng-repeat="result in results"
-                ng-mouseover="selectThis(result)" ng-click="selectLocation()"
-                ng-class="{'selected':results.indexOf(result) == selected}">
-                {{result.formatted_address}}
-            </li>
-        </ul>
     </div>
     <div ng-show="!mod">
         {{user.location.formatted_address || "위치 정보가 없습니다."}}

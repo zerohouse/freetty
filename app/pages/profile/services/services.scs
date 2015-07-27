@@ -1,0 +1,12 @@
+.price-s {
+    font-size: 60%;
+    float: right;
+}
+
+.font-s {
+    font-size: 60%
+}
+
+.btn-s {
+    font-size: 40%;
+}

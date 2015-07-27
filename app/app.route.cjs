@@ -9,25 +9,16 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             templateUrl: "/app/pages/services/services.html"
         })
         .state('profile', {
-            url: "/:url",
+            url: "/:url?state",
             controller: "profile",
             templateUrl: "/app/pages/profile/profile.html"
-        })
-        .state('register', {
-            url: "/user/register?email",
-            controller: "register",
-            templateUrl: "/app/pages/register/register.html"
-        })
-        .state('login', {
-            url: "/user/login?email",
-            controller: "login",
-            templateUrl: "/app/pages/login/login.html"
         })
         .state('article', {
             url: "/article/:_id?mod",
             controller: "article",
             templateUrl: "/app/pages/article/article.html"
         });
+
 
 });
 

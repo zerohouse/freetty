@@ -11,7 +11,7 @@
     </div>
     <div class="img-handle">
         <i class="fa fa-circle-o" ng-repeat="photo in photos"
-           ng-class="{'fa-circle select':select == photos.indexOf(photo)}" ng-click="selectPhoto(photo)"></i>
+           ng-class="{'fa-circle':select == photos.indexOf(photo)}" ng-click="selectPhoto(photo)"></i>
     </div>
 
     <div class='img-wall' ng-class="{'dark':loading}"></div>

@@ -1,13 +1,5 @@
 <div class="container">
 
-    <a ng-show="isRootUser() && !mod" class="btn btn-primary" ng-click="mod =!mod;">수정하기</a>
-
-    <div ng-show="isRootUserAndMod()">
-        <a class="btn btn-primary" ng-click="mod =!mod;">수정완료</a>
-        <a ng-show="!article.done" class="btn btn-primary" ng-click="done();">작성이 완료되지 않은 게시물입니다.</a>
-        <a ng-show="article.done" class="btn btn-primary">게시 중 입니다.</a>
-    </div>
-
     <div class="article-header">
         <img class="article-back" ng-show="article.photos.length>0" ng-src="{{'/uploads/'+selectedPhoto}}">
 
@@ -26,6 +18,18 @@
         </div>
 
     </div>
+</div>
+
+
+<div class="container">
+    <a ng-show="isRootUser() && !mod" class="btn btn-primary" ng-click="mod =!mod;">수정하기</a>
+
+    <div ng-show="isRootUserAndMod()">
+        <a class="btn btn-primary" ng-click="mod =!mod;">수정완료</a>
+        <a ng-show="!article.done" class="btn btn-primary" ng-click="done();">작성이 완료되지 않은 게시물입니다.</a>
+        <a ng-show="article.done" class="btn btn-primary">게시 중 입니다.</a>
+    </div>
+
 
     <div class="row">
         <div class="user-left">
@@ -35,13 +39,7 @@
             <h1 mod-textarea="article.head" mod-save="save" mod-default="제목이 없습니다." mod-right="isRootUserAndMod()"
                 placeholder="제목"></h1>
 
-            <div class="btn btn-info" ng-repeat="tag in article.tags">{{tag}}
-                <i class="fa fa-times" ng-click="remove(article.tags, tag)" ng-show="isRootUserAndMod()"></i></div>
-
-
-            <div class="btn btn-info" ng-show="isRootUserAndMod()" ng-click="addTag();tagging = !tagging"><input
-                    ng-click="$event.stopPropagation()" ng-model="tag" ng-show="tagging"> 태그 추가하기
-            </div>
+            <div array="article.tags" el-class="btn btn-info" mod-right="isRootUserAndMod()" save="save" del-confirm="true"></div>
 
             <div class="row">
                 <h4>

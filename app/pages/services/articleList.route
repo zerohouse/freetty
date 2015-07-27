@@ -1,0 +1,32 @@
+app.post('/api/article/list', function (req, res) {
+        var query = {done: true};
+        if (req.passed.query) {
+            if (req.passed.query.time) {
+                query.startTime = {$lte: req.passed.query.time};
+                query.endTime = {$gte: req.passed.query.time};
+            }
+            if (req.passed.location) {
+                query.location = {
+                    geometry: {
+                        lat: {$lte: 1, $gte: 1},
+                        lng: {$lte: 1, $gte: 1}
+                    }
+                };
+            }
+            if (req.passed.query.provider)
+                query.provider = req.passed.query.provider;
+        }
+
+        var limit = req.passed.limit;
+        if (limit == undefined)
+            limit = 6;
+        if (limit > 10)
+            limit = 6;
+
+        Article.find(query).sort({'date': -1}).limit(limit).skip(req.passed.skip).exec(function (err, results) {
+            res.send(results);
+        });
+    }
+)
+;
+

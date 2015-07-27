@@ -1,0 +1,10 @@
+
+.search {
+    margin-top: 42px;
+    position: absolute;
+    z-index: 1;
+}
+
+.margin-bottom {
+    margin-bottom: 10px;
+}
