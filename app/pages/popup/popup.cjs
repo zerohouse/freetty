@@ -41,10 +41,12 @@ app.controller('popup', function ($scope, popup) {
     });
 
     $scope.url = {};
-
     $scope.url.login = $scope.url.register = '/app/pages/popup/login/login.html'
-
     $scope.url.license = '/app/pages/popup/license/license.html';
+
+    $scope.classes = {};
+    $scope.classes.login = $scope.classes.register = $scope.classes.license = 'window-s'
+
 
     $scope.popup = popup;
 

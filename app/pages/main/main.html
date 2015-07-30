@@ -29,7 +29,7 @@
                 <span class="placeholder" ng-show="!query.time">시간 (Any date)</span>
             </div>
             <div class="timer" ng-show="time" ng-click="$event.stopPropagation()">
-                <slider floor="32" ceiling="88" format="toTime" ng-model="query.time"></slider>
+                <slider class="main-slider" floor="32" ceiling="88" format="toTime" ng-model="query.time"></slider>
             </div>
             <div class="input-group-addon" ng-click="get()">검색</div>
         </div>

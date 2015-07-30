@@ -1,4 +1,4 @@
-<div ng-class="{'border-active':time}" type="text" class="form-control" ng-click="time=true;$event.stopPropagation()">
+<div ng-class="{'border-active':time}" type="text" ng-click="time=true;$event.stopPropagation()">
     <span ng-show="timeStart && timeEnd">{{timeStart.toTime()}} ~ {{timeEnd.toTime()}}</span>
     <span class="placeholder" ng-show="!(timeStart && timeEnd)">{{placeholder}}</span>
 </div>

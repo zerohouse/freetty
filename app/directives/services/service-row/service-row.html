@@ -2,12 +2,13 @@
     <h4><span mod-textarea="service.name" mod-save="save" mod-default="서비스명"
               mod-right="modRight" placeholder="서비스명"></span>
         <span class="price-s"><i class="fa fa-krw"></i>
-            <span mod-format="service.price.moneyFormat()" mod-number="service.price" mod-save="save" mod-default="0"
+            <span mod-number="service.price" mod-format="service.price.moneyFormat()" mod-save="save" mod-default="0"
                   mod-right="modRight" placeholder="가격"></span>
         </span>
     </h4>
 
-    <p mod-textarea="service.description" mod-default="서비스 내용" placeholder="서비스 내용" mod-right="modRight" mod-save="save"></p>
+    <p mod-textarea="service.description" mod-default="서비스 내용" placeholder="서비스 내용" mod-right="modRight"
+       mod-save="save"></p>
 </div>
 <div class="col-sm-3">
     <div class="panel-body">
@@ -16,6 +17,6 @@
 </div>
 <div class="col-sm-3">
     <div class="panel-body">
-        <a class="btn btn-success">Book Me</a>
+        <a class="btn btn-success" ng-show="!modRight">Book Me</a>
     </div>
 </div>

@@ -2,6 +2,8 @@ app.controller('profile', function ($scope, users, user, $stateParams, Upload, r
 
     $scope.mod = false;
 
+    $scope.popup = popup;
+
     $scope.save = function () {
         req.put('/api/user', $scope.user).success(function (res) {
             if (res.err) {
@@ -16,18 +18,6 @@ app.controller('profile', function ($scope, users, user, $stateParams, Upload, r
             if (res.ok == 0) {
                 alert('이미 존재하는 url입니다.');
             }
-        });
-    };
-
-    $scope.validateLicense = function () {
-        req.get('/api/license', $scope.validate).success(function (res) {
-            if (!res.valid) {
-                alert(res.err);
-                return;
-            }
-            if ($scope.user.licenses == undefined)
-                $scope.user.licenses = [];
-            $scope.user.licenses.push(res);
         });
     };
 

@@ -3,10 +3,10 @@ app.config(function ($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/");
 
     $stateProvider
-        .state('services', {
+        .state('main', {
             url: "/",
-            controller: "services",
-            templateUrl: "/app/pages/services/services.html"
+            controller: "main",
+            templateUrl: "/app/pages/main/main.html"
         })
         .state('profile', {
             url: "/:url?state",
@@ -18,25 +18,25 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             controller: "article",
             templateUrl: "/app/pages/article/article.html"
         })
-        .state('artist-register', {
-            url: "/register/artist",
-            controller: "artist.register",
-            templateUrl: "/app/pages/artist-register/artist-register.html"
-        })
-        .state('artist-register.step1', {
-            url: "/step1",
+        .state('artist-register-step1', {
+            url: "/register/step1",
             controller: "artist.register",
             templateUrl: "/app/pages/artist-register/step1/step1.html"
         })
-        .state('artist-register.step2', {
-            url: "/step2",
+        .state('artist-register-step2', {
+            url: "/register/step2",
             controller: "artist.register",
             templateUrl: "/app/pages/artist-register/step2/step2.html"
         })
-        .state('artist-register.step3', {
-            url: "/step3",
+        .state('artist-register-step3', {
+            url: "/register/step3",
             controller: "artist.register",
             templateUrl: "/app/pages/artist-register/step3/step3.html"
+        })
+        .state('artist-register-step4', {
+            url: "/register/step4",
+            controller: "artist.register",
+            templateUrl: "/app/pages/artist-register/step4/step4.html"
         });
 
 

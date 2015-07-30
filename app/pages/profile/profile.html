@@ -46,7 +46,7 @@
                     <div><span>FOLLOWERS</span><span class="size">30</span></div>
                 </div>
             </div>
-            <div class="row bottom-border">
+            <div class="row bottom-border" ng-show="user.introduce.aboutme.length || isRootUserAndMod();">
                 <div class="panel-body">
                     <h5>ABOUT ME</h5>
 
@@ -56,26 +56,13 @@
             </div>
             <div class="row bottom-border" ng-show="user.introduce.licenses.length!=0 || isRootUserAndMod()">
                 <div class="panel-body">
-                    <h5>Licences</h5>
+                    <h5>Licenses</h5>
 
-                    <div class="span" ng-repeat="element in user.licenses">{{element.name}}
+                    <div class="btn btn-info" ng-repeat="element in user.licenses">{{element.name}} <span class="badge">(국가공인)</span>
                         <i class="fa fa-times" ng-click="deleteLicense(element);"
                            ng-show="isRootUserAndMod()"></i></div>
 
-
-                    <div class="panel panel-default top-margin" ng-show="isRootUserAndMod()">
-                        <div class="panel-heading">국가공인 자격증 추가</div>
-                        <div class="panel-body">
-                            <input class="form-control" ng-model="validate.name" placeholder="이름">
-                            <input class="form-control" ng-model="validate.birth" placeholder="생년월일(6자리)">
-                            <input class="form-control" ng-model="validate.date" placeholder="발급일자">
-                            <input class="form-control" ng-model="validate.license" placeholder="라이센스 번호">
-                            <input class="form-control" ng-model="validate.inner" placeholder="자격증 내 번호">
-                        </div>
-                        <div class="panel-footer">
-                            <div class="full-width" ng-click="validateLicense()">확인</div>
-                        </div>
-                    </div>
+                    <div ng-click="popup('license', $event)">자격증 추가 하기</div>
 
                 </div>
             </div>

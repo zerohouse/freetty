@@ -7,7 +7,7 @@ var User = mongoose.model('user', mongoose.Schema({
     introduce: Object,
     profile: Object,
     location: Object,
-    types: Object,
+    serviceTypes: Object,
     fields: Array,
     licenses: Array,
     type: String

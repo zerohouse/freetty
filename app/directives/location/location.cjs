@@ -1,7 +1,7 @@
 app.directive('location', function () {
     return {
         restrict: 'E',
-        templateUrl: '/app/pages/profile/location/location.html',
+        templateUrl: '/app/directives/location/location.html',
         scope: {
             user: '=',
             modSave: '=',

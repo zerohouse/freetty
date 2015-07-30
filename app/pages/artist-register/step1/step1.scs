@@ -1,0 +1,19 @@
+.border-bottom {
+    border-bottom: 1px solid;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.none-top-margin {
+    margin-top: 0 !important;
+}
+
+.font-m {
+    font-size: 80%;
+}
+
+.red {
+    color: red;
+}

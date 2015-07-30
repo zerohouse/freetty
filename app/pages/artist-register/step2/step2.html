@@ -1,0 +1,37 @@
+<div class="container">
+
+    <div class="row bottom-border margin-bottom">
+        <div class="panel-body">
+            <h1>Step 2</h1>
+            <small>자신의 전문분야를 입력합니다.</small>
+        </div>
+    </div>
+
+    <div class="row bottom-border margin-bottom">
+        <div class="col-md-6">
+            <span class="font-m">전문분야 <span class="red">*</span></span>
+            <auto-complete data="specialty" placeholder="전문분야" limit="5"
+                           selected-class="label label-info"></auto-complete>
+
+            <span class="font-m">외국어 <span class="red">*</span></span>
+            <auto-complete data="specialty" placeholder="외국어" limit="5"
+                           selected-class="label label-info"></auto-complete>
+
+
+            <span class="font-m">사용제품 <span class="red">*</span></span>
+            <auto-complete data="specialty" placeholder="사용제품" limit="5"
+                           selected-class="label label-info"></auto-complete>
+        </div>
+    </div>
+
+    <div class="row bottom-border margin-bottom">
+        <div class="panel-body">
+            <a class="btn btn-primary" ng-click="save('artist-register-step1')">이전단계</a>
+            <a class="btn btn-primary">임시저장</a>
+            <a class="btn btn-primary" ng-click="save('artist-register-step3')">다음단계</a>
+        </div>
+    </div>
+
+
+
+</div>

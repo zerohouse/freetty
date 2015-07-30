@@ -1,9 +1,9 @@
-app.controller('login.popup', function ($regex, popup, $scope) {
+app.controller('login.popup', function ($regex, popup, $scope, req, user) {
     $scope.popup = popup;
 
     $scope.regex = $regex;
 
-    $scope.user = {email: "", password: ""};
+    $scope.user = user;
 
     $scope.login = function () {
         if (!$regex.email)

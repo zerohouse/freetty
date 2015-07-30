@@ -4,6 +4,11 @@
     iconv.extendNodeEncodings();
     var request = require('request');
     app.get('/api/license', function (req, res) {
+        if (req.session.user == undefined) {
+            res.send({err: '로그인이 필요한 서비스입니다.'});
+            return;
+        }
+
         var params = {};
         params.hgulNm = urlencode(req.passed.name, 'euckr');
         params.lcsNo = req.passed.license;
@@ -35,11 +40,13 @@
                     req.session.user.licenses = [];
                 if (contains(req.session.user.licenses, result)) {
                     res.send({err: '이미 추가한 자격증입니다.'});
+                    return;
                 }
-                req.session.user.licences.push(result);
+                req.session.user.licenses.push(result);
                 req.session.save();
-                User.update({_id: req.session.user._id}, {licenses: req.session.user.licences}, function (err, re) {
+                User.update({_id: req.session.user._id}, {licenses: req.session.user.licenses}, function (err, re) {
                     res.send(result);
+                    return;
                 });
                 function contains(arr, obj) {
                     for (var i = 0; i < arr.length; i++)
@@ -60,10 +67,15 @@
     });
 
     app.post('/api/license', function (req, res) {
+        if (req.session.user == undefined) {
+            res.send({err: '로그인이 필요한 서비스입니다.'});
+            return;
+        }
         req.session.user.licenses.remove(req.passed);
         req.session.user.save();
-        User.update({_id: req.session.user._id}, {licenses: req.session.user.licences}, function (err, re) {
+        User.update({_id: req.session.user._id}, {licenses: req.session.user.licenses}, function (err, re) {
             res.send(re);
+            return;
         });
     });
 

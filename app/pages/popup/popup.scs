@@ -7,7 +7,7 @@
     z-index: 3000;
 }
 
-.popup .window {
+.popup .window-s {
     padding: 20px 40px 40px 40px;
     position: absolute;
     top: 50%;

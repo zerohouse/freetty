@@ -1,0 +1,15 @@
+<div>
+    <a ng-repeat="el in selected" ng-class="selectedClass">{{el}}
+        <i class="fa fa-times" ng-click="selected.remove(el, true)"></i></a>
+    <input ng-focus="show=true" ng-click="show=true" ng-model="keyword" ng-blur="show=false"
+           ng-keydown="keydown($event)"
+           class="form-control"
+           placeholder="{{placeholder}}">
+
+</div>
+<ul ng-show="show" class="list-group results">
+    <li class="list-group-item" ng-repeat="result in results = (data | filter: keyword | limitTo:limit)"
+        ng-class="{active:select == results.indexOf(result)}">
+        {{result}}
+    </li>
+</ul>

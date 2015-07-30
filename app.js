@@ -118,7 +118,7 @@ var User = mongoose.model('user', mongoose.Schema({
     introduce: Object,
     profile: Object,
     location: Object,
-    types: Object,
+    serviceTypes: Object,
     fields: Array,
     licenses: Array,
     type: String
@@ -322,6 +322,39 @@ app.post('/api/reply/delete', function (req, res) {
 
 });
 
+app.post('/api/article/list', function (req, res) {
+        var query = {done: true};
+        if (req.passed.query) {
+            if (req.passed.query.time) {
+                query.startTime = {$lte: req.passed.query.time};
+                query.endTime = {$gte: req.passed.query.time};
+            }
+            if (req.passed.location) {
+                query.location = {
+                    geometry: {
+                        lat: {$lte: 1, $gte: 1},
+                        lng: {$lte: 1, $gte: 1}
+                    }
+                };
+            }
+            if (req.passed.query.provider)
+                query.provider = req.passed.query.provider;
+        }
+
+        var limit = req.passed.limit;
+        if (limit == undefined)
+            limit = 6;
+        if (limit > 10)
+            limit = 6;
+
+        Article.find(query).sort({'date': -1}).limit(limit).skip(req.passed.skip).exec(function (err, results) {
+            res.send(results);
+        });
+    }
+)
+;
+
+
 app.post('/api/user/login', function (req, res) {
     var query = {};
     query.email = req.passed.email;
@@ -362,6 +395,11 @@ app.post('/api/user', function (req, res) {
     iconv.extendNodeEncodings();
     var request = require('request');
     app.get('/api/license', function (req, res) {
+        if (req.session.user == undefined) {
+            res.send({err: '로그인이 필요한 서비스입니다.'});
+            return;
+        }
+
         var params = {};
         params.hgulNm = urlencode(req.passed.name, 'euckr');
         params.lcsNo = req.passed.license;
@@ -393,11 +431,13 @@ app.post('/api/user', function (req, res) {
                     req.session.user.licenses = [];
                 if (contains(req.session.user.licenses, result)) {
                     res.send({err: '이미 추가한 자격증입니다.'});
+                    return;
                 }
-                req.session.user.licences.push(result);
+                req.session.user.licenses.push(result);
                 req.session.save();
-                User.update({_id: req.session.user._id}, {licenses: req.session.user.licences}, function (err, re) {
+                User.update({_id: req.session.user._id}, {licenses: req.session.user.licenses}, function (err, re) {
                     res.send(result);
+                    return;
                 });
                 function contains(arr, obj) {
                     for (var i = 0; i < arr.length; i++)
@@ -418,10 +458,15 @@ app.post('/api/user', function (req, res) {
     });
 
     app.post('/api/license', function (req, res) {
+        if (req.session.user == undefined) {
+            res.send({err: '로그인이 필요한 서비스입니다.'});
+            return;
+        }
         req.session.user.licenses.remove(req.passed);
         req.session.user.save();
-        User.update({_id: req.session.user._id}, {licenses: req.session.user.licences}, function (err, re) {
+        User.update({_id: req.session.user._id}, {licenses: req.session.user.licenses}, function (err, re) {
             res.send(re);
+            return;
         });
     });
 
@@ -459,39 +504,6 @@ app.put('/api/user', function (req, res) {
         res.send(result);
     });
 });
-app.post('/api/article/list', function (req, res) {
-        var query = {done: true};
-        if (req.passed.query) {
-            if (req.passed.query.time) {
-                query.startTime = {$lte: req.passed.query.time};
-                query.endTime = {$gte: req.passed.query.time};
-            }
-            if (req.passed.location) {
-                query.location = {
-                    geometry: {
-                        lat: {$lte: 1, $gte: 1},
-                        lng: {$lte: 1, $gte: 1}
-                    }
-                };
-            }
-            if (req.passed.query.provider)
-                query.provider = req.passed.query.provider;
-        }
-
-        var limit = req.passed.limit;
-        if (limit == undefined)
-            limit = 6;
-        if (limit > 10)
-            limit = 6;
-
-        Article.find(query).sort({'date': -1}).limit(limit).skip(req.passed.skip).exec(function (err, results) {
-            res.send(results);
-        });
-    }
-)
-;
-
-
 app.get('/*', function (req, res) {
     res.sendFile(path.join(__dirname + '/app/pages/index/index.html'));
 });

@@ -1,5 +1,6 @@
 .article {
     display: inline-block;
+    position: relative;
 }
 
 .article img {
@@ -23,6 +24,7 @@
 }
 
 .article .info {
+    margin-top: 30px;
     padding: 20px;
     padding-top: 10px;
     color: #777;
@@ -39,7 +41,7 @@
 }
 
 .article [user-photo] {
-    top: -45px;
+    top: -85px;
     z-index: 3;
     left: 50%;
     transform: translateX(-50%);

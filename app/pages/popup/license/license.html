@@ -1,4 +1,16 @@
-<div  ng-controller="license.popup">
-    라이센스
+<div ng-controller="license.popup">
+
+    <div class="panel-body">
+        <h5>국가공인 자격증 인증</h5>
+
+        <input class="form-control" ng-model="validate.name" placeholder="이름">
+        <input class="form-control" ng-model="validate.birth" placeholder="생년월일(6자리)">
+        <input class="form-control" ng-model="validate.date" placeholder="발급일자">
+        <input class="form-control" ng-model="validate.license" placeholder="라이센스 번호">
+        <input class="form-control" ng-model="validate.inner" placeholder="자격증 내 번호">
+
+        <div class="btn btn-primary full-width" ng-click="validateLicense()">인증요청</div>
+    </div>
+</div>
 
 </div>

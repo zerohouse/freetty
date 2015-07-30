@@ -1,4 +1,4 @@
-app.controller('services', function ($scope, req, $state, alert) {
+app.controller('main', function ($scope, req, $state, alert) {
 
     document.body.addEventListener('click', function () {
         $scope.date = false;
