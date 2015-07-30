@@ -1,10 +1,4 @@
-app.controller('popup', function ($scope, $stateParams, $regex, req, alert, user, popup) {
-    popup.registerScope($scope);
-
-    document.body.addEventListener('click', function () {
-        popup.hide();
-    });
-
+app.controller('login.popup', function ($regex, popup, $scope) {
     $scope.popup = popup;
 
     $scope.regex = $regex;

@@ -48,49 +48,7 @@
 
 
 <div ui-view></div>
-
-<div class="popup" ng-show="popup.isShow()" ng-controller="popup">
-    <div class="window" ng-click="$event.stopPropagation()">
-
-
-        <div class="login-popup" ng-show="popup.getState()=='login' || popup.getState() == 'register'">
-            <ul class="nav tabs">
-                <li class="half" ng-class="{active:popup.getState()=='login'}" ng-click="popup('login')">
-                    <a>로그인</a>
-                </li>
-                <li class="half" ng-class="{active:popup.getState()=='register'}" ng-click="popup('register')">
-                    <a>회원가입</a>
-                </li>
-            </ul>
-
-            <h1>FREETTY</h1>
-
-            <div class="input-group">
-                <input class="form-control" placeholder="이메일" ng-model="user.email" name="email"
-                       regex="^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$"
-                       message="이메일 형식이 맞지 않습니다.">
-                <span class="message"
-                      ng-show="!exist && popup.getState() =='login' && regex['email']">가입하지 않은 이메일입니다.</span>
-                <span class="message"
-                      ng-show="exist && popup.getState() =='register' && regex['email']">이미 존재하는 아이디입니다.</span>
-            </div>
-            <div class="input-group">
-                <input class="form-control" regex=".{6,}" message="패스워드는 6글자이상입니다." name="password" placeholder="패스워드"
-                       type="password" ng-model="user.password">
-            </div>
-
-            <div class="input-group" ng-show="popup.getState()=='register'">
-                <input class="form-control" name="name" regex=".{2,}" message="이름은 두글자 이상입니다." placeholder="이름"
-                       ng-model="user.name">
-            </div>
-
-            <div class="btn btn-default form-control" ng-show="popup.getState()=='login'" ng-click="login();">로그인</div>
-            <div class="btn btn-default form-control" ng-show="popup.getState()=='register'" ng-click="register();">회원가입
-            </div>
-
-        </div>
-    </div>
-</div>
+<ng-include src="'/app/pages/popup/popup.html'"></ng-include>
 
 <script data-require="jquery@*" data-semver="2.0.3" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
 <script data-require="bootstrap@*" data-semver="3.1.1"

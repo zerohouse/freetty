@@ -1,0 +1,23 @@
+<div class="row profile">
+    <div class="container">
+        <ul class="nav tabs">
+            <li ng-class="{active:isState('portfolio')}">
+                <a ng-click="setState('portfolio')">Step1</a>
+            </li>
+            <li ng-class="{active:isState('services')}">
+                <a ng-click="setState('services')">Step2</a>
+            </li>
+            <li ng-class="{active:isState('recommend')}">
+                <a ng-click="setState('recommend')">Step3</a>
+            </li>
+            <li ng-class="{active:isState('recommend')}">
+                <a ng-click="setState('recommend')">Step4</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="row">
+    <div class="container" ui-view></div>
+
+</div>

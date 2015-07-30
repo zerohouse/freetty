@@ -1,0 +1,5 @@
+<div class="popup" ng-show="popup.isShow()" ng-controller="popup">
+    <div class="window" ng-click="$event.stopPropagation()">
+        <ng-include src="url[popup.getState()]"></ng-include>
+    </div>
+</div>

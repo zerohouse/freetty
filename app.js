@@ -86,6 +86,10 @@ app.use(session({
     }
 }));
 
+Array.prototype.remove = function (val) {
+    this.splice(this.indexOf(val), 1);
+};
+
 var Article = mongoose.model('article', mongoose.Schema({
     done: Boolean,
     head: String,
@@ -115,7 +119,9 @@ var User = mongoose.model('user', mongoose.Schema({
     profile: Object,
     location: Object,
     types: Object,
-    fields: Array
+    fields: Array,
+    licenses: Array,
+    type: String
 }));
 
 User.schema.path('email').validate(function (value) {
@@ -351,54 +357,75 @@ app.post('/api/user', function (req, res) {
     });
 });
 (function () {
-    var wget = require('wget-improved');
-    var options = {
-        host: 'www.q-net.or.kr',
-        method: 'GET',
-        path: '/qlf006.do?id=qlf00601s01&gSite=Q&gId=&resdNo1=840417&hgulNm=%C3%D6%B9%CE%C1%A4&lcsNo=15501130081S&qualExpDt=20150427&lcsMngNo=1402008519',
-    };
+    var iconv = require('iconv-lite');
+    var urlencode = require('urlencode');
+    iconv.extendNodeEncodings();
+    var request = require('request');
+    app.get('/api/license', function (req, res) {
+        var params = {};
+        params.hgulNm = urlencode(req.passed.name, 'euckr');
+        params.lcsNo = req.passed.license;
+        params.lcsMngNo = req.passed.inner;
+        params.resdNo1 = req.passed.birth;
+        params.qualExpDt = req.passed.date;
+        var options = {
+            url: 'http://www.q-net.or.kr/qlf006.do?id=qlf00601s01&gSite=Q&gId=&' + parse(params),
+            encoding: null,
+            headers: {
+                'Host': 'www.q-net.or.kr',
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+                'User-Agent': 'Mozilla/5.0 (Windows NT 6.2; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.107 Safari/537.36',
+            }
+        };
+        request(options, function (error, response, body) {
+            var buf = new Buffer(body, 'euckr');
+            var html = iconv.decode(buf, 'euckr');
+            var result = {};
+            if (html.match("정상적으로 발급된 자격증입니다")) {
+                result.valid = true;
+                var regex = /<td>(.*)<\/td>/g;
+                regex.exec(html);
+                result.name = regex.exec(html)[1];
+                result.name = result.name.substring(0, result.name.length - 15);
+                result.date = regex.exec(html)[1];
+                result.license = req.passed.license;
+                if (req.session.user.licenses == undefined)
+                    req.session.user.licenses = [];
+                if (contains(req.session.user.licenses, result)) {
+                    res.send({err: '이미 추가한 자격증입니다.'});
+                }
+                req.session.user.licences.push(result);
+                req.session.save();
+                User.update({_id: req.session.user._id}, {licenses: req.session.user.licences}, function (err, re) {
+                    res.send(result);
+                });
+                function contains(arr, obj) {
+                    for (var i = 0; i < arr.length; i++)
+                        if (arr[i].license == obj.license)
+                            return true;
+                    return false;
+                }
+            }
+            res.send({err: '자격증 정보가 유효하지 않습니다.'});
+        });
 
-    app.get('/api/licence', function (req, res) {
         function parse(obj) {
             var str = [];
             for (var p in obj)
-                str.push(encodeURIComponent(p) + "="
-                    + encodeURIComponent(obj[p]));
+                str.push(p + "=" + obj[p]);
             return str.join("&");
         }
-
-        var params = {};
-        params.id = 'qlf00601s01';
-        params.resdNo1 = '840417';
-        params.hgulNm = '%C3%D6%B9%CE%C1%A4';
-        params.qualExpDt = '20150427';
-        params.lcsNo = '15501130081S';
-        params.lcsMngNo = '1402008519';
-
-        options.path = '/qlf006.do?id=qlf00601s01&gSite=Q&gId=&resdNo1=840417&hgulNm=%C3%D6%B9%CE%C1%A4&lcsNo=15501130081S&qualExpDt=20150427&lcsMngNo=1402008519';
-
-        console.log(options)
-
-        var req = wget.request(options, function (res) {
-            var content = '';
-            res.on('error', function (err) {
-                console.log(err);
-            });
-            res.on('data', function (chunk) {
-                content += chunk;
-            });
-            res.on('end', function () {
-                console.log(content);
-            });
-            console.log('Server respond ' + res.statusCode);
-        });
-        req.end();
-        req.on('error', function (err) {
-            console.log(err);
-        });
-
-
     });
+
+    app.post('/api/license', function (req, res) {
+        req.session.user.licenses.remove(req.passed);
+        req.session.user.save();
+        User.update({_id: req.session.user._id}, {licenses: req.session.user.licences}, function (err, re) {
+            res.send(re);
+        });
+    });
+
+
 })();
 app.put('/api/user', function (req, res) {
     var result = {};
@@ -423,6 +450,8 @@ app.put('/api/user', function (req, res) {
 
     if (req.passed.url == "")
         delete req.passed.url;
+
+    req.passed.licences = undefined;
 
     User.update({_id: _id}, req.passed, function (err, result) {
         req.session.user = req.passed;

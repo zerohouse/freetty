@@ -19,35 +19,28 @@ app.controller('profile', function ($scope, users, user, $stateParams, Upload, r
         });
     };
 
-    $scope.validateLicence = function (name, birth, lno, date, inno) {
-        var params = {};
-        params.id = 'qlf00601s01';
-        params.resdNo1 = birth;
-        params.hgulNm = name;
-        params.qualExpDt = date;
-        params.lcsNo = lno;
-        params.lcsMngNo = inno;
-        params.callback = "jsonp_callback";
-
-        $.ajax({
-            url: "http://www.q-net.or.kr/qlf006.do"
-            , crossDomain: true
-            , dataType: "jsonp"
-            , type: 'GET'
-            , data: params
-            , error: function (jqXHR, textStatus, errorThrown) {
-                debugger;
-                alert(textStatus + ", " + errorThrown);
+    $scope.validateLicense = function () {
+        req.get('/api/license', $scope.validate).success(function (res) {
+            if (!res.valid) {
+                alert(res.err);
+                return;
             }
-
+            if ($scope.user.licenses == undefined)
+                $scope.user.licenses = [];
+            $scope.user.licenses.push(res);
         });
+    };
 
-
-        //req.get('http://www.q-net.or.kr/qlf006.do', params).success(function (res) {
-        //    console.log(res);
-        //});
-
-
+    $scope.deleteLicense = function (l) {
+        if (!confirm('국가 공인 자격증 정보를 삭제하시겠습니까?'))
+            return;
+        req.post('/api/license', l).success(function (res) {
+            if (res.err) {
+                alert(res.err);
+                return;
+            }
+            $scope.user.licenses.remove(l);
+        });
     };
 
 

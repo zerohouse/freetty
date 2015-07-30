@@ -22,6 +22,8 @@ app.put('/api/user', function (req, res) {
     if (req.passed.url == "")
         delete req.passed.url;
 
+    req.passed.licences = undefined;
+
     User.update({_id: _id}, req.passed, function (err, result) {
         req.session.user = req.passed;
         req.session.save();

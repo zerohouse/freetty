@@ -33,7 +33,10 @@ Array.prototype.contains = function (val) {
     return false;
 };
 
-Array.prototype.remove = function (val) {
+Array.prototype.remove = function (val, con) {
+    if (con)
+        if (!confirm('삭제하시겠습니까?'))
+            return;
     this.splice(this.indexOf(val), 1);
 };
 
