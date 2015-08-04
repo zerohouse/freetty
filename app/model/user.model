@@ -10,7 +10,8 @@ var User = mongoose.model('user', mongoose.Schema({
     serviceTypes: Object,
     fields: Array,
     licenses: Array,
-    type: String
+    type: String,
+    date: Date
 }));
 
 User.schema.path('email').validate(function (value) {

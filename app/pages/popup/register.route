@@ -1,5 +1,5 @@
 app.post('/api/user', function (req, res) {
-    req.passed.introduce = {type: 'text'};
+    req.passed.introduce = {};
     req.passed.date = new Date();
     var user = new User(req.passed);
     user.save(function (err, result) {

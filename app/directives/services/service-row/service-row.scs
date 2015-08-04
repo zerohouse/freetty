@@ -1,0 +1,21 @@
+.service-body {
+    font-size: 80%;
+    color: #777;
+}
+
+.top-padding-s {
+    padding-top: 10px;
+}
+
+.delete {
+    font-size: 50%;
+    color: #999;
+}
+
+.absolute {
+    position: absolute;
+}
+
+.table tbody>tr>td.vert-align{
+    vertical-align: middle;
+}

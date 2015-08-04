@@ -1,8 +1,10 @@
-<div class="row border-bottom" ng-show="mod || user.introduce.working[day].attend">
-    <div class="float-left"><input ng-show="mod" type="checkbox" ng-model="user.introduce.working[day].attend"
+<td class="vert-align" ng-show="mod">
+    <input ng-show="mod" type="checkbox" ng-model="user.introduce.working[day].attend"
            ng-change="save();">
-    <span>{{day}}</span></div>
-    <timer-range class="float-left" time-start="user.introduce.working[day].start" mod-right="mod"
-                 time-end="user.introduce.working[day].end" step="1" ng-mouseup="save()"
-                 floor="24" ceiling="96" placeholder="근무시간(AnyTime)"></timer-range>
-</div>
+</td>
+<td class="vert-align">{{day}}</td>
+<td>
+    <timer-range time-start="user.introduce.working[day].start" mod-right="mod"
+                 time-end="user.introduce.working[day].end" step="1" ng-mouseup="save(!mod)"
+                 floor="24" ceiling="96" placeholder="근무시간(All day)" mod-default="All day"></timer-range>
+</td>

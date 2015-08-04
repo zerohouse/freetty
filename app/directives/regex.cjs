@@ -1,26 +1,9 @@
-app.factory('$regex', function () {
-    var regex = {};
-
-    regex.$all = function () {
-        for (var k in regex) {
-            if (k == undefined)
-                continue;
-            if (!regex[k])
-                return false;
-        }
-        return true;
-    };
-
-    return regex;
-});
-
-
-app.directive('regex', function ($compile, $regex) {
+app.directive('regex', function ($compile) {
     return {
         restrict: 'A',
-        scope: {},
+        scope: {ngModel: '='},
         link: function (scope, element, attrs) {
-            var message = angular.element("<div class='message' ng-show='!matched'>" + attrs.message + '</div>');
+            var message = angular.element("<div class='message' ng-show='!matched && ngModel!=undefined && ngModel.length != 0'>" + attrs.message + '</div>');
             $compile(message)(scope);
 
             element[0].parentNode.insertBefore(message[0], element[0].nextSibling);
@@ -31,20 +14,29 @@ app.directive('regex', function ($compile, $regex) {
             };
             parent.$watch(attrs.ngModel, function () {
                 if (parent.$eval(attrs.ngModel) == undefined || parent.$eval(attrs.ngModel) == "") {
-                    element.removeClass('waring');
-                    scope.matched = true;
-                    $regex[attrs.name] = false;
+                    setRegex(false);
                     return;
                 }
                 if (regexTest()) {
-                    element.removeClass('waring');
-                    scope.matched = true;
-                    $regex[attrs.name] = true;
+                    setRegex(true);
                     return;
                 }
-                element.addClass('waring');
-                scope.matched = false;
-                $regex[attrs.name] = false;
+                setRegex(false);
+
+                function setRegex(val) {
+                    scope.matched = val;
+                    if (val)
+                        element.removeClass('waring');
+                    else
+                        element.addClass('waring');
+
+                    if (!attrs.name)
+                        return;
+                    if (parent.regex == undefined)
+                        parent.regex = {};
+                    parent.regex[attrs.name] = val;
+                }
+
             });
         }
     }

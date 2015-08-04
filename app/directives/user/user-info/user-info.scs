@@ -1,0 +1,12 @@
+[user-info] img {
+    display: block;
+    margin: auto;
+    margin-top: 20px;
+    width: 70px !important;
+    height: 70px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+[user-info] .name {
+}

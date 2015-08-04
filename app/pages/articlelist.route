@@ -1,9 +1,9 @@
 app.post('/api/article/list', function (req, res) {
         var query = {done: true};
-        if (req.passed.query) {
-            if (req.passed.query.time) {
-                query.startTime = {$lte: req.passed.query.time};
-                query.endTime = {$gte: req.passed.query.time};
+        if (req.passed) {
+            if (req.passed.time) {
+                query.startTime = {$lte: req.passed.time};
+                query.endTime = {$gte: req.passed.time};
             }
             if (req.passed.location) {
                 query.location = {
@@ -13,8 +13,8 @@ app.post('/api/article/list', function (req, res) {
                     }
                 };
             }
-            if (req.passed.query.provider)
-                query.provider = req.passed.query.provider;
+            if (req.passed.provider)
+                query.provider = req.passed.provider;
         }
 
         var limit = req.passed.limit;
@@ -27,6 +27,5 @@ app.post('/api/article/list', function (req, res) {
             res.send(results);
         });
     }
-)
-;
+);
 

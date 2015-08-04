@@ -1,0 +1,9 @@
+<span ng-click="$event.stopPropagation()">
+    <span ng-show="!mod" class="not-edit" ng-click="modify()" ng-class="{'mod':modRight}">
+        <span ng-show="modInput">{{modFormat || modInput}}</span>
+        <span class="placeholder" ng-show="!modInput">{{modDefault}}</span>
+        <i class="fa fa-pencil"></i>
+    </span>
+    <input ng-show="mod" placeholder="{{placeholder}}" ng-model="modInput" class="mod-control"
+           ng-keydown="enter($event)">
+</span>

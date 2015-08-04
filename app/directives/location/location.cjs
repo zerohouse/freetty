@@ -3,21 +3,21 @@ app.directive('location', function () {
         restrict: 'E',
         templateUrl: '/app/directives/location/location.html',
         scope: {
-            user: '=',
+            location: '=',
             modSave: '=',
             modRight: '='
         },
         controller: function ($scope, req, $timeout) {
 
             $scope.$watch(function () {
-                return $scope.user.location;
+                return $scope.location;
             }, function () {
-                if ($scope.user.location == undefined)
+                if ($scope.location == undefined)
                     return;
 
                 if ($scope.map == undefined)
                     $scope.map = new google.maps.Map(document.getElementById('map-canvas'), {
-                        center: $scope.user.location.geometry.location,
+                        center: $scope.location.geometry.location,
                         zoom: 14
                     });
 
@@ -25,7 +25,7 @@ app.directive('location', function () {
                     $scope.marker.setMap(null);
 
                 $scope.marker = new google.maps.Marker({
-                    position: $scope.user.location.geometry.location,
+                    position: $scope.location.geometry.location,
                     map: $scope.map
                 });
                 setCenter();

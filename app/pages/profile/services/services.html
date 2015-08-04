@@ -1,2 +1,12 @@
-<services mod-right="isRootUserAndMod()" user="user" save="save"></services>
+<div class="panel-body">
+    <span class="input-label font-l">
+        Services
+        <span ng-show="isRootUser()">
+            <span ng-click="modService = false;save();" ng-show="modService">[완료]</span>
+            <span ng-click="modService = true;" ng-show="!modService">[서비스 편집]</span>
+        </span>
+    </span>
 
+    <div services='user.serviceTypes' mod-service="modService"></div>
+
+</div>

@@ -1,22 +1,39 @@
-<div class="bottom-border bottom-space" ng-repeat="(k, services) in user.serviceTypes">
-    <h3><span mod-textarea="k" mod-save="save" mod-right="isRootUserAndMod()"></span>
-        <span class="font-s"> - {{services.length}}개</span>
-        <span class="btn-s" ng-show="!modRight && !show[k]" ng-click="show[k]=true">[접기]</span>
-        <span class="btn-s" ng-show="!modRight && show[k]" ng-click="show[k]=false">[펼치기]</span>
-    </h3>
+<table class="table table-hover" ng-repeat="(key,services) in services">
+    <thead>
+    <tr>
+        <td colspan="5">
+            <span mod-input="key" mod-save="save" mod-default="서비스 유형"
+                  mod-right="modService" placeholder="서비스 유형"></span>
+            <span class="font-m vert-align" ng-show="modService" ng-click="remove(key)">서비스 삭제</span>
 
-    <div class="row top-border" ng-repeat="service in services" ng-show="!show[k]">
-        <service-row service="service" save="save" mod-right="modRight"></service-row>
-    </div>
-    <div class="row top-border" ng-show="modRight">
-        <div class="panel-body" ng-click="services.push({})">서비스 추가하기</div>
-    </div>
-</div>
-<div class="row" ng-show="modRight">
-    <div class="panel-body">
-        <div class="input-group">
-            <input class="form-control" placeholder="서비스 유형" ng-model="newTypeName"><a
-                class="input-group-addon" ng-click="newType(newTypeName)">서비스 유형 추가</a>
-        </div>
-    </div>
+            <span ng-show="!modService">
+                <span class="btn-s" ng-show="!hide[key]" ng-click="hide[key]=true">[접기]</span>
+                <span class="btn-s" ng-show="hide[key]" ng-click="hide[key]=false">[펼치기]</span>
+            </span>
+        </td>
+    </tr>
+    </thead>
+    <tbody ng-show="!hide[key] || modService">
+    <tr ng-click="select.toggle(service)" mod-right="modService" service-array="services" service-row
+        select="select" service="service"
+        ng-repeat="service in services">
+
+
+    </tr>
+    <tr ng-show="modService">
+        <td colspan="5" ng-click="services.push({})">새로운 서비스 <i class="fa fa-plus"></i></td>
+    </tr>
+    </tbody>
+</table>
+<div ng-show="modService">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <div class="input-group">
+                <input class="form-control" placeholder="새 서비스 타입" ng-model="newTypeName"><a
+                    class="input-group-addon" ng-click="newType(newTypeName)">서비스 타입 추가</a>
+            </div>
+        </tr>
+        </thead>
+    </table>
 </div>

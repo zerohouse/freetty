@@ -9,7 +9,8 @@
 </div>
 <ul ng-show="show" class="list-group results">
     <li class="list-group-item" ng-repeat="result in results = (data | filter: keyword | limitTo:limit)"
-        ng-class="{active:select == results.indexOf(result)}">
+        ng-class="{active:select == results.indexOf(result)}" ng-click="selectSelected();"
+        ng-mouseover="select = results.indexOf(result)">
         {{result}}
     </li>
 </ul>

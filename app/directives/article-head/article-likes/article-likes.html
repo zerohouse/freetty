@@ -1,0 +1,3 @@
+<i class="fa"
+   ng-class="{'fa-heart':article.likes.contains(user._id), 'fa-heart-o':!article.likes.contains(user._id)}"
+   ng-click="likeToggle(article);"></i> {{article.likes.length}}

@@ -1,84 +1,94 @@
 <div class="container">
-
-    <div class="article-header">
-        <img class="article-back" ng-show="article.photos.length>0" ng-src="{{'/uploads/'+selectedPhoto}}">
-
-        <div class="photos">
-            <div class="photo" ng-repeat="photo in article.photos" ng-click="selectPhoto(photo)">
-                <img ng-src="{{'/uploads/' + photo}}">
-                <i ng-show="isRootUserAndMod()"
-                   ng-click="remove(article.photos, photo, true);$event.stopPropagation();"
-                   class="fa fa-times"></i>
-            </div>
-
-            <div ng-show="isRootUserAndMod()" ng-show="true" ngf-drop ng-model="files" class="drop-box" ngf-select
-                 ngf-drag-over-class="dragover" ngf-multiple="true" ngf-allow-dir="true"
-                 ngf-accept="'image/*'"><i class="fa fa-picture-o"></i> 사진 추가
-            </div>
-        </div>
-
-    </div>
-</div>
-
-
-<div class="container">
-    <a ng-show="isRootUser() && !mod" class="btn btn-primary" ng-click="mod =!mod;">수정하기</a>
-
-    <div ng-show="isRootUserAndMod()">
-        <a class="btn btn-primary" ng-click="mod =!mod;">수정완료</a>
-        <a ng-show="!article.done" class="btn btn-primary" ng-click="done();">작성이 완료되지 않은 게시물입니다.</a>
-        <a ng-show="article.done" class="btn btn-primary">게시 중 입니다.</a>
-    </div>
-
-
     <div class="row">
-        <div class="user-left">
-            <div user-info="article.provider"></div>
-        </div>
-        <div class="col-sm-9">
-            <h1 mod-textarea="article.head" mod-save="save" mod-default="제목이 없습니다." mod-right="isRootUserAndMod()"
-                placeholder="제목"></h1>
+        <div class="col-md-8">
+            <div class="panel-body contents">
 
-            <div array="article.tags" el-class="btn btn-info" mod-right="isRootUserAndMod()" save="save" del-confirm="true"></div>
+                <div class="header padder">
+                    <h3 ng-bind-html="article.head"></h3>
 
-            <div class="row">
-                <h4>
-                    <i class="fa fa-krw"></i>
-                 <span mod-format="article.price.moneyFormat()" mod-number="article.price" mod-save="save"
-                       mod-default="0"
-                       mod-right="isRootUserAndMod()" placeholder="가격"></span>
-                </h4>
+                    <div class="label label-info" ng-repeat="tag in article.tags">#{{tag}}</div>
+
+                    <div class="icon-box">
+                        <span class="right-space"><i class="fa fa-eye"></i> {{article.hits||0}}</span>
+                        <span class="right-space"><article-likes article="article"></article-likes></span>
+                        <span ui-sref="{scroll: 'recommends'}"><i
+                                class="fa fa-comment-o"></i> {{article.reply||0}}</span>
+                    </div>
+                </div>
+
+                <div class="header none-top-border description padder">
+                    <span ng-bind-html="article.body"></span>
+                </div>
+
+                <div class="body images padder none-top-border">
+                       <span class="input-label" ng-click="expand = !expand" ng-init="expand=true">
+                            Photos
+                            <span ng-show="!expand">[Thumbnail]</span>
+                            <span ng-show="expand">[Expand]</span>
+                        </span>
+
+                    <div class="photos center">
+                        <div ng-class="{'thumb':!expand}" class="photo" ng-repeat="photo in article.photos"
+                             ng-click="selectPhoto(photo)">
+                            <img ng-src="{{'/uploads/' + photo}}">
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="header padder none-top-border">
+                    <span class="input-label">Services</span>
+
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <td colspan="4">적용 서비스 ({{article.selectedServices.length}})</td>
+                        </tr>
+                        </thead>
+
+
+                        <tbody>
+                        <tr ng-repeat="service in article.selectedServices">
+                            <td></td>
+                            <td>{{service.name}}</td>
+                            <td>{{service.duration.toDuration()}}</td>
+                            <td class="number"><i class="fa fa-krw"></i>{{service.price.moneyFormat()}}</td>
+                        </tr>
+                        </tbody>
+                        <thead>
+                        <tr>
+                            <td colspan="2">계</td>
+                            <td>{{article.total.duration.toDuration()}}</td>
+                            <td class="number">
+                                <span ng-class="{strike:article.discount.value != 0}"><i class="fa fa-krw"></i>{{article.total.price.moneyFormat()}}</span>
+                                    <span ng-show="article.discount.value != 0"> <i class="fa fa-arrow-right"></i> <i
+                                            class="fa fa-krw"></i>{{article.total.discountPrice.moneyFormat()}}</span>
+                            </td>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+
+                <div class="body images padder none-top-border">
+                    <span id="recommends" class="input-label">Recommends</span>
+
+                    <replies user="user" reply-id="stateParams._id"></replies>
+                </div>
             </div>
-            <div class="row info-icons">
-                <i class="fa"
-                   ng-class="{'fa-heart':article.likes.contains(user._id), 'fa-heart-o':!article.likes.contains(user._id)}"
-                   ng-click="likeToggle()"></i>
-                {{article.likes.length}}
-                <i class="fa fa-comment-o"></i> {{replies.length}}
+
+        </div>
+        <div class="col-md-4">
+            <div class="panel-body provider">
+                <span class="small-subject">Content Provided By</span>
+
+                <div user-block="article.provider"></div>
+            </div>
+
+            <div ng-show="isRootUser()" class="panel-body">
+                <a ui-sref="edit({_id:stateParams._id})">수정하기</a>
             </div>
         </div>
     </div>
 
-</div>
-<div class="jumbotron">
-    <div class="container">
-        <div mod-save="save" mod-content="article.body" mod-default="본문 내용이 없습니다." mod-right="isRootUserAndMod()"
-             placeholder="제목"></div>
-    </div>
-</div>
-
-<div class="container" ng-controller="reply" ng-show="!mod">
-    <div class="reply">
-        <div class="left">
-            <div user-info="user._id"></div>
-        </div>
-        <div class="right">
-            <div class="input-group">
-                <textarea placeholder="내용을 작성해주세요." class="form-control" ng-model="newReply"></textarea>
-
-                <div class="input-group-addon btn btn-default" ng-click="writeReply()">댓글달기</div>
-            </div>
-        </div>
-    </div>
-    <div reply="reply" delete="delete" ng-repeat="reply in replies"></div>
 </div>

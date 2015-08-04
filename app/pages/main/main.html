@@ -39,8 +39,8 @@
 <div class="container" id="services">
     <div class="btn btn-default" ng-click="newService()" ng-show='user.logged'>새 서비스 등록하기</div>
     <div class="row">
-        <div class="panel-body">
-            <div class="half" ng-repeat="article in articles" article-head="article"></div>
+        <div class="panel-body center">
+            <article-head ng-repeat="article in articles" article="article"></article-head>
         </div>
     </div>
     <div ng-show="!noMore" class="badge" ng-click="get()">더보기</div>

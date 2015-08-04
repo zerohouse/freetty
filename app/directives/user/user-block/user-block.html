@@ -1,0 +1,9 @@
+<div class="row">
+    <div class="photo">
+        <img ng-src="{{photo}}">
+    </div>
+    <div class="info">
+        <div class="name">{{user.name}}</div>
+        <div class="badge" ng-repeat="specialty in user.introduce.specialty | limitTo:2">{{specialty}}</div>
+    </div>
+</div>

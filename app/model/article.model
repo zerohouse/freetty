@@ -1,13 +1,16 @@
 var Article = mongoose.model('article', mongoose.Schema({
     done: Boolean,
     head: String,
-    body: Object,
+    body: String,
     provider: String,
     date: Date,
-    price: String,
+    total: Object,
+    discount: Object,
+    selectedServices: Array,
     tags: Array,
     photos: Array,
     likes: Array,
     reply: Number,
+    hits: Number,
     location: Object
 }));

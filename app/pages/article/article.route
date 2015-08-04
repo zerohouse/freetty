@@ -6,7 +6,7 @@ app.get('/api/article', function (req, res) {
         res.send(e);
         return;
     }
-    Article.findOne({_id: _id}, function (err, result) {
+    Article.findOneAndUpdate({_id: _id}, {$inc: {hits: 1}}, function (err, result) {
         res.send(result);
     });
 });
@@ -24,42 +24,6 @@ app.post('/api/article', function (req, res) {
     });
 });
 
-app.put('/api/article', function (req, res) {
-    if (req.session.user == undefined) {
-        res.send('로그인이 필요한 서비스입니다.');
-        return;
-    }
-    try {
-        var _id = new ObjectID(req.passed._id);
-    }
-    catch (e) {
-        res.send(e);
-        return;
-    }
-    req.passed.date = new Date();
-    Article.update({_id: _id, provider: req.session.user._id}, req.passed, function (err, result) {
-        res.send(result);
-    });
-});
-
-app.post('/api/article/upload', function (req, res) {
-    if (req.session.user == undefined) {
-        res.send('로그인이 필요한 서비스입니다.');
-        return;
-    }
-    var files = [];
-    if (req.files.file == undefined) {
-        res.send('no files');
-        return;
-    }
-    if (req.files.file.forEach == undefined)
-        files.push(req.files.file.name);
-    else
-        req.files.file.forEach(function (file) {
-            files.push(file.name);
-        });
-    res.send(files);
-});
 
 app.get('/api/article/new', function (req, res) {
     var result = {};

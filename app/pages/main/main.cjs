@@ -41,7 +41,7 @@ app.controller('main', function ($scope, req, $state, alert) {
                 alert(res.err);
                 return;
             }
-            $state.go('article', {_id: res, mod: true});
+            $state.go('edit', {_id: res});
         });
     };
 

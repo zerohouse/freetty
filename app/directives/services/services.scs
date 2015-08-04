@@ -1,5 +1,5 @@
 .price-s {
-    font-size: 60%;
+    font-size: 80%;
     float: right;
 }
 
@@ -9,4 +9,31 @@
 
 .btn-s {
     font-size: 40%;
+}
+
+.top-border {
+    border-top: 1px solid #eee;
+}
+
+.bottom-border {
+    border-bottom: 1px solid #eee;
+}
+
+.top-space {
+    padding-top: 20px;
+    margin-top: 20px;
+}
+
+.bottom-space {
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.bottom-space-s {
+    margin-bottom: 10px;
+}
+
+.service-label {
+    color: #119975;
+    font-weight: 900;
 }

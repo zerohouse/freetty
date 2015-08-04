@@ -1,0 +1,34 @@
+app.post('/api/article/like', function (req, res) {
+    if (req.session.user == undefined) {
+        res.send({err: '로그인이 필요한 서비스입니다.'});
+        return;
+    }
+    try {
+        var _id = new ObjectID(req.passed._id);
+    }
+    catch (e) {
+        res.send(e);
+        return;
+    }
+    Article.update({_id: _id}, {$push: {likes: req.session.user._id}}, function (err, result) {
+        res.send(result);
+    });
+});
+
+
+app.post('/api/article/dislike', function (req, res) {
+    if (req.session.user == undefined) {
+        res.send({err: '로그인이 필요한 서비스입니다.'});
+        return;
+    }
+    try {
+        var _id = new ObjectID(req.passed._id);
+    }
+    catch (e) {
+        res.send(e);
+        return;
+    }
+    Article.update({_id: _id}, {$pop: {likes: req.session.user._id}}, function (err, result) {
+        res.send(result);
+    });
+});

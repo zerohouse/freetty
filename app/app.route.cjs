@@ -1,3 +1,10 @@
+app.config(["$locationProvider", function ($locationProvider) {
+    $locationProvider.html5Mode({
+        enabled: true,
+        requireBase: false
+    });
+}]);
+
 app.config(function ($stateProvider, $urlRouterProvider) {
 
     $urlRouterProvider.otherwise("/");
@@ -14,9 +21,14 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             templateUrl: "/app/pages/profile/profile.html"
         })
         .state('article', {
-            url: "/article/:_id?mod",
+            url: "/article/:_id?scroll",
             controller: "article",
             templateUrl: "/app/pages/article/article.html"
+        })
+        .state('edit', {
+            url: "/article/:_id/edit",
+            controller: "edit",
+            templateUrl: "/app/pages/article/edit/edit.html"
         })
         .state('artist-register-step1', {
             url: "/register/step1",
@@ -41,10 +53,3 @@ app.config(function ($stateProvider, $urlRouterProvider) {
 
 
 });
-
-app.config(["$locationProvider", function ($locationProvider) {
-    $locationProvider.html5Mode({
-        enabled: true,
-        requireBase: false
-    });
-}]);

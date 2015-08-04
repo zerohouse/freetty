@@ -1,0 +1,25 @@
+[mod-input] .not-edit {
+    display: inline-block;
+}
+
+[mod-input] .not-edit i {
+    display: none;
+    font-size: 60%;
+    color: #aaa;
+}
+
+[mod-input] .mod {
+    cursor: pointer;
+}
+
+[mod-input] .mod:hover i {
+    display: inline-block;
+}
+
+[mod-input] .mod-control {
+    width: 90%;
+    margin: 0 3%;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding: 2%;
+}

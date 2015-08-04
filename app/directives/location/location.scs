@@ -7,3 +7,19 @@
 location {
     font-size: 80%;
 }
+
+location .edit i {
+    display: none;
+    font-size: 60%;
+    color: #aaa;
+}
+
+location .edit {
+    cursor: pointer;
+}
+
+location .edit:hover i {
+    display: inline-block;
+}
+
+

@@ -1,0 +1,68 @@
+.input-label {
+    color: #119975;
+    font-size: 13px;
+    font-weight: 900;
+}
+
+.photos {
+    list-style: none;
+    padding: 10px 0;
+    margin: 10px 0;
+}
+
+.photos .photo {
+    display: inline-block;
+    margin: 5px;
+    position: relative;
+    border: 1px solid #eee;
+}
+
+.photo i {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    color: #777;
+}
+
+.photos .photo img {
+    width: 100%;
+    height: 100%;
+}
+
+.strike {
+    text-decoration: line-through;
+}
+
+td.number {
+    text-align: right;
+}
+
+.photo.thumb {
+    height: 80px;
+}
+
+.photo.thumb img {
+    width: inherit;
+}
+
+.center {
+    text-align: center;
+}
+
+.none-top-border {
+    border-top: none;
+}
+
+.drop-box {
+    border: 3px dotted #ccc;
+    color: #aaa;
+    width: 40%;
+    padding: 2%;
+    margin: auto;
+    margin-top: 30px;
+}
+
+.dragover {
+    color: #777;
+    border-color: #777;
+}

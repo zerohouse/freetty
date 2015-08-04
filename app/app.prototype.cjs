@@ -25,13 +25,10 @@ Date.prototype.toString = function () {
     return date + " " + this.toAmPm();
 };
 
-Array.prototype.contains = function (val) {
-    for (var i = 0; i < this.length; i++) {
-        if (this[i] == val)
-            return true;
-    }
-    return false;
+Array.prototype.contains = function (item) {
+    return this.indexOf(item) != -1;
 };
+
 
 Array.prototype.remove = function (val, con) {
     if (con)
@@ -39,6 +36,15 @@ Array.prototype.remove = function (val, con) {
             return;
     this.splice(this.indexOf(val), 1);
 };
+
+Array.prototype.toggle = function (item) {
+    if (this.contains(item)) {
+        this.remove(item);
+        return;
+    }
+    this.push(item);
+};
+
 
 String.prototype.newLine = function () {
     return this.replace(/\n/g, '<br>');

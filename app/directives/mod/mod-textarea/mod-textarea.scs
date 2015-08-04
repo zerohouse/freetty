@@ -1,0 +1,19 @@
+[mod-textarea] .not-edit {
+    display: inline-block;
+}
+
+[mod-textarea] .not-edit i {
+    display: none;
+    font-size: 60%;
+    color: #aaa;
+}
+
+[mod-textarea] .mod {
+    cursor: pointer;
+}
+
+[mod-textarea] .mod:hover i {
+    display: inline-block;
+}
+
+

@@ -1,16 +1,12 @@
 app.directive('articleHead', function (users) {
     return {
-        restrict: 'A',
+        restrict: 'E',
         scope: {
-            articleHead: '='
+            article: '='
         },
         templateUrl: "/app/directives/article-head/article-head.html",
         controller: function ($scope) {
             $scope.users = users;
-        },
-        link: function (s) {
-            s.article = s.articleHead;
         }
-
     }
 });

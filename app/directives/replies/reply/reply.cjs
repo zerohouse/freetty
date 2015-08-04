@@ -1,7 +1,7 @@
 app.directive('reply', function () {
     return {
         restrict: 'A',
-        templateUrl: '/app/directives/reply/reply.html',
+        templateUrl: '/app/directives/replies/reply/reply.html',
         scope: {
             reply: '=',
             delete: '='

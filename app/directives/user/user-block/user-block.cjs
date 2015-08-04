@@ -1,21 +1,21 @@
-app.directive('userPhoto', function (users) {
+app.directive('userBlock', function (users) {
 
     return {
         restrict: 'A',
-        templateUrl: '/app/directives/user-photo/user-photo.html',
+        templateUrl: '/app/directives/user/user-block/user-block.html',
         scope: {
-            userPhoto: '='
+            userBlock: '='
         },
         controller: function ($scope) {
-            $scope.$watch('userPhoto', function () {
-                if ($scope.userPhoto == undefined)
+            $scope.$watch('userBlock', function () {
+                if ($scope.userBlock == undefined)
                     return;
-                users($scope.userPhoto, function (user) {
+                users($scope.userBlock, function (user) {
                     $scope.user = user;
                 });
             });
 
-            var defaultImg = 'http://cfile29.uf.tistory.com/image/23315D3F53808A931FB5E9';
+            var defaultImg = '/dist/profile.jpg';
 
             $scope.$watch('user', function () {
                 if ($scope.user == undefined)

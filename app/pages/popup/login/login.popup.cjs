@@ -1,14 +1,12 @@
-app.controller('login.popup', function ($regex, popup, $scope, req, user) {
+app.controller('login.popup', function (popup, $scope, req, user) {
     $scope.popup = popup;
-
-    $scope.regex = $regex;
 
     $scope.user = user;
 
     $scope.login = function () {
-        if (!$regex.email)
+        if (!$scope.regex.email)
             return;
-        if (!$regex.password)
+        if (!$scope.regex.password)
             return;
         if (!$scope.exist)
             return;
@@ -31,7 +29,7 @@ app.controller('login.popup', function ($regex, popup, $scope, req, user) {
     });
 
     $scope.register = function () {
-        if (!$regex.$all())
+        if (!$scope.regex.email || !$scope.regex.password)
             return;
         if ($scope.exist)
             return;
@@ -55,7 +53,9 @@ app.controller('login.popup', function ($regex, popup, $scope, req, user) {
 
 
     function existCheck() {
-        if (!$regex.email) {
+        if ($scope.regex == undefined)
+            return;
+        if (!$scope.regex.email) {
             $scope.exist = true;
             return;
         }

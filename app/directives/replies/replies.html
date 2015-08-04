@@ -1,0 +1,13 @@
+<div class="reply"  ng-show="user.logged">
+    <div class="col-sm-3">
+        <div user-info="user._id"></div>
+    </div>
+    <div class="col-sm-9 top-padding-m">
+        <div class="input-group">
+            <textarea placeholder="내용을 작성해주세요." class="form-control" ng-model="newReply"></textarea>
+
+            <div class="input-group-addon btn btn-default" ng-click="writeReply()">댓글달기</div>
+        </div>
+    </div>
+</div>
+<div reply="reply" delete="delete" ng-repeat="reply in replies"></div>

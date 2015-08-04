@@ -1,28 +1,25 @@
 <div class="container">
     <div class="row profile">
-        <div class="col-md-4">
-            <div class="row top-space">
+        <div class="col-sm-4">
+            <div class="row">
                 <div class="panel-body">
-                    <h4 mod-textarea="user.name" mod-save="save" mod-right="isRootUserAndMod()"></h4>
+                    <h4 mod-textarea="user.name" mod-save="save" mod-right="isRootUser()"></h4>
 
-                    <div>
-                    <span class="label label-danger" ng-show="isRootUser() && !mod" ng-click="mod=true;">EDIT PROFILE
-                    </span>
-                        <span class="label label-success" ng-show="isRootUserAndMod()" ng-click="mod=false;">DONE</span>
-                    </div>
                     <span ng-show="user.url || urlMod">http://freetty.com/</span><span
                         mod-textarea="user.url" mod-default="url을 설정해주세요." placeholder="url"
-                        mod-save="urlSave" mod-right="isRootUserAndMod()" mod="urlMod"></span>
+                        mod-save="urlSave" mod-right="isRootUser()" mod="urlMod"></span>
                 </div>
             </div>
             <div class="row">
                 <div class="half">
-                    <img ngf-accept="'image/*'" ng-model="files" ngf-select="true" ngf-drop="true"
-                         ng-src="{{photo}}" ng-show="isRootUserAndMod()">
-                    <img ng-src="{{photo}}" ng-show="!isRootUserAndMod()">
+                    <img class="photo" ngf-accept="'image/*'" ng-model="files" ngf-select="true" ngf-drop="true"
+                         ng-src="{{photo}}" ng-show="isRootUser()">
+                    <img class="photo" ng-src="{{photo}}" ng-show="!isRootUser()">
                 </div>
                 <div class="half">
-                    <div class="font-small"><i class="fa fa-comment-o"></i> Hair Designer</div>
+                    <div class="font-small" ng-repeat="s in user.introduce.specialty | limitTo : 2">
+                        <i class="fa fa-star"></i> {{s}}
+                    </div>
                 </div>
             </div>
             <div class="row bottom-space">
@@ -33,80 +30,100 @@
                     <a class="btn btn-default full-width">Follow</a>
                 </div>
             </div>
-            <div class="row bottom-border top-border">
-                <div class="panel-body">
-                    <a class="btn btn-primary full-width">Book Me</a>
-                </div>
-            </div>
-            <div class="row bottom-border">
-                <div class="panel-body">
-                    <div><span>LOVE IT</span><span class="size">30</span></div>
-                    <div><span>LOVE IT</span><span class="size">30</span></div>
-                    <div><span>CLIENTS</span><span class="size">30</span></div>
-                    <div><span>FOLLOWERS</span><span class="size">30</span></div>
-                </div>
-            </div>
-            <div class="row bottom-border" ng-show="user.introduce.aboutme.length || isRootUserAndMod();">
+            <!--<div class="row bottom-border top-border">-->
+            <!--<div class="panel-body">-->
+            <!--<a class="btn btn-primary full-width">Book Me</a>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--<div class="row bottom-border">-->
+            <!--<div class="panel-body">-->
+            <!--<div><span>LOVE IT</span><span class="size">30</span></div>-->
+            <!--<div><span>LOVE IT</span><span class="size">30</span></div>-->
+            <!--<div><span>CLIENTS</span><span class="size">30</span></div>-->
+            <!--<div><span>FOLLOWERS</span><span class="size">30</span></div>-->
+            <!--</div>-->
+            <!--</div>-->
+            <div class="row bottom-border" ng-show="user.introduce.aboutme.length || isRootUser();">
                 <div class="panel-body">
                     <h5>ABOUT ME</h5>
 
-                    <div class="el" mod-textarea="user.introduce.aboutme" mod-save="save"
-                         mod-right="isRootUserAndMod()"></div>
+                    <div class="el" mod-default="자기소개" placeholder="자기소개"
+                         mod-textarea="user.introduce.aboutme" mod-save="save"
+                         mod-right="isRootUser()"></div>
                 </div>
             </div>
-            <div class="row bottom-border" ng-show="user.introduce.licenses.length!=0 || isRootUserAndMod()">
+            <div class="row bottom-border" ng-show="user.licenses.length!=0 || isRootUser()">
                 <div class="panel-body">
                     <h5>Licenses</h5>
 
                     <div class="btn btn-info" ng-repeat="element in user.licenses">{{element.name}} <span class="badge">(국가공인)</span>
                         <i class="fa fa-times" ng-click="deleteLicense(element);"
-                           ng-show="isRootUserAndMod()"></i></div>
+                           ng-show="isRootUser()"></i></div>
 
-                    <div ng-click="popup('license', $event)">자격증 추가 하기</div>
+                    <div ng-show="isRootUser()" ng-click="popup('license', $event)">자격증 추가 하기</div>
 
                 </div>
             </div>
-            <div class="row bottom-border" ng-show="user.introduce.awards.length!=0 || isRootUserAndMod()">
+            <div class="row bottom-border" ng-show="user.introduce.specailty.length!=0 || isRootUser()">
                 <div class="panel-body">
-                    <h5>AWARDS</h5>
+                    <h5>Specialty</h5>
 
-                    <div array="user.introduce.awards" el-class="label label-primary" mod-right="isRootUserAndMod()"
+                    <div array="user.introduce.specialty" el-class="label label-primary" mod-right="isRootUser()"
                          save="save"
                          del-confirm="true"></div>
                 </div>
             </div>
-            <div class="row bottom-border">
-                <div class="panel-body">
-                    <h5>BUSINESS HOURS</h5>
 
-                    <div day='MON' mod="isRootUserAndMod()" save="save" user="user"></div>
-                    <div day='TUE' mod="isRootUserAndMod()" save="save" user="user"></div>
-                    <div day='WED' mod="isRootUserAndMod()" save="save" user="user"></div>
-                    <div day='THUR' mod="isRootUserAndMod()" save="save" user="user"></div>
-                    <div day='FRI' mod="isRootUserAndMod()" save="save" user="user"></div>
-                    <div day='SAT' mod="isRootUserAndMod()" save="save" user="user"></div>
-                    <div day='SUN' mod="isRootUserAndMod()" save="save" user="user"></div>
-                </div>
-            </div>
-            <div ng-show="isRootUserAndMod()||user.introduce.contact||user.location" class="row bottom-border">
+            <div ng-show="isRootUser()||user.introduce.contact||user.location" class="row bottom-border">
                 <div class="panel-body">
                     <h5>CONTACT </h5>
 
-                    <div class="el" mod-textarea="user.introduce.contact" mod-save="save"
-                         mod-right="isRootUserAndMod()"></div>
 
-                    <location user="user" mod-save="save" mod-right="isRootUserAndMod()"></location>
+                    <div class="el">
+                        <span mod-default="email" placeholder="email"
+                              mod-input="user.introduce.contact.email"
+                              mod-save="save"
+                              mod-right="isRootUser()"></span></div>
+                    <div class="el">
+                        <span mod-default="phone" placeholder="phone"
+                              mod-input="user.introduce.contact.phone"
+                              mod-save="save"
+                              mod-right="isRootUser()"></span></div>
+
+                    <location location="user.location" mod-save="save" mod-right="isRootUser()"></location>
                 </div>
             </div>
-            <div ng-show="isRootUserAndMod()||user.introduce.ontheweb.length !=0" class="row bottom-border">
+            <!--<div ng-show="isRootUser()||user.introduce.ontheweb.length !=0" class="row bottom-border">-->
+            <!--<div class="panel-body">-->
+            <!--<h5>ON THE WEB</h5>-->
+
+            <!--<div array="user.introduce.ontheweb" el-class="label label-danger" mod-right="isRootUser()"-->
+            <!--save="save"-->
+            <!--del-confirm="true"></div>-->
+            <!--</div>-->
+            <!--</div>-->
+            <div class="row bottom-border">
                 <div class="panel-body">
-                    <h5>ON THE WEB</h5>
-
-                    <div array="user.introduce.ontheweb" el-class="label label-danger" mod-right="isRootUserAndMod()"
-                         save="save"
-                         del-confirm="true"></div>
+                    <h5>Business Hours </h5>
+                    <table class="table">
+                        <tr day='MON' ng-show="user.introduce.working.MON.attend || isRootUser()" mod="isRootUser()"
+                            save="save" user="user"></tr>
+                        <tr day='TUE' ng-show="user.introduce.working.TUE.attend || isRootUser()" mod="isRootUser()"
+                            save="save" user="user"></tr>
+                        <tr day='WED' ng-show="user.introduce.working.WED.attend || isRootUser()" mod="isRootUser()"
+                            save="save" user="user"></tr>
+                        <tr day='THUR' ng-show="user.introduce.working.THUR.attend || isRootUser()" mod="isRootUser()"
+                            save="save" user="user"></tr>
+                        <tr day='FRI' ng-show="user.introduce.working.FRI.attend || isRootUser()" mod="isRootUser()"
+                            save="save" user="user"></tr>
+                        <tr day='SAT' ng-show="user.introduce.working.SAT.attend || isRootUser()" mod="isRootUser()"
+                            save="save" user="user"></tr>
+                        <tr day='SUN' ng-show="user.introduce.working.SUN.attend || isRootUser()" mod="isRootUser()"
+                            save="save" user="user"></tr>
+                    </table>
                 </div>
             </div>
+
             <div class="row">
                 <div class="panel-body">
                     <div>Member since {{user.date.toTime().toString()}}</a>
@@ -116,21 +133,39 @@
         </div>
 
 
-        <div class="col-md-8 profile">
+        <div class="col-sm-8 profile">
 
-            <ul class="nav tabs">
-                <li ng-class="{active:isState('portfolio')}">
-                    <a ng-click="setState('portfolio')">Portfolio</a>
-                </li>
-                <li ng-class="{active:isState('services')}">
-                    <a ng-click="setState('services')">Services</a>
-                </li>
-                <li ng-class="{active:isState('recommend')}">
-                    <a ng-click="setState('recommend')">Recommend</a>
-                </li>
-            </ul>
+            <div class="panel-body">
+                <div class="input-label font-l bottom-space-s">
+                    Services
+                    <span ng-show="isRootUser()">
+                        <span ng-click="modService = false;save();" ng-show="modService">[완료]</span>
+                        <span ng-click="modService = true;" ng-show="!modService">[서비스 편집]</span>
+                    </span>
+                </div>
 
-            <ng-include class="panel-body" src="state.templateUrl"></ng-include>
+                <div services='user.serviceTypes' mod-service="modService"></div>
+            </div>
+
+
+            <div class="panel-body" ng-controller="profile.portfolio">
+                <div class="input-label font-l bottom-space-s">
+                    Portfolios
+                </div>
+                <div class="center">
+                    <article-head ng-repeat="article in articles" article="article"></article-head>
+                </div>
+            </div>
+
+            <div class="panel-body">
+                <div class="input-label font-l bottom-space-s">
+                    Recommends
+                </div>
+
+                <replies user="user" reply-id="user._id"></replies>
+
+            </div>
+
 
         </div>
     </div>

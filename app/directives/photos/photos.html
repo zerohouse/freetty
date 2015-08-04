@@ -9,10 +9,6 @@
         <div ng-click="left()" class="arrow left"><i class="fa fa-angle-left"></i></div>
         <div ng-click="right()" class="arrow right"><i class="fa fa-angle-right"></i></div>
     </div>
-    <div class="img-handle">
-        <i class="fa fa-circle-o" ng-repeat="photo in photos"
-           ng-class="{'fa-circle':select == photos.indexOf(photo)}" ng-click="selectPhoto(photo)"></i>
-    </div>
 
     <div class='img-wall' ng-class="{'dark':loading}"></div>
 </div>

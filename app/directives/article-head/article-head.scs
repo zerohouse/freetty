@@ -1,10 +1,15 @@
-.article {
+article-head {
+    width: 260px;
     display: inline-block;
-    position: relative;
+    margin: 10px;
 }
 
-.article img {
+.article {
+    position: relative;
+    border: 1px solid #eee;
+    border-radius: 0 0 6px 6px;
     width: 100%;
+    text-align: center;
 }
 
 .article .price {
@@ -12,14 +17,14 @@
     top: 0;
     background-color: rgba(60, 63, 64, 0.9);
     color: white;
-    padding: 5px 15px 5px 40px;
-    font-size: 30px;
+    padding: 5px 10px 5px 30px;
+    font-size: 22px;
 }
 
 .price > i {
     position: absolute;
-    top: 13px;
-    left: 20px;
+    top: 10px;
+    left: 15px;
     font-size: 60%;
 }
 
@@ -34,6 +39,7 @@
 
 .info .title {
     font-size: 20px;
+    overflow: hidden;
 }
 
 .article small {

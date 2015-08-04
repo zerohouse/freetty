@@ -8,7 +8,8 @@ app.directive('timerRange', function () {
             ceiling: '=',
             step: '=',
             placeholder: '@',
-            modRight: '='
+            modRight: '=',
+            modDefault: '@'
         },
         templateUrl: '/app/directives/time/timer-range/timer-range.html',
         controller: function ($scope) {

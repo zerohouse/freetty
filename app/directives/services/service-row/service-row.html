@@ -1,22 +1,14 @@
-<div class="col-sm-6">
-    <h4><span mod-textarea="service.name" mod-save="save" mod-default="서비스명"
-              mod-right="modRight" placeholder="서비스명"></span>
-        <span class="price-s"><i class="fa fa-krw"></i>
-            <span mod-number="service.price" mod-format="service.price.moneyFormat()" mod-save="save" mod-default="0"
-                  mod-right="modRight" placeholder="가격"></span>
-        </span>
-    </h4>
-
-    <p mod-textarea="service.description" mod-default="서비스 내용" placeholder="서비스 내용" mod-right="modRight"
-       mod-save="save"></p>
-</div>
-<div class="col-sm-3">
-    <div class="panel-body">
-        <timer-duration ng-model="service.duration" mod-right="modRight" save="save" format="toTime"></timer-duration>
-    </div>
-</div>
-<div class="col-sm-3">
-    <div class="panel-body">
-        <a class="btn btn-success" ng-show="!modRight">Book Me</a>
-    </div>
-</div>
+<td ng-show="select && !modRight">
+    <i class="fa fa-check-square-o" ng-show="select.contains(service)"></i>
+    <i class="fa fa-square-o" ng-show="!select.contains(service)"></i>
+</td>
+<td><span mod-input="service.name" mod-save="save" mod-default="서비스명"
+          mod-right="modRight" placeholder="서비스명"></span></td>
+<td>
+    <timer-duration ng-model="service.duration" mod-right="modRight" save="save" format="toTime"></timer-duration>
+</td>
+<td class="number"><i ng-show="!mod" class="fa fa-krw"></i>
+            <span mod="mod" mod-input="service.price" mod-format="service.price.moneyFormat()" mod-save="save"
+                  mod-default="0"
+                  mod-right="modRight" placeholder="가격"></span></td>
+<td ng-show="modRight" ng-click="serviceArray.remove(service, true);save()" class="font-m vert-align">삭제</td>

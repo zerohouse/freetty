@@ -9,6 +9,21 @@ app.directive('modTextarea', function () {
             modRight: '=',
             modDefault: '@',
             placeholder: '@'
+        },
+        controller: function ($scope) {
+            $scope.modify = function () {
+                if (!$scope.modRight)
+                    return;
+                $scope.mod = true;
+            };
+
+            $scope.done = function () {
+                $scope.mod = false;
+                if ($scope.modSave == undefined)
+                    return;
+                $scope.modSave();
+            };
+
         }
     }
 });

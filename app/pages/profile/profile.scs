@@ -1,4 +1,4 @@
-.profile img {
+.profile .photo {
     width: 100%;
 }
 
@@ -27,28 +27,6 @@
     width: 100%;
 }
 
-.profile .top-border {
-    border-top: 1px solid #eee;
-}
-
-.profile .bottom-border {
-    border-bottom: 1px solid #eee;
-}
-
-.profile .top-space {
-    padding-top: 20px;
-    margin-top: 20px;
-}
-
-.profile .bottom-space {
-    padding-bottom: 20px;
-    margin-bottom: 20px;
-}
-
-.profile .bottom-space-s {
-    margin-bottom: 10px;
-}
-
 .profile .row {
     margin-left: 0;
     margin-right: 0;
@@ -60,8 +38,8 @@
 }
 
 .profile .el {
-    margin-right: 10px;
     font-size: 90%;
+    margin: 10px 0;
 }
 
 .profile .label {
@@ -84,4 +62,8 @@
 
 .top-margin {
     margin-top: 20px;
+}
+
+.font-l {
+    font-size: 120%;
 }

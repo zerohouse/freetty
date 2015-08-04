@@ -1,0 +1,20 @@
+.reply {
+    border-bottom: 1px solid #eee;
+    padding-top: 0;
+    padding-bottom: 20px;
+    overflow: auto;
+    text-align: center;
+}
+
+[reply]:last-child .reply {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+[reply] {
+    margin: 10px;
+}
+
+.top-padding-m {
+    padding-top: 20px;
+}

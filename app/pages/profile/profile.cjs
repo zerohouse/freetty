@@ -4,7 +4,9 @@ app.controller('profile', function ($scope, users, user, $stateParams, Upload, r
 
     $scope.popup = popup;
 
-    $scope.save = function () {
+    $scope.save = function (nop) {
+        if (nop)
+            return;
         req.put('/api/user', $scope.user).success(function (res) {
             if (res.err) {
                 alert(res.err);
@@ -50,6 +52,12 @@ app.controller('profile', function ($scope, users, user, $stateParams, Upload, r
             $scope.user.photo = data;
             $scope.save();
         });
+    });
+
+    $scope.$watch(function () {
+        return $scope.user.photo;
+    }, function () {
+        $scope.photo = $scope.user.photo == undefined ? '/dist/profile.jpg' : '/uploads/' + $scope.user.photo;
     });
 
 

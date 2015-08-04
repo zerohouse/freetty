@@ -93,14 +93,17 @@ Array.prototype.remove = function (val) {
 var Article = mongoose.model('article', mongoose.Schema({
     done: Boolean,
     head: String,
-    body: Object,
+    body: String,
     provider: String,
     date: Date,
-    price: String,
+    total: Object,
+    discount: Object,
+    selectedServices: Array,
     tags: Array,
     photos: Array,
     likes: Array,
     reply: Number,
+    hits: Number,
     location: Object
 }));
 var Reply = mongoose.model('reply', mongoose.Schema({
@@ -177,9 +180,9 @@ app.get('/api/user/logout', function (req, res) {
     req.session.destroy();
     res.send(true);
 });
-app.put('/api/reply', function (req, res) {
+app.post('/api/article/like', function (req, res) {
     if (req.session.user == undefined) {
-        res.send('로그인이 필요한 서비스입니다.');
+        res.send({err: '로그인이 필요한 서비스입니다.'});
         return;
     }
     try {
@@ -189,42 +192,15 @@ app.put('/api/reply', function (req, res) {
         res.send(e);
         return;
     }
-    req.passed.date = new Date();
-    Reply.update({_id: _id, writer: req.session.user._id}, req.passed, function (err, result) {
-        res.send(result);
-    });
-
-});
-
-app.get('/api/article', function (req, res) {
-    try {
-        var _id = new ObjectID(req.passed._id);
-    }
-    catch (e) {
-        res.send(e);
-        return;
-    }
-    Article.findOne({_id: _id}, function (err, result) {
+    Article.update({_id: _id}, {$push: {likes: req.session.user._id}}, function (err, result) {
         res.send(result);
     });
 });
 
-app.post('/api/article', function (req, res) {
-    if (req.session.user == undefined) {
-        res.send('로그인이 필요한 서비스입니다.');
-        return;
-    }
-    var article = new Article(req.passed);
-    article.date = new Date();
-    article.provider = req.session.user._id;
-    article.save(function (err, result) {
-        res.send(err);
-    });
-});
 
-app.put('/api/article', function (req, res) {
+app.post('/api/article/dislike', function (req, res) {
     if (req.session.user == undefined) {
-        res.send('로그인이 필요한 서비스입니다.');
+        res.send({err: '로그인이 필요한 서비스입니다.'});
         return;
     }
     try {
@@ -234,49 +210,9 @@ app.put('/api/article', function (req, res) {
         res.send(e);
         return;
     }
-    req.passed.date = new Date();
-    Article.update({_id: _id, provider: req.session.user._id}, req.passed, function (err, result) {
+    Article.update({_id: _id}, {$pop: {likes: req.session.user._id}}, function (err, result) {
         res.send(result);
     });
-});
-
-app.post('/api/article/upload', function (req, res) {
-    if (req.session.user == undefined) {
-        res.send('로그인이 필요한 서비스입니다.');
-        return;
-    }
-    var files = [];
-    if (req.files.file == undefined) {
-        res.send('no files');
-        return;
-    }
-    if (req.files.file.forEach == undefined)
-        files.push(req.files.file.name);
-    else
-        req.files.file.forEach(function (file) {
-            files.push(file.name);
-        });
-    res.send(files);
-});
-
-app.get('/api/article/new', function (req, res) {
-    var result = {};
-    if (req.session.user == undefined) {
-        result.err = '로그인이 필요한 서비스입니다.';
-        res.send(result);
-        return;
-    }
-    Article.findOne({provider: req.session.user._id, done: false}, function (err, result) {
-        if (result == null) {
-            var article = new Article({provider: req.session.user._id, done: false, reply: 0, likes: []});
-            article.save(function (err, result) {
-                res.send(article._id);
-            });
-            return;
-        }
-        res.send(result._id);
-    });
-
 });
 
 app.get('/api/reply', function (req, res) {
@@ -322,12 +258,115 @@ app.post('/api/reply/delete', function (req, res) {
 
 });
 
+app.put('/api/reply', function (req, res) {
+    if (req.session.user == undefined) {
+        res.send('로그인이 필요한 서비스입니다.');
+        return;
+    }
+    try {
+        var _id = new ObjectID(req.passed._id);
+    }
+    catch (e) {
+        res.send(e);
+        return;
+    }
+    req.passed.date = new Date();
+    Reply.update({_id: _id, writer: req.session.user._id}, req.passed, function (err, result) {
+        res.send(result);
+    });
+
+});
+
+app.get('/api/article', function (req, res) {
+    try {
+        var _id = new ObjectID(req.passed._id);
+    }
+    catch (e) {
+        res.send(e);
+        return;
+    }
+    Article.findOneAndUpdate({_id: _id}, {$inc: {hits: 1}}, function (err, result) {
+        res.send(result);
+    });
+});
+
+app.post('/api/article', function (req, res) {
+    if (req.session.user == undefined) {
+        res.send('로그인이 필요한 서비스입니다.');
+        return;
+    }
+    var article = new Article(req.passed);
+    article.date = new Date();
+    article.provider = req.session.user._id;
+    article.save(function (err, result) {
+        res.send(err);
+    });
+});
+
+
+app.get('/api/article/new', function (req, res) {
+    var result = {};
+    if (req.session.user == undefined) {
+        result.err = '로그인이 필요한 서비스입니다.';
+        res.send(result);
+        return;
+    }
+    Article.findOne({provider: req.session.user._id, done: false}, function (err, result) {
+        if (result == null) {
+            var article = new Article({provider: req.session.user._id, done: false, reply: 0, likes: []});
+            article.save(function (err, result) {
+                res.send(article._id);
+            });
+            return;
+        }
+        res.send(result._id);
+    });
+
+});
+
+app.put('/api/article', function (req, res) {
+    if (req.session.user == undefined) {
+        res.send('로그인이 필요한 서비스입니다.');
+        return;
+    }
+    try {
+        var _id = new ObjectID(req.passed._id);
+    }
+    catch (e) {
+        res.send(e);
+        return;
+    }
+    req.passed.date = new Date();
+    Article.update({_id: _id, provider: req.session.user._id}, req.passed, function (err, result) {
+        res.send(result);
+    });
+});
+
+app.post('/api/article/upload', function (req, res) {
+    if (req.session.user == undefined) {
+        res.send({err: '로그인이 필요한 서비스입니다.'});
+        return;
+    }
+
+    var files = [];
+    if (req.files.file == undefined) {
+        res.send('no files');
+        return;
+    }
+    if (req.files.file.forEach == undefined)
+        files.push(req.files.file.name);
+    else
+        req.files.file.forEach(function (file) {
+            files.push(file.name);
+        });
+    res.send(files);
+});
 app.post('/api/article/list', function (req, res) {
         var query = {done: true};
-        if (req.passed.query) {
-            if (req.passed.query.time) {
-                query.startTime = {$lte: req.passed.query.time};
-                query.endTime = {$gte: req.passed.query.time};
+        if (req.passed) {
+            if (req.passed.time) {
+                query.startTime = {$lte: req.passed.time};
+                query.endTime = {$gte: req.passed.time};
             }
             if (req.passed.location) {
                 query.location = {
@@ -337,8 +376,8 @@ app.post('/api/article/list', function (req, res) {
                     }
                 };
             }
-            if (req.passed.query.provider)
-                query.provider = req.passed.query.provider;
+            if (req.passed.provider)
+                query.provider = req.passed.provider;
         }
 
         var limit = req.passed.limit;
@@ -351,8 +390,7 @@ app.post('/api/article/list', function (req, res) {
             res.send(results);
         });
     }
-)
-;
+);
 
 
 app.post('/api/user/login', function (req, res) {

@@ -1,0 +1,137 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="panel-body contents">
+
+                <div class="header padder">
+                    <span class="input-label">Title</span>
+                    <input placeholder="제목" class="form-control" ng-model="article.head">
+
+                    <div class="top-padding-s">
+                        <div class="label label-info" ng-repeat="tag in article.tags">#{{tag}}</div>
+                    </div>
+
+                </div>
+
+                <div class="header none-top-border description padder">
+                    <span class="input-label">Description</span>
+                    <textarea placeholder="서비스 내용" class="form-control" ng-model="article.body"></textarea>
+
+                </div>
+
+                <div class="body none-top-border images padder ">
+                    <span class="input-label" ng-click="howtosee = !howtosee">
+                            카드 미리보기
+                            <span ng-show="howtosee">[펼치기]</span>
+                            <span ng-show="!howtosee">[접기]</span>
+                    </span>
+
+                    <div ng-show="!howtosee" class="photos center">
+                        <article-head article="article" class="half"></article-head>
+                    </div>
+                </div>
+
+                <div class="body images padder none-top-border">
+                       <span class="input-label" ng-click="expand = !expand">
+                            Photos
+                            <span ng-show="!expand">[Thumbnail]</span>
+                            <span ng-show="expand">[Expand]</span>
+                        </span>
+
+                    <div class="photos center">
+                        <div ng-class="{'thumb':!expand}" class="photo" ng-repeat="photo in article.photos"
+                             ng-click="selectPhoto(photo)">
+                            <img ng-src="{{'/uploads/' + photo}}">
+                            <i ng-show="true"
+                               ng-click="article.photos.remove(photo, true);$event.stopPropagation();"
+                               class="fa fa-times"></i>
+                        </div>
+
+                        <div ng-show="true" ng-show="true" ngf-drop ng-model="files" class="drop-box"
+                             ngf-select
+                             ngf-drag-over-class="dragover" ngf-multiple="true" ngf-allow-dir="true"
+                             ngf-accept="'image/*'"> 사진을 추가하려면 <br>이곳을 클릭하거나<br> 사진을
+                            끌어놓으세요.
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="header padder none-top-border">
+                    <span class="input-label" ng-click="serviceToggle()">Services
+                        <span ng-show="modService">[완료]</span>
+                        <span ng-show="!modService">[서비스 편집]</span>
+                    </span>
+
+                    <div services='user.serviceTypes' mod-service="modService" select="article.selectedServices"></div>
+
+
+                    <table ng-show="!modService" class="table table-hover" ng-show="article.selectedServices.length>0">
+                        <thead>
+                        <tr>
+                            <td colspan="4">적용 서비스 ({{article.selectedServices.length}})</td>
+                        </tr>
+                        </thead>
+
+
+                        <tbody>
+                        <tr ng-repeat="service in article.selectedServices"
+                            ng-click="article.selectedServices.remove(service)">
+                            <td></td>
+                            <td>{{service.name}}</td>
+                            <td>{{service.duration.toDuration()}}</td>
+                            <td class="number"><i class="fa fa-krw"></i>{{service.price.moneyFormat()}}</td>
+                        </tr>
+                        </tbody>
+                        <thead>
+                        <tr>
+                            <td colspan="2">계</td>
+                            <td>{{article.total.duration.toDuration()}}</td>
+                            <td class="number">
+                                <span ng-class="{strike:article.discount.value != 0}"><i class="fa fa-krw"></i>{{article.total.price.moneyFormat()}}</span>
+                                    <span ng-show="article.discount.value != 0"> <i class="fa fa-arrow-right"></i> <i
+                                            class="fa fa-krw"></i>{{article.total.discountPrice.moneyFormat()}}</span>
+                            </td>
+                        </tr>
+                        </thead>
+                    </table>
+
+                    <div ng-show="!modService" class="input-group">
+                        <a class="input-group-addon">할인</a>
+                        <input type="text" class="form-control" ng-model="article.discount.value">
+
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                <span ng-show="article.discount.type == 'p'">%</span>
+                                <i ng-show="article.discount.type == 'm'" class="fa fa-minus"></i>
+
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li><a ng-click="article.discount.type = 'p'">% (퍼센트)</a></li>
+                                <li><a ng-click="article.discount.type = 'm'"><i class="fa fa-minus"></i>
+                                    (차감)</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-4">
+            <div class="panel-body provider">
+                <span class="small-subject">Content Provided By</span>
+
+                <div user-block="article.provider" mod-default="본문"></div>
+            </div>
+
+            <div class="panel-body">
+                <a ng-click="save()">임시 저장하기</a>
+                <a ng-click="done()">작성완료</a>
+            </div>
+        </div>
+    </div>
+</div>

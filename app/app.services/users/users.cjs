@@ -51,14 +51,12 @@ app.factory('users', function (req) {
             user.fields = [];
         if (user.introduce == undefined)
             user.introduce = {};
-        if (user.introduce.awards == undefined)
-            user.introduce.awards = [];
-        if (user.introduce.licences == undefined)
-            user.introduce.licences = [];
+        if (user.introduce.specialty == undefined)
+            user.introduce.specialty = [];
+        if (user.licenses == undefined)
+            user.licenses = [];
         if (user.introduce.ontheweb == undefined)
             user.introduce.ontheweb = [];
-        user.photo == undefined ? 'http://cfile29.uf.tistory.com/image/23315D3F53808A931FB5E9' : '/uploads/' + user.photo;
-
 
         users[_id] = user;
         users[user._id] = user;

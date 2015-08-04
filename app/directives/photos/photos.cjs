@@ -38,6 +38,15 @@ app.directive('photos', function ($compile) {
                 $scope.select = $scope.photos.indexOf(photo);
             }
 
+            if ($scope.photos.length == 0) {
+                $scope.$watch('photos', function () {
+                    if ($scope.photos == undefined)
+                        return;
+                    $scope.loading = true;
+                    $scope.photoUrl = $scope.photos[$scope.select] == undefined ? undefined : '/uploads/' + $scope.photos[$scope.select];
+                }, true);
+            }
+
         }
     };
 });

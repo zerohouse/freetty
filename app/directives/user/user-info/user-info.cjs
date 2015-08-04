@@ -2,7 +2,7 @@ app.directive('userInfo', function (users) {
 
     return {
         restrict: 'A',
-        templateUrl: '/app/directives/user-info/user-info.html',
+        templateUrl: '/app/directives/user/user-info/user-info.html',
         scope: {
             userInfo: '='
         },
@@ -15,7 +15,7 @@ app.directive('userInfo', function (users) {
                 });
             });
 
-            var defaultImg = 'http://cfile29.uf.tistory.com/image/23315D3F53808A931FB5E9';
+            var defaultImg = '/dist/profile.jpg';
 
             $scope.$watch('user', function () {
                 if ($scope.user == undefined)

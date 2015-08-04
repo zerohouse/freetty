@@ -1,17 +1,19 @@
 <div class="article">
-    <div photos="article.photos">
+    <div photos="article.photos"></div>
+    <div class="price"><i class="fa fa-krw"></i>{{article.total.discountPrice.moneyFormat() ||
+        article.total.price.moneyFormat()}}
     </div>
-    <div class="price"><i class="fa fa-krw"></i>{{article.price.moneyFormat()}}</div>
 
     <div class="info">
         <div user-photo="article.provider" ui-sref="profile({url:article.provider})"></div>
 
         <div class="title">
-            <span ui-sref="article({_id:article._id})">{{article.head}}</span>
+            <span ui-sref="article({_id:article._id})">{{article.head.substring(0, 30)}}</span>
             <span class="label label-info" ng-repeat="tag in article.tags | limitTo:3">{{tag}}</span>
         </div>
         <div>
-            <i class="fa fa-heart-o"></i> {{article.likes.length}} <i class="fa fa-comment-o"></i> {{article.reply}}
+            <article-likes article="article"></article-likes>
+            <span ui-sref="article({_id:article._id, scroll:'recommends'})"><i class="fa fa-comment-o"></i> {{article.reply}}</span>
         </div>
     </div>
 </div>

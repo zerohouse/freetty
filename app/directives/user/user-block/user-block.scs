@@ -1,0 +1,28 @@
+[user-block] {
+    min-width: 200px;
+}
+
+[user-block] img {
+    width: 80px;
+    height: 80px;
+}
+
+[user-block] .name {
+}
+
+[user-block] .badge {
+    margin-right: 5px;
+}
+
+[user-block] .info, [user-block] .photo {
+    float: left;
+}
+
+[user-block] .info {
+    padding: 18px 5px;
+}
+
+[user-block] .photo {
+    width: 100px;
+    padding: 10px;
+}
