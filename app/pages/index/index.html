@@ -17,11 +17,9 @@
 <div class="nav-block"></div>
 <nav class="navbar navbar-default navbar-background" scroll-condition="this.pageYOffset >= element[0].offsetHeight"
      ng-class="{'navbar-fixed-top':!learnMore,'navbar-white':!learnMore &&scrollCondition}" ng-controller="nav">
-    <div class="container">
+    <div class="container-fluid">
         <div class="navbar-header">
-            <div class="navbar-brand">
-                <a ui-sref="main">Freetty</a>
-            </div>
+            <a class="navbar-brand" ui-sref="main">Freetty</a>
             <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#bs-navbar"
                     aria-controls="bs-navbar" aria-expanded="false">
                 <span class="sr-only">Toggle navigation</span>
@@ -31,12 +29,16 @@
             </button>
         </div>
         <div id="bs-navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a ui-sref="search">search</a></li>
+            </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li ng-show="!user.logged"><a ng-click="popup('login', $event)">로그인</a></li>
-                <li ng-show="!user.logged"><a ng-click="popup('register', $event)">회원가입</a></li>
-                <li class="login-profile" ng-show="user.logged">
-                    <div user-photo="user._id" ng-click="auth()"></div>
-                    <span class="name">{{user.name}}<i class="fa fa-caret-down"></i></span>
+                <li ng-show="!rootUser.logged"><a ng-click="popup('login', $event)">로그인</a></li>
+                <li ng-show="!rootUser.logged"><a ng-click="popup('register', $event)">회원가입</a></li>
+                <li class="login-profile" ng-show="rootUser.logged">
+                    <span user-info="rootUser._id"></span>
+                    <span class="more">
+                        <i class="fa fa-caret-down"></i></span>
                     <ul class="list-group">
                         <li class="list-group-item" ng-click="logout()">로그아웃</li>
                     </ul>

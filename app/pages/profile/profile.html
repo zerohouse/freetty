@@ -17,7 +17,7 @@
                     <img class="photo" ng-src="{{photo}}" ng-show="!isRootUser()">
                 </div>
                 <div class="half">
-                    <div class="font-small" ng-repeat="s in user.introduce.specialty | limitTo : 2">
+                    <div class="font-small bottom-space-s" ng-repeat="s in user.introduce.specialty | limitTo : 2">
                         <i class="fa fa-star"></i> {{s}}
                     </div>
                 </div>
@@ -90,7 +90,7 @@
                               mod-save="save"
                               mod-right="isRootUser()"></span></div>
 
-                    <location location="user.location" mod-save="save" mod-right="isRootUser()"></location>
+                    <location user="user" mod-save="save" mod-right="isRootUser()"></location>
                 </div>
             </div>
             <!--<div ng-show="isRootUser()||user.introduce.ontheweb.length !=0" class="row bottom-border">-->
@@ -126,7 +126,7 @@
 
             <div class="row">
                 <div class="panel-body">
-                    <div>Member since {{user.date.toTime().toString()}}</a>
+                    <div>Member since {{user.date.toDate().dateOnly()}}</a>
                     </div>
                 </div>
             </div>
@@ -153,16 +153,18 @@
                     Portfolios
                 </div>
                 <div class="center">
+                    <div class="addNew" ng-click="newService()" ng-show="isRootUser()">
+                        <div class="add-inner"><i class="fa fa-5x fa-plus"></i><br>Add Portfolio</div>
+                    </div>
                     <article-head ng-repeat="article in articles" article="article"></article-head>
                 </div>
             </div>
 
-            <div class="panel-body">
+            <div class="panel-body" ng-hide="!rootUser.logged && (replies == undefined || replies.length == 0)">
                 <div class="input-label font-l bottom-space-s">
                     Recommends
                 </div>
-
-                <replies user="user" reply-id="user._id"></replies>
+                <replies user="rootUser" reply-id="user._id"></replies>
 
             </div>
 

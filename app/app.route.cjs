@@ -15,6 +15,11 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             controller: "main",
             templateUrl: "/app/pages/main/main.html"
         })
+        .state('search', {
+            url: "/service/search",
+            controller: "search",
+            templateUrl: "/app/pages/search/search.html"
+        })
         .state('profile', {
             url: "/:url?state",
             controller: "profile",

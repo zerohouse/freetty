@@ -1,0 +1,76 @@
+
+.search-input {
+    border: none;
+    outline: none;
+}
+
+.search-input:hover, .search-input:focus, .search-input:active {
+    width: inherit;
+}
+
+#search-map {
+    height: 260px;
+    width: 100%;
+}
+
+#infowindow [user-block] {
+    overflow: hidden;
+    padding: 0 8px;
+}
+
+#map-controls {
+    display: block;
+    z-index: 10;
+    background-color: white;
+    border: 1px solid #eee;
+    padding: 5px 10px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 2px silver;
+    margin: 10px;
+    transition: width 1s ease-in-out;
+}
+
+.margin-right-m {
+    margin-right: 20px;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #eee;
+}
+
+price-range.form-control .slider {
+    top: 20px;
+    left: 0;
+}
+
+@media (min-width: 768px) {
+
+    .left-container, .right-container {
+        position: fixed;
+        top: 50px;
+        height: inherit;
+        bottom: 0;
+        overflow: auto;
+    }
+
+    .left-container {
+        left: 0;
+        width: 55%;
+    }
+
+    .right-container {
+        right: 0;
+        width: 45%;
+    }
+
+    #search-map {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+    }
+
+}
+
+.top-margin-s {
+    margin-top: 5px;
+}

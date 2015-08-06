@@ -36,7 +36,7 @@ app.controller('login.popup', function (popup, $scope, req, user) {
         req.post('/api/user', $scope.user).success(function (res) {
             if (res) {
                 alert("가입해주셔서 감사합니다.");
-                popup.state = 'login';
+                popup('login');
                 $scope.exist = true;
                 return;
             }

@@ -16,11 +16,14 @@ app.controller('edit', function (req, $scope, $stateParams, Upload, user, alert,
         if ($scope.article.selectedServices == undefined)
             $scope.article.selectedServices = [];
 
+
+        var regex = /#([\wㄱ-ㅎ|ㅏ-ㅣ|가-힣]+)/g;
+
         $scope.$watch(function () {
             return $scope.article.body;
         }, function (body) {
-            var result = [];
             var match;
+            var result = [];
             while (true) {
                 match = regex.exec(body);
                 if (match == null)
@@ -48,12 +51,12 @@ app.controller('edit', function (req, $scope, $stateParams, Upload, user, alert,
                 total.duration += parseInt(service.duration);
             });
             $scope.article.total = total;
+            $scope.article.price = total.price;
             $scope.article.selectedServices = result;
             computeDiscount();
         }, true);
     });
 
-    var regex = /#([\wㄱ-ㅎ|ㅏ-ㅣ|가-힣]+)/g;
 
     $scope.done = function () {
         $scope.article.done = true;
@@ -64,7 +67,8 @@ app.controller('edit', function (req, $scope, $stateParams, Upload, user, alert,
     };
 
     $scope.save = function (fn) {
-        $scope.article.location = user.location;
+        $scope.article.lat = user.lat;
+        $scope.article.lng = user.lng;
         if ($scope.article.done) {
             $scope.article.done = doneCheck();
         }
@@ -129,6 +133,7 @@ app.controller('edit', function (req, $scope, $stateParams, Upload, user, alert,
             return;
         }
 
+        $scope.article.price = total.discountPrice;
         $scope.article.total.discountPrice = $scope.article.total.price - value;
 
     }

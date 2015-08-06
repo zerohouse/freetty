@@ -1,0 +1,14 @@
+<div ng-class="{'border-active':slider}" type="text" ng-click="slider=true;$event.stopPropagation()">
+    <span ng-show="min || max">
+        <span ng-show="min"><i class="font-s  fa fa-krw"></i>{{min.moneyFormat()}}</span> ~
+        <span ng-show="max"><i class="font-s fa fa-krw"></i>{{max.moneyFormat()}}</span>
+     </span>
+    <span ng-show="!(min || max)">
+        <span class="placeholder" ng-show="modRight">{{placeholder}}</span>
+        <span ng-show="!modRight">{{modDefault}}</span>
+    </span>
+</div>
+<div class="slider" ng-show="slider && modRight" ng-click="$event.stopPropagation()">
+    <slider format="moneyFormat" floor="{{floor}}" ceiling="{{ceiling}}" ng-model-low="min" step="{{step}}"
+            ng-model-high="max"></slider>
+</div>

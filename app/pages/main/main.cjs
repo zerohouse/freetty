@@ -34,15 +34,4 @@ app.controller('main', function ($scope, req, $state, alert) {
         scope.learnMore = true;
     };
 
-
-    $scope.newService = function () {
-        req.get('/api/article/new').success(function (res) {
-            if (res.err) {
-                alert(res.err);
-                return;
-            }
-            $state.go('edit', {_id: res});
-        });
-    };
-
 });

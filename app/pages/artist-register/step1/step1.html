@@ -1,122 +1,99 @@
 <div class="container">
 
     <div class="row bottom-border margin-bottom">
-        <div class="panel-body">
-            <h1>Step 1</h1>
-            <small>개인  정보를 입력합니다.</small>
-        </div>
-    </div>
-
-    <div class="row bottom-border margin-bottom">
-        <div class="col-md-6">
-            <span class="font-m">이름 <span class="red">*</span></span>
-
-            <div class="input-group none-top-margin">
-                <input class="form-control" type="text" placeholder="이름">
-                <a class="input-group-addon">본인인증</a>
-            </div>
-
-            <span class="font-m">연락처 <span class="red">*</span></span>
-
-            <input class="form-control" type="text" placeholder="연락처">
-            <br>
-
-
-            <div class="dropdown">
-
-                <div class="font-m">종사분야 <span class="red">*</span></div>
-                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="true">
-                    종사분야
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <li><a href="#">헤어</a></li>
-                    <li><a href="#">메이크업</a></li>
-                    <li><a href="#">속눈썹 연장/증모</a></li>
-                    <li><a href="#">네일</a></li>
-                    <li><a href="#">왁싱</a></li>
-                    <li><a href="#">피부관리</a></li>
-                    <li><a href="#">타투</a></li>
-                </ul>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <span class="font-m">국가 미용 자격증 등록 <span class="red">*</span></span>
-
-            <div class="input-group none-top-margin">
-                <input class="form-control" type="text" placeholder="국가 미용자격 인증">
-                <a class="input-group-addon" ng-click="popup('license', $event)">추가</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
         <div class="col-md-12">
-            <span class="font-m">자기소개 <span class="red">*</span></span> <i class="fa fa-question-circle"></i>
+            <div class="panel-body">
+                <h1>Step 1</h1>
+                <small>개인 정보를 입력합니다.</small>
+            </div>
+        </div>
+    </div>
 
-            <textarea class="form-control" type="text" placeholder="자기소개"></textarea>
+    <div class="row bottom-border bottom-space">
+        <div class="col-md-6">
+            <div class="panel-body">
+                <label class="font-m">이름 <span class="red">*</span></label>
+
+                <input regex="\w{2,}" message="이름은 두글자 이상 입력해 주세요." ng-model="user.name"
+                       class="bottom-space-s form-control"
+                       type="text" placeholder="이름">
+
+                <label class="font-m">영업 연락처 <span class="red">*</span></label>
+
+                <input ng-model="user.introduce.contact.phone" class="bottom-space-s form-control" type="text"
+                       placeholder="영업 연락처">
+
+                <label class="font-m">영업 이메일 <span class="red">*</span></label>
+
+                <input ng-model="user.introduce.contact.email" class="bottom-space-s form-control" type="text"
+                       placeholder="영업 이메일">
+
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="panel-body">
+                <label class="font-m">자기소개 <span class="red">*</span></label>
+
+                <textarea ng-model="user.introduce.aboutme" class="form-control" type="text"
+                          placeholder="자기소개"></textarea>
+            </div>
         </div>
     </div>
 
 
-    <div class="row">
+    <div class="row bottom-border bottom-space">
         <div class="col-md-12">
-            <span class="font-m">나의 FREETTY 주소 <span class="red">*</span></span> <i class="fa fa-question-circle"></i>
+            <div class="panel-body">
+                <label class="font-m">FREETTY 주소 <span class="red">*</span></label> <i
+                    class="fa fa-question-circle"></i>
 
-            <div class="input-group full-width none-top-margin">
-                <a class="input-group-addon">Http://freetty.com/</a>
-                <input class="form-control" type="text" placeholder="url">
+                <div class="input-group full-width none-top-margin">
+                    <a class="input-group-addon">http://freetty.com/</a>
+                    <input ng-model="url" class="form-control" type="text" placeholder="url">
+                </div>
+                <span ng-show="urlOk" class="font-m green">사용가능한 URL입니다.</span>
             </div>
         </div>
     </div>
 
-    <div class="row">
+    <div class="row bottom-border bottom-space">
         <div class="col-md-6">
-            <span class="font-m">근무하는 샵</span> <i class="fa fa-question-circle"></i>
+            <div class="panel-body">
+                <label class="font-m">소속샵</label>
 
-            <input class="form-control" type="text" placeholder="샵 이름">
+                <input ng-model="user.introduce.shop.name" class="form-control" type="text" placeholder="샵 이름">
 
-            <div class="input-group full-width">
-                <span class="font-m">샵 주소</span> <i class="fa fa-question-circle"></i>
-                <location user="user" placeholder="근무지"></location>
+                <div class="input-group full-width">
+                    <span class="font-m">근무지</span>
+                    <location user="user" placeholder="근무지" mod-save="save"></location>
+                </div>
             </div>
         </div>
+
         <div class="col-md-6">
-            <span class="font-m">근무 형태</span> <i class="fa fa-question-circle"></i>
+            <div class="panel-body">
 
-            <div class="dropdown">
-                <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="true">
-                    근무형태
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                    <li><a href="#">프리랜서</a></li>
-                    <li><a href="#">프리랜서</a></li>
-                    <li><a href="#">프리랜서</a></li>
-                </ul>
+
+                <div class="form-group">
+                    <label class="font-m">근무 형태</label> <i class="fa fa-question-circle"></i>
+                    <select ng-model="user.introduce.shop.type" class="form-control">
+                        <option value="free">프리랜서</option>
+                        <option value="free">프리랜서</option>
+                        <option value="free">프리랜서</option>
+                        <option value="free">프리랜서</option>
+                    </select>
+                </div>
             </div>
-
-            <br>
-
-            <span class="font-m">샵 전화번호</span> <i class="fa fa-question-circle"></i>
-
-            <input class="form-control" type="text" placeholder="샵 전화번호">
-
-            <span class="font-m">프로필 전화번호</span>
-            <input type="radio">
-            <input type="radio">
-        </div>
-
-    </div>
-
-    <div class="row bottom-border margin-bottom">
-        <div class="panel-body">
-            <a class="btn btn-primary" ng-click="save()">임시저장</a>
-            <a class="btn btn-primary" ng-click="save('artist-register-step2')">다음단계</a>
         </div>
     </div>
 
-
+    <div class="row margin-bottom">
+        <div class="col-md-12">
+            <div class="panel-body">
+                <a class="btn btn-primary" ng-click="save()">임시저장</a>
+                <a class="btn btn-primary" ng-click="save('artist-register-step2')">다음단계</a>
+            </div>
+        </div>
+    </div>
 </div>

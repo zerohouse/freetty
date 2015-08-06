@@ -1,16 +1,15 @@
 <div>
-    <a ng-repeat="el in selected" ng-class="selectedClass">{{el}}
-        <i class="fa fa-times" ng-click="selected.remove(el, true)"></i></a>
-    <input ng-focus="show=true" ng-click="show=true" ng-model="keyword" ng-blur="show=false"
+    <a ng-repeat="el in ngModel" ng-class="selectedClass" class="bottom-space-s margin-right-s">{{el}}
+        <i class="fa fa-times" ng-click="ngModel.remove(el, true)"></i></a>
+    <input ng-click="SHOW($event)" ng-model="keyword"
            ng-keydown="keydown($event)"
            class="form-control"
            placeholder="{{placeholder}}">
-
 </div>
 <ul ng-show="show" class="list-group results">
     <li class="list-group-item" ng-repeat="result in results = (data | filter: keyword | limitTo:limit)"
-        ng-class="{active:select == results.indexOf(result)}" ng-click="selectSelected();"
-        ng-mouseover="select = results.indexOf(result)">
+        ng-class="{active:select == results.indexOf(result)}"
+        ng-mouseover="SELECT(results.indexOf(result))" ng-click="selectSelected();">
         {{result}}
     </li>
 </ul>

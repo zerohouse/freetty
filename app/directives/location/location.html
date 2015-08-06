@@ -1,13 +1,13 @@
 <div class="margin-bottom">
     <div ng-show="mod">
         <div class="input-group">
-            <location-search ng-model="location"></location-search>
+            <location-search input-class="form-control" placeholder="지역" top="34px" location="user"></location-search>
             <div class="input-group-addon">검색</div>
         </div>
     </div>
     <div class="edit" ng-show="!mod" ng-click="mod = !mod">
-        {{location.formatted_address || "위치 정보가 없습니다."}}
+        {{user.formatted_address || "위치 정보가 없습니다."}}
         <i class="fa fa-pencil"></i>
     </div>
 </div>
-<div ng-show="location" id="map-canvas"></div>
+<div ng-show="user.lat" id="map-canvas"></div>

@@ -1,0 +1,10 @@
+auto-complete-ajax {
+    position: relative;
+}
+
+auto-complete-ajax .results {
+    min-width: 300px;
+    position: absolute;
+    top: 0;
+    z-index: 10;
+}

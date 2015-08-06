@@ -1,20 +1,13 @@
 app.post('/api/article/list', function (req, res) {
-        var query = {done: true};
+        var condition = {done: true};
         if (req.passed) {
             if (req.passed.time) {
                 query.startTime = {$lte: req.passed.time};
                 query.endTime = {$gte: req.passed.time};
             }
-            if (req.passed.location) {
-                query.location = {
-                    geometry: {
-                        lat: {$lte: 1, $gte: 1},
-                        lng: {$lte: 1, $gte: 1}
-                    }
-                };
-            }
+
             if (req.passed.provider)
-                query.provider = req.passed.provider;
+                condition.provider = req.passed.provider;
         }
 
         var limit = req.passed.limit;
@@ -23,9 +16,46 @@ app.post('/api/article/list', function (req, res) {
         if (limit > 10)
             limit = 6;
 
-        Article.find(query).sort({'date': -1}).limit(limit).skip(req.passed.skip).exec(function (err, results) {
+
+        var query = Article.find(condition).sort({'date': -1}).limit(limit).skip(req.passed.skip);
+
+        if (req.passed.location) {
+            query = query.where('lat').gte(req.passed.location.lat.gte).lte(req.passed.location.lat.lte);
+            query = query.where('lng').gte(req.passed.location.lng.gte).lte(req.passed.location.lng.lte);
+        }
+
+        if (req.passed.tags && req.passed.tags.length != 0) {
+            if (req.passed.tagType == "or")
+                query = query.where('tags').in(req.passed.tags);
+            if (req.passed.tagType == "and") {
+                var q = [];
+                req.passed.tags.forEach(function (tag) {
+                    q.push({tags: tag});
+                });
+                query = query.and(q);
+            }
+        }
+
+        if (req.passed.price) {
+            if (req.passed.price.min)
+                query = query.where('price').gte(req.passed.price.min);
+            if (req.passed.price.max)
+                query = query.where('price').lte(req.passed.price.max);
+        }
+
+        query.exec(function (err, results) {
             res.send(results);
         });
     }
 );
+
+app.get('/api/tags', function (req, res) {
+    var query = Article.aggregate([{$match: {tags: {$regex: ".*" + req.passed.keyword + ".*"}}}, {$unwind: "$tags"}, {
+        $group: {_id: "$tags", count: {$sum: 1}}
+    }, {$sort: {count: -1}}, {$limit: 5}], function (err, result) {
+        res.send(result);
+    });
+});
+
+
 

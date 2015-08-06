@@ -3,39 +3,49 @@ app.directive('location', function () {
         restrict: 'E',
         templateUrl: '/app/directives/location/location.html',
         scope: {
-            location: '=',
+            user: '=',
             modSave: '=',
             modRight: '='
         },
         controller: function ($scope, req, $timeout) {
 
             $scope.$watch(function () {
-                return $scope.location;
+                return $scope.user.lat;
             }, function () {
-                if ($scope.location == undefined)
+                if ($scope.user == undefined)
+                    return;
+                if ($scope.user.lat == undefined)
+                    return;
+                if ($scope.user.lng == undefined)
                     return;
 
+
                 if ($scope.map == undefined)
-                    $scope.map = new google.maps.Map(document.getElementById('map-canvas'), {
-                        center: $scope.location.geometry.location,
-                        zoom: 14
+                    $timeout(function () {
+                        $scope.map = new google.maps.Map(document.getElementById('map-canvas'), {
+                            streetViewControl: false,
+                            center: {lat: $scope.user.lat, lng: $scope.user.lng},
+                            zoom: 14
+                        });
                     });
 
                 if ($scope.marker != undefined)
                     $scope.marker.setMap(null);
 
-                $scope.marker = new google.maps.Marker({
-                    position: $scope.location.geometry.location,
-                    map: $scope.map
-                });
-                setCenter();
-                google.maps.event.addListener($scope.marker, 'click', function () {
+                $timeout(function () {
+                    $scope.marker = new google.maps.Marker({
+                        position: {lat: $scope.user.lat, lng: $scope.user.lng},
+                        map: $scope.map
+                    });
                     setCenter();
+                    google.maps.event.addListener($scope.marker, 'click', function () {
+                        setCenter();
+                    });
+                    function setCenter() {
+                        $scope.map.setZoom(14);
+                        $scope.map.setCenter($scope.marker.getPosition());
+                    }
                 });
-                function setCenter() {
-                    $scope.map.setZoom(14);
-                    $scope.map.setCenter($scope.marker.getPosition());
-                }
 
                 if (!$scope.mod)
                     return;

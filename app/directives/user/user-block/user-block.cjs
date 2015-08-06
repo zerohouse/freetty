@@ -6,7 +6,13 @@ app.directive('userBlock', function (users) {
         scope: {
             userBlock: '='
         },
-        controller: function ($scope) {
+        controller: function ($scope, popup) {
+
+            $scope.moveTo = function (user) {
+                popup('profile');
+                popup.user = user;
+            };
+
             $scope.$watch('userBlock', function () {
                 if ($scope.userBlock == undefined)
                     return;
@@ -15,12 +21,10 @@ app.directive('userBlock', function (users) {
                 });
             });
 
-            var defaultImg = '/dist/profile.jpg';
-
             $scope.$watch('user', function () {
                 if ($scope.user == undefined)
-                    return defaultImg;
-                $scope.photo = $scope.user.photo == undefined ? defaultImg : '/uploads/' + $scope.user.photo;
+                    return;
+                $scope.photo = $scope.user.photo == undefined ? app.constants.defaultImg : '/uploads/' + $scope.user.photo;
             });
 
         }

@@ -70,10 +70,11 @@
                     </table>
                 </div>
 
-                <div class="body images padder none-top-border">
+                <div class="body images padder none-top-border"
+                     ng-hide="!rootUser.logged && (replies == undefined || replies.length == 0)">
                     <span id="recommends" class="input-label">Recommends</span>
 
-                    <replies user="user" reply-id="stateParams._id"></replies>
+                    <replies user="rootUser" reply-id="stateParams._id" replies="replies"></replies>
                 </div>
             </div>
 

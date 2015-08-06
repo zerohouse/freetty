@@ -29,30 +29,66 @@ article-head {
 }
 
 .article .info {
-    margin-top: 30px;
-    padding: 20px;
-    padding-top: 10px;
+    padding: 10px 0;
+    margin: 0 10px;
+    margin-top: 57px;
+    border-top: 1px solid #eee;
     color: #777;
     font-size: 90%;
     position: relative;
 }
 
 .info .title {
-    font-size: 20px;
+    height: 50px;
+    font-size: 18px;
     overflow: hidden;
+    text-align: left;
+    font-weight: 900;
+    margin: 0 15px;
+}
+
+.info .title .tags {
+    font-weight: normal;
+    color: #888;
+    font-size: 80%;
+    margin-right: 6px;
+}
+
+.article .footer article-likes {
+    margin-right: 13px;
+}
+
+.article .footer {
+    padding: 7px 17px;
+    background-color: #f4f4f4;
+    border-top: 1px solid #eee;
+    text-align: left;
+    font-size: 90%;
+    color: #555;
+}
+
+.article .footer .location {
+    float: right;
 }
 
 .article small {
     font-size: 70%;
 }
 
-.article [user-photo] {
-    top: -85px;
+.article [user-info] {
+    top: -120px;
     z-index: 3;
     left: 50%;
     transform: translateX(-50%);
+    position: absolute;
+}
+
+.article [user-info] .prefix {
+    margin-right: 3px;
 }
 
 .title .label {
     margin: 3px;
 }
+
+

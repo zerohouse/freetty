@@ -9,22 +9,24 @@
 
     <div class="row">
         <div class="panel-body">
-            <h5>업무시간</h5>
-
-            <div day='MON' mod="true" save="save" user="user"></div>
-            <div day='TUE' mod="true" save="save" user="user"></div>
-            <div day='WED' mod="true" save="save" user="user"></div>
-            <div day='THUR' mod="true" save="save" user="user"></div>
-            <div day='FRI' mod="true" save="save" user="user"></div>
-            <div day='SAT' mod="true" save="save" user="user"></div>
-            <div day='SUN' mod="true" save="save" user="user"></div>
+            <h5>Business Hours </h5>
+            <table class="table">
+                <tr day='MON' mod="true" user="user"></tr>
+                <tr day='TUE' mod="true" user="user"></tr>
+                <tr day='WED' mod="true" user="user"></tr>
+                <tr day='THUR' mod="true" user="user"></tr>
+                <tr day='FRI' mod="true" user="user"></tr>
+                <tr day='SAT' mod="true" user="user"></tr>
+                <tr day='SUN' mod="true" user="user"></tr>
+            </table>
         </div>
     </div>
 
     <div class="row bottom-border margin-bottom">
         <div class="panel-body">
             <a class="btn btn-primary" ng-click="save('artist-register-step3')">이전단계</a>
-            <a class="btn btn-primary" ng-click="save()">작성완료</a>
+            <a class="btn btn-primary" ng-click="save()">임시저장</a>
+            <a class="btn btn-primary" ng-click="done()">작성완료 및 아티스트 등록</a>
         </div>
     </div>
 

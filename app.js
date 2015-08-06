@@ -104,7 +104,9 @@ var Article = mongoose.model('article', mongoose.Schema({
     likes: Array,
     reply: Number,
     hits: Number,
-    location: Object
+    lat: Number,
+    lng: Number,
+    price: Number
 }));
 var Reply = mongoose.model('reply', mongoose.Schema({
     articleId: {type: String, index: true},
@@ -120,11 +122,14 @@ var User = mongoose.model('user', mongoose.Schema({
     photo: String,
     introduce: Object,
     profile: Object,
-    location: Object,
     serviceTypes: Object,
     fields: Array,
     licenses: Array,
-    type: String
+    type: String,
+    date: Date,
+    lat: Number,
+    lng: Number,
+    formatted_address: String
 }));
 
 User.schema.path('email').validate(function (value) {
@@ -362,22 +367,15 @@ app.post('/api/article/upload', function (req, res) {
     res.send(files);
 });
 app.post('/api/article/list', function (req, res) {
-        var query = {done: true};
+        var condition = {done: true};
         if (req.passed) {
             if (req.passed.time) {
                 query.startTime = {$lte: req.passed.time};
                 query.endTime = {$gte: req.passed.time};
             }
-            if (req.passed.location) {
-                query.location = {
-                    geometry: {
-                        lat: {$lte: 1, $gte: 1},
-                        lng: {$lte: 1, $gte: 1}
-                    }
-                };
-            }
+
             if (req.passed.provider)
-                query.provider = req.passed.provider;
+                condition.provider = req.passed.provider;
         }
 
         var limit = req.passed.limit;
@@ -386,13 +384,79 @@ app.post('/api/article/list', function (req, res) {
         if (limit > 10)
             limit = 6;
 
-        Article.find(query).sort({'date': -1}).limit(limit).skip(req.passed.skip).exec(function (err, results) {
+
+        var query = Article.find(condition).sort({'date': -1}).limit(limit).skip(req.passed.skip);
+
+        if (req.passed.location) {
+            query = query.where('lat').gte(req.passed.location.lat.gte).lte(req.passed.location.lat.lte);
+            query = query.where('lng').gte(req.passed.location.lng.gte).lte(req.passed.location.lng.lte);
+        }
+
+        if (req.passed.tags && req.passed.tags.length != 0) {
+            if (req.passed.tagType == "or")
+                query = query.where('tags').in(req.passed.tags);
+            if (req.passed.tagType == "and") {
+                var q = [];
+                req.passed.tags.forEach(function (tag) {
+                    q.push({tags: tag});
+                });
+                query = query.and(q);
+            }
+        }
+
+        if (req.passed.price) {
+            if (req.passed.price.min)
+                query = query.where('price').gte(req.passed.price.min);
+            if (req.passed.price.max)
+                query = query.where('price').lte(req.passed.price.max);
+        }
+
+        query.exec(function (err, results) {
             res.send(results);
         });
     }
 );
 
+app.get('/api/tags', function (req, res) {
+    var query = Article.aggregate([{$match: {tags: {$regex: ".*" + req.passed.keyword + ".*"}}}, {$unwind: "$tags"}, {
+        $group: {_id: "$tags", count: {$sum: 1}}
+    }, {$sort: {count: -1}}, {$limit: 5}], function (err, result) {
+        res.send(result);
+    });
+});
 
+
+
+
+app.post('/api/url/check', function (req, res) {
+    var result = {};
+    if (req.session.user == undefined) {
+        result.err = '권한이 없습니다.';
+        res.send(result);
+        return;
+    }
+
+    User.findOn
+
+    try {
+        var _id = new ObjectID(req.passed._id);
+    }
+    catch (e) {
+        res.send(e);
+        return;
+    }
+
+    if (req.passed.url == "")
+        delete req.passed.url;
+
+    req.passed.licences = undefined;
+
+    User.update({_id: _id}, req.passed, function (err, result) {
+        req.session.user = req.passed;
+        req.session.save();
+        res.send(result);
+    });
+});
 app.post('/api/user/login', function (req, res) {
     var query = {};
     query.email = req.passed.email;
@@ -417,7 +481,7 @@ app.post('/api/user/login', function (req, res) {
 });
 
 app.post('/api/user', function (req, res) {
-    req.passed.introduce = {type: 'text'};
+    req.passed.introduce = {};
     req.passed.date = new Date();
     var user = new User(req.passed);
     user.save(function (err, result) {

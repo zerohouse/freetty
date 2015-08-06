@@ -9,14 +9,14 @@
         <a ng-click="showHelp();" smooth-scroll target="help" class="btn btn-primary">LEARN MORE</a>
     </div>
 </div>
-
+<!--scroll-condition="this.pageYOffset >= (document.querySelector('#services').offsetTop - element[0].offsetHeight)"-->
 <div class="jumbotron search-bar navbar-collapse collapse"
-     scroll-condition="this.pageYOffset >= (document.querySelector('#services').offsetTop - element[0].offsetHeight)"
+
      ng-class="{'navbar-fixed-top':scrollCondition}">
     <div class="container">
         <div class="input-group">
             <input ng-model="query.keyword" placeholder="서비스 검색" type="text" class="form-control">
-            <location-search ng-model="query.location"></location-search>
+            <location-search placeholder="지역" top="34px" ng-model="query.location"></location-search>
 
             <div ng-click="date=true;time=false;$event.stopPropagation()" type="text"
                  class="form-control" ng-class="{'border-active':date}">
@@ -35,15 +35,3 @@
         </div>
     </div>
 </div>
-
-<div class="container" id="services">
-    <div class="btn btn-default" ng-click="newService()" ng-show='user.logged'>새 서비스 등록하기</div>
-    <div class="row">
-        <div class="panel-body center">
-            <article-head ng-repeat="article in articles" article="article"></article-head>
-        </div>
-    </div>
-    <div ng-show="!noMore" class="badge" ng-click="get()">더보기</div>
-    <div ng-show="noMore" class="badge">마지막입니다.</div>
-</div>
-

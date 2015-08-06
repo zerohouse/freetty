@@ -1,12 +1,18 @@
-[user-info] img {
+[user-info] .wrap {
     display: block;
     margin: auto;
     margin-top: 20px;
-    width: 70px !important;
+    width: 70px;
     height: 70px;
     border-radius: 50%;
     overflow: hidden;
+    border: 2px solid white;
+}
+
+[user-info] .wrap img {
+    width: 100%;
 }
 
 [user-info] .name {
 }
+

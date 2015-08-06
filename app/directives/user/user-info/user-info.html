@@ -1,2 +1,6 @@
-<img ng-src="{{photo}}">
-<div class="name">{{user.name}}</div>
+<span ng-click="moveTo(user)">
+    <span class="wrap">
+    <img ng-src="{{photo}}">
+    </span>
+    <span class="name"><span class="prefix">{{prefix}}</span>{{user.name}}</span>
+</span>

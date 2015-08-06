@@ -1,0 +1,29 @@
+app.post('/api/url/check', function (req, res) {
+    var result = {};
+    if (req.session.user == undefined) {
+        result.err = '권한이 없습니다.';
+        res.send(result);
+        return;
+    }
+
+    User.findOn
+
+    try {
+        var _id = new ObjectID(req.passed._id);
+    }
+    catch (e) {
+        res.send(e);
+        return;
+    }
+
+    if (req.passed.url == "")
+        delete req.passed.url;
+
+    req.passed.licences = undefined;
+
+    User.update({_id: _id}, req.passed, function (err, result) {
+        req.session.user = req.passed;
+        req.session.save();
+        res.send(result);
+    });
+});

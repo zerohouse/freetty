@@ -8,3 +8,7 @@ auto-complete .results {
     top: 0;
     z-index: 10;
 }
+
+.margin-right-s {
+    margin-right: 5px;
+}

@@ -1,4 +1,4 @@
-app.factory('users', function (req) {
+app.factory('users', function (req, popup) {
     var users = {};
     var callbacks = {};
 

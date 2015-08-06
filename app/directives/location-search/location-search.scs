@@ -1,6 +1,4 @@
-
 .search {
-    margin-top: 42px;
     position: absolute;
     z-index: 1;
 }

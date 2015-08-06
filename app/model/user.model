@@ -6,12 +6,14 @@ var User = mongoose.model('user', mongoose.Schema({
     photo: String,
     introduce: Object,
     profile: Object,
-    location: Object,
     serviceTypes: Object,
     fields: Array,
     licenses: Array,
     type: String,
-    date: Date
+    date: Date,
+    lat: Number,
+    lng: Number,
+    formatted_address: String
 }));
 
 User.schema.path('email').validate(function (value) {

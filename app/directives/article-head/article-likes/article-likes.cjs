@@ -4,8 +4,15 @@ app.directive('articleLikes', function () {
         scope: {
             article: '='
         }, controller: function (req, user, $scope) {
+
+            $scope.likes = function () {
+                if ($scope.article == undefined)
+                    return false;
+                return $scope.article.likes.contains(user._id);
+            };
+
             $scope.likeToggle = function (article) {
-                if (article.likes.contains(user._id)) {
+                if ($scope.likes()) {
                     req.post('/api/article/dislike', {_id: article._id}).success(function (res) {
                         if (res.err) {
                             alert(res.err);

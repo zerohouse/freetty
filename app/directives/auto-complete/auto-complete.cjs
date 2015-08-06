@@ -4,14 +4,23 @@ app.directive('autoComplete', function (alert) {
         restrict: 'E',
         templateUrl: '/app/directives/auto-complete/auto-complete.html',
         scope: {
+            ngModel: '=',
             data: '=',
+            keyword: '=',
             placeholder: '@',
             limit: '@',
             selectedClass: '@'
         },
         controller: function ($scope) {
 
-            $scope.selected = [];
+            document.body.addEventListener('click', function () {
+                $scope.HIDE();
+                $scope.$apply();
+            });
+
+            if ($scope.ngModel == undefined)
+                $scope.ngModel = [];
+
             $scope.select = 0;
 
             $scope.keydown = function (e) {
@@ -34,20 +43,35 @@ app.directive('autoComplete', function (alert) {
                 }
             };
 
+            $scope.SELECT = function (i) {
+                $scope.select = i;
+            };
+
             $scope.selectSelected = function () {
                 var select = $scope.results[$scope.select];
                 if (select == undefined) {
+                    select = $scope.keyword;
+                }
+                if (select == undefined || select == '') {
                     alert('결과가 없습니다.');
                     return;
                 }
-                if ($scope.selected.contains(select)) {
+                if ($scope.ngModel.contains(select)) {
                     alert('이미 추가되었습니다.');
                     return;
                 }
-                $scope.selected.push(select);
+                $scope.ngModel.push(select);
                 $scope.keyword = '';
                 $scope.show = false;
-            }
+            };
+
+            $scope.SHOW = function (e) {
+                $scope.show = true;
+                e.stopPropagation();
+            };
+            $scope.HIDE = function () {
+                $scope.show = false;
+            };
 
 
         }

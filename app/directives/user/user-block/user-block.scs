@@ -2,11 +2,6 @@
     min-width: 200px;
 }
 
-[user-block] img {
-    width: 80px;
-    height: 80px;
-}
-
 [user-block] .name {
 }
 
@@ -25,4 +20,10 @@
 [user-block] .photo {
     width: 100px;
     padding: 10px;
+    overflow: hidden;
+}
+
+
+[user-block] .photo img {
+    width: 100%;
 }

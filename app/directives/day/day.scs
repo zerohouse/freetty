@@ -1,8 +1,3 @@
-
-[day] .border-bottom {
-    border-bottom: 1px solid #eee;
-}
-
 [day] .float-left {
     float: left;
     padding: 20px;

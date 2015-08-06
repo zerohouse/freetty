@@ -5,15 +5,16 @@
     </div>
 
     <div class="info">
-        <div user-photo="article.provider" ui-sref="profile({url:article.provider})"></div>
+        <div user-info="article.provider" prefix="by "></div>
 
         <div class="title">
-            <span ui-sref="article({_id:article._id})">{{article.head.substring(0, 30)}}</span>
-            <span class="label label-info" ng-repeat="tag in article.tags | limitTo:3">{{tag}}</span>
+            <div ui-sref="article({_id:article._id})">{{article.head.substring(0, 30)}}</div>
+            <span class="tags" ng-repeat="tag in article.tags | limitTo:3">#{{tag}}</span>
         </div>
-        <div>
-            <article-likes article="article"></article-likes>
-            <span ui-sref="article({_id:article._id, scroll:'recommends'})"><i class="fa fa-comment-o"></i> {{article.reply}}</span>
-        </div>
+    </div>
+    <div class="footer">
+        <article-likes article="article"></article-likes>
+        <span ui-sref="article({_id:article._id, scroll:'recommends'})"><i class="fa fa-comment-o"></i> {{article.reply}}</span>
+        <span class="location">{{distance}} <i class="fa fa-map-marker"></i></span>
     </div>
 </div>

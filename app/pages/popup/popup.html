@@ -1,4 +1,4 @@
-<div class="popup" ng-show="popup.isShow()" ng-controller="popup">
+<div class="popup" ng-show="popup.isShow()" ng-click="popup.hide()" ng-controller="popup">
     <div ng-class="classes[popup.getState()]" ng-click="$event.stopPropagation()">
         <ng-include src="url[popup.getState()]"></ng-include>
     </div>

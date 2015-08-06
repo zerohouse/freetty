@@ -1,7 +1,7 @@
-<span class="search badge" ng-show="ngModel.formatted_address">{{ngModel.formatted_address}}</span>
-<input ng-model="keyword" placeholder="주소찾기" class="form-control"
+<span class="search badge" ng-show="user.formatted_address">{{user.formatted_address}}</span>
+<input ng-model="keyword" placeholder="{{placeholder}}" ng-class="inputClass"
        ng-keydown="keyPress($event);">
-<ul ng-show="search" class="list-group search">
+<ul ng-style="{top:top,left:left}" ng-show="search" class="list-group search">
     <li class="list-group-item" ng-repeat="result in results"
         ng-mouseover="selectThis(result)" ng-click="selectLocation()"
         ng-class="{'selected':results.indexOf(result) == selected}">

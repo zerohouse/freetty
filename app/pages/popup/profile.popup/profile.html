@@ -1,0 +1,27 @@
+<div class="profile" ng-controller="profile.popup">
+    <div class="row">
+        <div class="half">
+            <img class="full-width" ng-src="{{photo}}">
+        </div>
+        <div class="half">
+            <h2>{{user.name}}</h2>
+
+            <div class="font-small  bottom-space-s" ng-repeat="s in user.introduce.specialty | limitTo : 2">
+                <i class="fa fa-star"></i> {{s}}
+            </div>
+            <div class="introduce-body">{{user.introduce.aboutme}}</div>
+            <span ng-show="user.url">http://freetty.com/</span>{{user.url}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="half">
+            <div class="btn btn-default full-width">Message</div>
+        </div>
+        <div class="half">
+            <a ng-show="user.type=='provider'" class="btn btn-default full-width"
+               ng-click="profilePage(user)">Profile</a>
+            <a ng-show="user.type!='provider' && isRootUser(user)" class="btn btn-default full-width"
+               ng-click="toArtist(user)">아티스트 등록하기</a>
+        </div>
+    </div>
+</div>

@@ -1,12 +1,10 @@
 app.factory('popup', function () {
     var popup = {};
 
-    var scope;
-
     var pop = function (val, e) {
         popup.show = true;
         popup.state = val;
-        if (e != undefined)
+        if (e && e.stopPropagation)
             e.stopPropagation();
     };
 
@@ -18,34 +16,24 @@ app.factory('popup', function () {
         return popup.state;
     };
 
-
-    pop.scope = function (s) {
-        scope = s;
-    };
-
-
     pop.hide = function () {
         popup.show = false;
-        scope.$apply();
     };
+
 
     return pop;
 });
 
 app.controller('popup', function ($scope, popup) {
 
-    popup.scope($scope);
-
-    document.body.addEventListener('click', function () {
-        popup.hide();
-    });
-
     $scope.url = {};
-    $scope.url.login = $scope.url.register = '/app/pages/popup/login/login.html'
+    $scope.url.login = $scope.url.register = '/app/pages/popup/login/login.html';
     $scope.url.license = '/app/pages/popup/license/license.html';
+    $scope.url.profile = '/app/pages/popup/profile.popup/profile.html';
 
     $scope.classes = {};
-    $scope.classes.login = $scope.classes.register = $scope.classes.license = 'window-s'
+    $scope.classes.login = $scope.classes.register = $scope.classes.license = 'window-s';
+    $scope.classes.profile = 'window-m';
 
 
     $scope.popup = popup;

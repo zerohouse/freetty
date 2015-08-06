@@ -11,7 +11,7 @@
 
 .nav-block {
     display: block;
-    height: 52px;
+    height: 50px;
 }
 
 .navbar-white {
@@ -32,7 +32,7 @@
     padding: 50px;
 }
 
-.nav [user-photo] {
+.nav [user-info] .wrap {
     position: relative;
     float: left;
     display: inline-block;
@@ -41,11 +41,14 @@
     height: 40px;
 }
 
-.login-profile .name {
-    display: block;
-    float: right;
+.login-profile .more {
     line-height: 50px;
-    margin-left: 5px;
+    margin-right: 10px;
+}
+
+.login-profile .name {
+    line-height: 50px;
+    margin: 0 10px;
 }
 
 .login-profile .name > i {
@@ -72,6 +75,6 @@
 }
 
 .search-bar.navbar-fixed-top {
-    margin-top: 53px;
+    margin-top: 50px;
     border-bottom: 1px solid #ccc;
 }

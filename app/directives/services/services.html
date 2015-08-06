@@ -15,8 +15,7 @@
     </thead>
     <tbody ng-show="!hide[key] || modService">
     <tr ng-click="select.toggle(service)" mod-right="modService" service-array="services" service-row
-        select="select" service="service"
-        ng-repeat="service in services">
+        select="select" service="service" ng-show="service.done || modService" ng-repeat="service in services">
 
 
     </tr>

@@ -1,7 +1,7 @@
 app.directive('replies', function () {
     return {
         restrict: 'E',
-        scope: {replyId: '=', user: '='},
+        scope: {replyId: '=', user: '=', replies: '='},
         templateUrl: '/app/directives/replies/replies.html',
         controller: function ($scope, req, alert) {
             $scope.replies = [];

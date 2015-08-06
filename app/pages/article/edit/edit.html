@@ -13,6 +13,12 @@
 
                 </div>
 
+                <!--<div class="header padder">-->
+                <!--<span class="input-label">Tags</span>-->
+                <!--<auto-complete-ajax data="tagResults" keyword="keyword" placeholder="태그" limit="5"-->
+                <!--selected-class="label label-info" ng-model="article.tags"></auto-complete-ajax>-->
+                <!--</div>-->
+
                 <div class="header none-top-border description padder">
                     <span class="input-label">Description</span>
                     <textarea placeholder="서비스 내용" class="form-control" ng-model="article.body"></textarea>
@@ -64,7 +70,8 @@
                         <span ng-show="!modService">[서비스 편집]</span>
                     </span>
 
-                    <div services='user.serviceTypes' mod-service="modService" select="article.selectedServices"></div>
+                    <div services='rootUser.serviceTypes' mod-service="modService"
+                         select="article.selectedServices"></div>
 
 
                     <table ng-show="!modService" class="table table-hover" ng-show="article.selectedServices.length>0">
@@ -129,8 +136,8 @@
             </div>
 
             <div class="panel-body">
-                <a ng-click="save()">임시 저장하기</a>
-                <a ng-click="done()">작성완료</a>
+                <a ng-show="!article.done" ng-click="save()">임시 저장하기</a>
+                <a ng-click="done()"><span ng-show="!article.done">작성</span><span ng-show="article.done">수정</span>완료</a>
             </div>
         </div>
     </div>

@@ -4,9 +4,15 @@ app.directive('userInfo', function (users) {
         restrict: 'A',
         templateUrl: '/app/directives/user/user-info/user-info.html',
         scope: {
-            userInfo: '='
+            userInfo: '=',
+            prefix: '@'
         },
-        controller: function ($scope) {
+        controller: function ($scope, popup) {
+
+            $scope.moveTo = function (user) {
+                popup('profile', user);
+                popup.user = user;
+            };
             $scope.$watch('userInfo', function () {
                 if ($scope.userInfo == undefined)
                     return;
@@ -15,12 +21,10 @@ app.directive('userInfo', function (users) {
                 });
             });
 
-            var defaultImg = '/dist/profile.jpg';
-
             $scope.$watch('user', function () {
                 if ($scope.user == undefined)
-                    return defaultImg;
-                $scope.photo = $scope.user.photo == undefined ? defaultImg : '/uploads/' + $scope.user.photo;
+                    return;
+                $scope.photo = $scope.user.photo == undefined ? app.constants.defaultImg : '/uploads/' + $scope.user.photo;
             });
 
         }

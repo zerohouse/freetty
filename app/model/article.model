@@ -12,5 +12,7 @@ var Article = mongoose.model('article', mongoose.Schema({
     likes: Array,
     reply: Number,
     hits: Number,
-    location: Object
+    lat: Number,
+    lng: Number,
+    price: Number
 }));

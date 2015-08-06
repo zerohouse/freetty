@@ -39,6 +39,8 @@ app.controller('profile', function ($scope, users, user, $stateParams, Upload, r
     $scope.$watch('files', function (files) {
         if (files == undefined)
             return;
+        if (files.length == 0)
+            return;
         var query = {};
         query.id = $scope.user.id;
 
@@ -57,9 +59,8 @@ app.controller('profile', function ($scope, users, user, $stateParams, Upload, r
     $scope.$watch(function () {
         return $scope.user.photo;
     }, function () {
-        $scope.photo = $scope.user.photo == undefined ? '/dist/profile.jpg' : '/uploads/' + $scope.user.photo;
+        $scope.photo = $scope.user.photo == undefined ? app.constants.defaultImg : '/uploads/' + $scope.user.photo;
     });
-
 
     $scope.isRootUser = function () {
         if ($scope.user._id == undefined)
@@ -73,9 +74,10 @@ app.controller('profile', function ($scope, users, user, $stateParams, Upload, r
     init();
 
     function init() {
+        $scope.user = {};
         users($stateParams.url, function (user) {
             if (user == null) {
-                $state.go('services');
+                $state.go('main');
                 return;
             }
             $scope.user = user;

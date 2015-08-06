@@ -1,7 +1,3 @@
-.border-bottom {
-    border-bottom: 1px solid;
-}
-
 .full-width {
     width: 100%;
 }

@@ -2,7 +2,7 @@ app.directive('locationSearch', function () {
     return {
         restrict: 'E',
         templateUrl: '/app/directives/location-search/location-search.html',
-        scope: {ngModel: '='},
+        scope: {location: '=', top: '@', left: '@', placeholder: '@', inputClass: '@'},
         controller: function ($scope, req, $timeout) {
 
 
@@ -61,15 +61,11 @@ app.directive('locationSearch', function () {
                 if (selected == undefined)
                     return;
 
-                $scope.ngModel = new Location(selected);
+                $scope.location.formatted_address = selected.formatted_address;
+                $scope.location.lat = selected.geometry.location.lat;
+                $scope.location.lng = selected.geometry.location.lng;
                 $scope.search = false;
             };
-
-            function Location(loc) {
-                this.formatted_address = loc.formatted_address;
-                this.geometry = {location: loc.geometry.location};
-            }
-
 
         }
     }

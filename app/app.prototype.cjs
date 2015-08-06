@@ -25,6 +25,13 @@ Date.prototype.toString = function () {
     return date + " " + this.toAmPm();
 };
 
+Date.prototype.dateOnly = function () {
+    var month = '' + (this.getMonth() + 1),
+        day = '' + this.getDate(),
+        year = this.getFullYear();
+    return [year, month, day].join('.');
+};
+
 Array.prototype.contains = function (item) {
     return this.indexOf(item) != -1;
 };

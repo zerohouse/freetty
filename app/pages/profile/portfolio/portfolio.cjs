@@ -33,7 +33,8 @@ app.controller('profile.portfolio', function ($scope, $stateParams, users, req, 
                 alert(res.err);
                 return;
             }
-            $state.go('article', {_id: res, mod: true});
+            $state.go('edit', {_id: res});
         });
     };
+
 });
