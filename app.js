@@ -108,6 +108,12 @@ var Article = mongoose.model('article', mongoose.Schema({
     lng: Number,
     price: Number
 }));
+var Keyword = mongoose.model('keyword', mongoose.Schema({
+    keyword: String,
+    hits: Number
+}));
+
+
 var Reply = mongoose.model('reply', mongoose.Schema({
     articleId: {type: String, index: true},
     reply: String,
@@ -392,22 +398,27 @@ app.post('/api/article/list', function (req, res) {
             query = query.where('lng').gte(req.passed.location.lng.gte).lte(req.passed.location.lng.lte);
         }
 
-        if (req.passed.tags && req.passed.tags.length != 0) {
-            if (req.passed.tagType == "or")
-                query = query.where('tags').in(req.passed.tags);
-            if (req.passed.tagType == "and") {
-                var q = [];
-                req.passed.tags.forEach(function (tag) {
-                    q.push({tags: tag});
-                });
-                query = query.and(q);
+        if (req.passed.keywords && req.passed.keywords.length != 0) {
+            var l = req.passed.keywords.length;
+            for (var i = 0; i < l; i++) {
+                Keyword.update({keyword: req.passed.keywords[i]}, {$inc: {hits: 1}}, {upsert: true}).exec();
+            }
+
+            var regex = req.passed.searchType == "or" ? new RegExp(or(req.passed.keywords)) : new RegExp(and(req.passed.keywords));
+            query = query.and({$or: [{head: {$regex: regex}}, {selectedServices: {$regex: regex}}, {tags: {$regex: regex}}]});
+            function and(a) {
+                return "(=?.*" + a.join(".*)(?=.*") + ".*)"
+            }
+
+            function or(a) {
+                return "(=?.*" + a.join(".*)|(?=.*") + ".*)"
             }
         }
 
         if (req.passed.price) {
-            if (req.passed.price.min)
+            if (req.passed.price.min && req.passed.price.min != 0)
                 query = query.where('price').gte(req.passed.price.min);
-            if (req.passed.price.max)
+            if (req.passed.price.max && req.passed.price.max != 600000)
                 query = query.where('price').lte(req.passed.price.max);
         }
 
@@ -416,16 +427,6 @@ app.post('/api/article/list', function (req, res) {
         });
     }
 );
-
-app.get('/api/tags', function (req, res) {
-    var query = Article.aggregate([{$match: {tags: {$regex: ".*" + req.passed.keyword + ".*"}}}, {$unwind: "$tags"}, {
-        $group: {_id: "$tags", count: {$sum: 1}}
-    }, {$sort: {count: -1}}, {$limit: 5}], function (err, result) {
-        res.send(result);
-    });
-});
-
-
 
 
 app.post('/api/url/check', function (req, res) {
@@ -457,6 +458,15 @@ app.post('/api/url/check', function (req, res) {
         res.send(result);
     });
 });
+app.get('/api/keywords', function (req, res) {
+    var query = Keyword.find({keyword: new RegExp(".*" + req.passed.keyword + ".*")}).sort({hits: -1}).limit(5).exec(function (err, result) {
+        res.send(result);
+    });
+});
+
+
+
+
 app.post('/api/user/login', function (req, res) {
     var query = {};
     query.email = req.passed.email;

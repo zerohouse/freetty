@@ -9,6 +9,7 @@
     "angular-date-picker": "^1.2.1",
     "angular-route": "^1.4.0",
     "angular-sanitize": "^1.4.2",
+    "angular-scroll": "^0.7.1",
     "angular-ui-router": "^0.2.14",
     "autosize": "^3.0.8",
     "body-parser": "^1.13.2",

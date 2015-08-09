@@ -1,0 +1,5 @@
+var Keyword = mongoose.model('keyword', mongoose.Schema({
+    keyword: String,
+    hits: Number
+}));
+

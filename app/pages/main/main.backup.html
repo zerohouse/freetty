@@ -1,0 +1,37 @@
+<div class="jumbotron jumbo navbar-collapse collapse">
+    <div class="container">
+        <h2>뷰티아티스트</h2>
+
+        <h3>'찾지말고', '선택하세요'</h3>
+
+        <p> 600,000명 이상의 뷰티아티스트가 당신을 기다립니다.</p>
+
+        <a ng-click="showHelp();" smooth-scroll target="help" class="btn btn-primary">LEARN MORE</a>
+    </div>
+</div>
+<!--scroll-condition="this.pageYOffset >= (document.querySelector('#services').offsetTop - element[0].offsetHeight)"-->
+<div class="jumbotron search-bar navbar-collapse collapse"
+
+     ng-class="{'navbar-fixed-top':scrollCondition}">
+    <div class="container">
+        <div class="input-group">
+            <input ng-model="query.keyword" placeholder="서비스 검색" type="text" class="form-control">
+            <location-search placeholder="지역" top="34px" ng-model="query.location"></location-search>
+
+            <div ng-click="date=true;time=false;$event.stopPropagation()" type="text"
+                 class="form-control" ng-class="{'border-active':date}">
+                <span ng-show="query.date">{{query.date}}</span><span class="placeholder" ng-show="!query.date">날짜 (Any date)</span>
+            </div>
+            <date-picker ng-model="query.date" ng-show="date" on-date-selected="date=false"></date-picker>
+            <div ng-class="{'border-active':time}" type="text" class="form-control"
+                 ng-click="date=false;time=true;$event.stopPropagation()">
+                <span ng-show="query.time">{{query.time.toTime()}}</span>
+                <span class="placeholder" ng-show="!query.time">시간 (Any date)</span>
+            </div>
+            <div class="timer" ng-show="time" ng-click="$event.stopPropagation()">
+                <slider class="main-slider" floor="32" ceiling="88" format="toTime" ng-model="query.time"></slider>
+            </div>
+            <div class="input-group-addon" ng-click="get()">검색</div>
+        </div>
+    </div>
+</div>

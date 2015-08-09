@@ -10,15 +10,16 @@ price-range {
     position: relative;
 }
 
-price-range .slider {
-    position: absolute;
+price-range .min {
+    float: left;
+}
+
+price-range .max {
+    float: right;
+}
+
+price-range slider {
+    margin: 0;
+    margin-bottom: 5px;
     width: 100%;
-    z-index: 10;
-    padding: 0 10px;
-    border-radius: 10px;
-    text-align: center;
-    font-size: 80%;
-    left: -20px;
-    min-width: 180px;
-    top: -10px;
 }

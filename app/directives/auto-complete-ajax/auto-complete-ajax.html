@@ -1,5 +1,5 @@
 <div>
-    <a ng-repeat="el in ngModel" ng-class="selectedClass" class="bottom-space-s margin-right-s">#{{el}}
+    <a ng-repeat="el in ngModel" ng-class="selectedClass" class="bottom-space-s margin-right-m">{{el}}
         <i class="fa fa-times" ng-click="ngModel.remove(el, true)"></i></a>
     <input ng-click="SHOW($event)" ng-model="keyword"
            ng-keydown="keydown($event)"
@@ -10,6 +10,6 @@
     <li class="list-group-item" ng-repeat="result in results = (data | filter: keyword | limitTo:limit)"
         ng-class="{active:select == results.indexOf(result)}"
         ng-mouseover="SELECT(results.indexOf(result))" ng-click="selectSelected();">
-        {{result._id}}<a class="badge">{{result.count}}</a>
+        {{result.keyword}}<a class="badge">{{result.hits}}</a>
     </li>
 </ul>

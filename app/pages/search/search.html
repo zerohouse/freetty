@@ -1,3 +1,6 @@
+<div class="nav-block"></div>
+
+
 <div class="right-container">
 
     <div id="map-controls">
@@ -25,27 +28,27 @@
         <div class="row border-bottom">
             <div class="col-sm-3">
                 <div class="panel-body">
-                    태그
+                    검색어
                 </div>
             </div>
             <div class="col-sm-9">
                 <div class="panel-body">
-                    <auto-complete-ajax data="tagResults" keyword="keyword" placeholder="태그" limit="5"
-                                        selected-class="" ng-model="query.tags"></auto-complete-ajax>
+                    <auto-complete-ajax data="tagResults" keyword="keyword" placeholder="검색어" limit="5"
+                                        selected-class="" ng-model="query.keywords"></auto-complete-ajax>
                 </div>
-                <div class="panel-body" ng-show="query.tags.length>1">
-                    태그들을
+                <div class="panel-body" ng-show="query.keywords.length>1">
+                    검색어들을
                     <div class="radio">
                         <label>
-                            <input type="radio" name="tagtype" value="and" ng-model="query.tagType"
-                                   ng-init="query.tagType='and'">
-                            모두 포함한 (AND)
+                            <input type="radio" name="searchType" value="or" ng-model="query.searchType"
+                                   ng-init="query.searchType='or'">
+                            하나라도 포함한 (OR)
                         </label>
                     </div>
                     <div class="radio">
                         <label>
-                            <input type="radio" name="tagtype" value="or" ng-model="query.tagType">
-                            하나라도 포함한 (OR)
+                            <input type="radio" name="searchType" value="and" ng-model="query.searchType">
+                            모두 포함한 (AND)
                         </label>
                     </div>
                     서비스를 찾습니다.
@@ -60,9 +63,9 @@
             </div>
             <div class="col-sm-9">
                 <div class="panel-body">
-                    <price-range class="form-control" min="query.price.min" mod-right="true"
+                    <price-range min="query.price.min" mod-right="true"
                                  max="query.price.max" step="1000" ng-mouseup="save(!mod)"
-                                 floor="0" ceiling="500000" placeholder="가격 무관"
+                                 floor="0" ceiling="600000" placeholder="가격 무관"
                                  mod-default="All day"></price-range>
                 </div>
             </div>

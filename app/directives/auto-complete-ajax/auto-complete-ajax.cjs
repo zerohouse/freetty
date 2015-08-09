@@ -21,20 +21,20 @@ app.directive('autoCompleteAjax', function (alert) {
             if ($scope.ngModel == undefined)
                 $scope.ngModel = [];
 
-            $scope.select = 0;
+            $scope.select = -1;
 
             $scope.keydown = function (e) {
                 $scope.show = true;
                 switch (e.keyCode) {
                     case 38:
                         $scope.select--;
-                        if ($scope.select < 0)
+                        if ($scope.select < -1)
                             $scope.select = $scope.results.length - 1;
                         break;
                     case 40:
                         $scope.select++;
                         if ($scope.select > $scope.results.length - 1)
-                            $scope.select = 0;
+                            $scope.select = -1;
                         break;
                     case 13:
                         $scope.selectSelected();
@@ -49,18 +49,20 @@ app.directive('autoCompleteAjax', function (alert) {
 
             $scope.selectSelected = function () {
                 var select = $scope.results[$scope.select];
-                if (select == undefined) {
+                if (select == undefined)
                     select = $scope.keyword;
-                }
-                if (select._id == undefined || select._id == '') {
-                    alert('결과가 없습니다.');
+                else
+                    select = $scope.results[$scope.select].keyword;
+
+                if ($scope.keyword == undefined || $scope.keyword == '') {
+                    alert('검색어가 없습니다.');
                     return;
                 }
-                if ($scope.ngModel.contains(select._id)) {
+                if ($scope.ngModel.contains(select)) {
                     alert('이미 추가되었습니다.');
                     return;
                 }
-                $scope.ngModel.push(select._id);
+                $scope.ngModel.push(select);
                 $scope.keyword = '';
                 $scope.show = false;
             };

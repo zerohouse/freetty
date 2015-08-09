@@ -1,7 +1,34 @@
-[ui-view]#main {
-    width: 100%;
-    height: 100%;
+.navbar-background {
+    background: #88FFE1;
+    border: none;
+    box-shadow: none;
+    margin-bottom: 0;
+    -webkit-transition: all .5s ease-in;
+    -moz-transition: all .5s ease-in;
+    -o-transition: all .5s ease-in;
+    transition: all .5s ease-in;
 }
+
+
+.navbar-white {
+    background-color: white;
+    box-shadow: 1px 1px 1px silver;
+}
+
+.navbar-white a {
+    font-size: 95% !important;
+}
+
+.jumbo {
+    background: #88FFE1;
+}
+
+.jumbo .container {
+    text-align: center;
+    padding: 50px;
+}
+
+
 
 .nav-block {
     display: block;

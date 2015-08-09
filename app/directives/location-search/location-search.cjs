@@ -6,6 +6,7 @@ app.directive('locationSearch', function () {
         controller: function ($scope, req, $timeout) {
 
 
+
             $scope.keyword = "";
 
             $scope.selected = 0;

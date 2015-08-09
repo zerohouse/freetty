@@ -1,4 +1,4 @@
-app.controller('search', function ($scope, req, $timeout, user, $compile) {
+app.controller('search', function ($scope, req, $timeout, user, $compile, param) {
 
     var location, map;
 
@@ -19,7 +19,7 @@ app.controller('search', function ($scope, req, $timeout, user, $compile) {
             $scope.tagResults = [];
             return;
         }
-        req.get('/api/tags', {keyword: keyword}).success(function (res) {
+        req.get('/api/keywords', {keyword: keyword}).success(function (res) {
             $scope.tagResults = res;
         });
     });
@@ -34,6 +34,7 @@ app.controller('search', function ($scope, req, $timeout, user, $compile) {
         this.load = $timeout(function () {
             if (reset)
                 $scope.articles = [];
+
             req.post('/api/article/list', $scope.query).success(function (res) {
                 resetMarkers();
                 $scope.queryModifyed = false;
@@ -46,57 +47,68 @@ app.controller('search', function ($scope, req, $timeout, user, $compile) {
                 if (res.length < $scope.query.limit)
                     $scope.noMore = true;
                 $scope.page++;
+
+                function resetMarkers() {
+                    markers.forEach(function (marker) {
+                        marker.setMap(null);
+                    });
+                }
+
+                function addMarker(article) {
+                    var marker = new google.maps.Marker({
+                        position: {lat: article.lat, lng: article.lng},
+                        map: $scope.map
+                    });
+                    markers.push(marker);
+
+                    if (infowindow)
+                        infowindow.close();
+
+                    infowindow = new google.maps.InfoWindow({
+                        content: "<div id='infowindow'><div user-block='article.provider'></div></div>"
+                    });
+
+                    google.maps.event.addListener(marker, 'click', function () {
+                        loading = true;
+                        $scope.article = article;
+                        infowindow.open(map, marker);
+                        $timeout(function () {
+                            $compile(angular.element($('#infowindow')))($scope);
+                            $timeout(function () {
+                                loading = false;
+                            }, 1000);
+                        });
+                    });
+                    google.maps.event.addListener(marker, 'mouseover', function () {
+                    });
+                    google.maps.event.addListener(marker, 'mouseout', function () {
+                    });
+                }
             });
         }, 400);
     };
 
-    function resetMarkers() {
-        markers.forEach(function (marker) {
-            marker.setMap(null);
-        });
-    }
 
-
-    function addMarker(article) {
-        var marker = new google.maps.Marker({
-            position: {lat: article.lat, lng: article.lng},
-            map: $scope.map
-        });
-        markers.push(marker);
-
-        if (infowindow)
-            infowindow.close();
-
-        infowindow = new google.maps.InfoWindow({
-            content: "<div id='infowindow'><div user-block='article.provider'></div></div>"
-        });
-
-        google.maps.event.addListener(marker, 'click', function () {
-            loading = true;
-            $scope.article = article;
-            infowindow.open(map, marker);
-            $timeout(function () {
-                $compile(angular.element($('#infowindow')))($scope);
-                $timeout(function () {
-                    loading = false;
-                }, 1000);
-            });
-        });
-        google.maps.event.addListener(marker, 'mouseover', function () {
-        });
-        google.maps.event.addListener(marker, 'mouseout', function () {
-        });
-    }
+    $scope.articles = [];
+    $scope.page = 0;
+    $scope.query = param.getParam();
+    if ($scope.query == undefined)
+        $scope.query = {};
+    $scope.query.limit = 20;
+    $scope.query.price = {min: 0, max: 600000};
 
     $timeout(function () {
         initialize();
     });
 
     function initialize() {
-        location = $scope.location = user.lat == undefined ? {
-            lat: 37.49794199999999,
-            lng: 127.027621
-        } : {lat: user.lat, lng: user.lng, formmated_address: user.formmated_address};
+        if ($scope.query && $scope.query.location && $scope.query.location.lat)
+            location = $scope.location = $scope.query.location;
+        else
+            location = $scope.location = user.lat == undefined ? {
+                lat: 37.49794199999999,
+                lng: 127.027621
+            } : {lat: user.lat, lng: user.lng, formmated_address: user.formmated_address};
         var mapOptions = {
             panControl: false,
             streetViewControl: false,
@@ -150,7 +162,4 @@ app.controller('search', function ($scope, req, $timeout, user, $compile) {
         });
     };
 
-    $scope.articles = [];
-    $scope.page = 0;
-    $scope.query = {limit: 20};
 });

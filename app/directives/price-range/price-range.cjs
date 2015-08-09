@@ -12,12 +12,6 @@ app.directive('priceRange', function () {
             modDefault: '@'
         },
         templateUrl: '/app/directives/price-range/price-range.html',
-        controller: function ($scope) {
-            document.querySelector('body').addEventListener('click', function () {
-                $scope.slider = false;
-                $scope.$apply();
-            });
-        }
     }
 });
 
