@@ -1,11 +1,17 @@
 auto-complete-ajax {
     position: relative;
     display: block;
+    cursor: text;
 }
 
 auto-complete-ajax .results {
     width: 100%;
     position: absolute;
-    top: 52px;
     z-index: 10;
+}
+
+auto-complete-ajax input {
+    border: none;
+    outline: none;
+    background-color: transparent;
 }

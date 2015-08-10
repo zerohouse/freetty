@@ -12,26 +12,18 @@ app.controller('search', function ($scope, req, $timeout, user, $compile, param)
         $scope.get(true);
     }, true);
 
-    $scope.$watch('keyword', function (keyword) {
-        if (keyword == undefined)
-            return;
-        if (keyword == "") {
-            $scope.tagResults = [];
-            return;
-        }
-        req.get('/api/keywords', {keyword: keyword}).success(function (res) {
-            $scope.tagResults = res;
-        });
-    });
+    var ajax;
 
     $scope.get = function (reset) {
-        if (reset) {
-            $scope.page = 0;
-            $scope.noMore = false;
-        }
-        $timeout.cancel(this.load);
-        $scope.query.skip = $scope.page * $scope.query.limit;
-        this.load = $timeout(function () {
+        if (loading)
+            return;
+        $timeout.cancel(ajax);
+        ajax = $timeout(function () {
+            if (reset) {
+                $scope.page = 0;
+                $scope.noMore = false;
+            }
+            $scope.query.skip = $scope.page * $scope.query.limit;
             if (reset)
                 $scope.articles = [];
 
@@ -102,6 +94,7 @@ app.controller('search', function ($scope, req, $timeout, user, $compile, param)
     });
 
     function initialize() {
+        loading = true;
         if ($scope.query && $scope.query.location && $scope.query.location.lat)
             location = $scope.location = $scope.query.location;
         else
@@ -122,8 +115,6 @@ app.controller('search', function ($scope, req, $timeout, user, $compile, param)
             mapOptions);
 
         google.maps.event.addListener(map, 'bounds_changed', function () {
-            if (loading)
-                return;
             if (!$scope.getItemsWhenChangeBounds)
                 return;
             $scope.getArticlesFromHere();
@@ -135,12 +126,14 @@ app.controller('search', function ($scope, req, $timeout, user, $compile, param)
 
 
         $scope.getArticlesFromHere = function () {
-            var bound = map.getBounds();
-            $scope.query.location = {
-                lat: {gte: bound.Ia.G, lte: bound.Ia.j},
-                lng: {gte: bound.Ca.j, lte: bound.Ca.G},
-            };
-            $scope.get(true);
+            $timeout.cancel(this.change);
+            this.change = $timeout(function () {
+                var bound = map.getBounds();
+                $scope.query.location = {
+                    lat: {gte: bound.Ia.G, lte: bound.Ia.j},
+                    lng: {gte: bound.Ca.j, lte: bound.Ca.G},
+                };
+            }, 400);
         };
 
         var mapControl = document.querySelector('#map-controls');
@@ -149,6 +142,9 @@ app.controller('search', function ($scope, req, $timeout, user, $compile, param)
         div.appendChild(mapControl);
         map.controls[google.maps.ControlPosition.LEFT_TOP].push(div);
 
+        $timeout(function () {
+            loading = false;
+        }, 1000);
     }
 
 

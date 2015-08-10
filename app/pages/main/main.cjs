@@ -8,12 +8,16 @@ app.controller('main', function ($scope, req, $timeout, param, $state) {
     $scope.query = {location: {}};
 
 
-    var date = new Date(2015, 10, 1);
+    var date = new Date(2015, 9, 1);
     $timeout(update, 500);
 
     function update() {
         var remain = new Date(date - new Date());
-        $scope.remainDate = remain.getDate() + "d " + remain.getHours() + "h " + remain.getMinutes() + "m " + remain.getSeconds() + "s";
+        var sec = remain / 1000;
+        var min = sec / 60;
+        var hours = min / 60;
+        var days = hours / 24;
+        $scope.remainDate = parseInt(days) + "d " + parseInt(hours) % 24 + "h " + parseInt(min) % 60 + "m " + parseInt(sec) % 60 + "s";
         $timeout(update, 500);
     }
 

@@ -21,7 +21,7 @@
 
 .search-bar .form-control {
     border-right: none;
-    width: 25%;
+    width: 50%;
 }
 
 .search-bar location-search .form-control {
@@ -33,24 +33,6 @@
     left: 25%;
     top: 6px;
     background-color: white;
-}
-
-.search-bar location-search .search {
-    left: 24.3%;
-    z-index: 10;
-}
-
-.search-bar .angular-date-picker {
-    position: absolute;
-    z-index: 10;
-    left: 47.7%;
-    top: 41px;
-}
-
-.main-slider {
-    position: absolute;
-    left: 0;
-    top: 35px;
 }
 
 header {

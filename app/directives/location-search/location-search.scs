@@ -1,8 +1,27 @@
-.search {
-    position: absolute;
-    z-index: 1;
-}
 
 .margin-bottom {
     margin-bottom: 10px;
+}
+
+location-search input {
+    border: none;
+    outline: none;
+    width: 100%;
+    background-color: transparent;
+}
+
+location-search {
+    cursor: text;
+    position: relative;
+}
+
+location-search span {
+    display: inline-block;
+    width: 100%;
+}
+
+location-search .search {
+    position: absolute;
+    z-index: 1;
+    min-width: 300px;
 }

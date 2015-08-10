@@ -8,15 +8,14 @@
         <span class="margin-right-m" ng-click="here()"><i class="fa fa-map-marker"></i> 현재 위치</span>
 
         <input type="checkbox" class="" ng-model="getItemsWhenChangeBounds">
-        <span class="margin-right-m"> 맵을 움직이며 찾기</span>
+        <span class="margin-right-m">지도에 맞춰 데이터 불러오기</span>
         <span ng-show="!getItemsWhenChangeBounds" class="label label-info"
               ng-click="getArticlesFromHere()">지금 위치에서 검색</span>
 
 
         <div class="top-margin-s">
-            <div ng-show="location.formatted_address">{{location.formatted_address}}</div>
             <i class="fa fa-search"></i>
-            <location-search input-class="search-input" placeholder="지역검색" location="location"></location-search>
+            <location-search placeholder="지역검색" location="location"></location-search>
         </div>
     </div>
 
@@ -33,7 +32,7 @@
             </div>
             <div class="col-sm-9">
                 <div class="panel-body">
-                    <auto-complete-ajax data="tagResults" keyword="keyword" placeholder="검색어" limit="5"
+                    <auto-complete-ajax data="tagResults" top="35" keyword="keyword" placeholder="검색어" limit="5"
                                         selected-class="" ng-model="query.keywords"></auto-complete-ajax>
                 </div>
                 <div class="panel-body" ng-show="query.keywords.length>1">
@@ -70,12 +69,12 @@
                 </div>
             </div>
         </div>
+        <div ng-show="!noMore" ng-click="get()">더보기</div>
     </div>
 
     <div class="panel-body center">
         <article-head ng-repeat="article in articles" article="article"></article-head>
-        <div ng-show="!noMore" class="badge" ng-click="get()">더보기</div>
-        <div ng-show="noMore" class="badge">마지막입니다.</div>
+
     </div>
 
 </div>

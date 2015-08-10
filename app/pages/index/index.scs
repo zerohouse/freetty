@@ -42,15 +42,83 @@
     min-width: 120px;
 }
 
-.search-bar {
-    padding: 10px !important;;
-}
-
 .login-profile:hover ul {
     display: block;
 }
 
-.search-bar.navbar-fixed-top {
-    margin-top: 50px;
-    border-bottom: 1px solid #ccc;
+/*.search-bar {*/
+/*padding: 10px !important;;*/
+/*}*/
+
+/*.search-bar.navbar-fixed-top {*/
+/*margin-top: 50px;*/
+/*border-bottom: 1px solid #ccc;*/
+/*}*/
+
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:focus, .navbar-default .navbar-nav > .open > a:hover {
+    background-color: transparent;
+}
+
+.nav .open > a, .nav .open > a:focus, .nav .open > a:hover {
+    background-color: transparent;
+}
+
+/*#search {*/
+/*position: relative;*/
+/*width: 200px;*/
+/*}*/
+
+/*#search a {*/
+/*position: absolute;*/
+/*left: 9px;*/
+/*top: 2px;*/
+/*}*/
+
+/*#search .input-group {*/
+/*margin: 10px 15px;*/
+/*padding: 5px;*/
+/*padding-left: 29px;*/
+/*outline: 1px solid #eee;*/
+/*width: 100%;*/
+/*}*/
+
+/*.affix-top:not('affixed') #search .input-group {*/
+/*border: 1px solid rgba(238, 238, 238, 0);*/
+/*}*/
+
+.arrow-div {
+    right: 8px;
+    background: #f1f1f1;
+    padding: 3px;
+    text-align: center;
+}
+
+.arrow-div li {
+    padding: 10px;
+    margin: 5px;
+}
+
+.arrow-div li:hover {
+    color: #777;
+    background-color: #DADADA;
+}
+
+.arrow-div:after {
+    border-radius: 5px;
+    bottom: 100%;
+    left: 80%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-color: rgba(241, 241, 241, 0);
+    border-bottom-color: #f1f1f1;
+    border-width: 12px;
+    margin-left: -12px;
+}
+
+.affix-top input {
+    color: white;
 }

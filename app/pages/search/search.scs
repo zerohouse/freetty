@@ -1,13 +1,3 @@
-
-.search-input {
-    border: none;
-    outline: none;
-}
-
-.search-input:hover, .search-input:focus, .search-input:active {
-    width: inherit;
-}
-
 #search-map {
     height: 260px;
     width: 100%;
@@ -30,6 +20,12 @@
     transition: width 1s ease-in-out;
 }
 
+#map-controls location-search {
+    display: block;
+    width: 240px;
+    float: right;
+}
+
 .margin-right-m {
     margin-right: 20px;
 }
@@ -48,7 +44,6 @@ price-range.form-control .slider {
     .left-container, .right-container {
         position: fixed;
         top: 50px;
-        height: inherit;
         bottom: 0;
         overflow: auto;
     }
@@ -73,4 +68,8 @@ price-range.form-control .slider {
 
 .top-margin-s {
     margin-top: 5px;
+}
+
+.block {
+    display: block;
 }

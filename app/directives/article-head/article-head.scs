@@ -1,7 +1,14 @@
 article-head {
-    width: 260px;
-    display: inline-block;
-    margin: 10px;
+    float: left;
+    width: 44%;
+    margin: 3%
+}
+
+@media (max-width: 600px) {
+    article-head {
+        width: 90%;
+        margin: 5%
+    }
 }
 
 .article {

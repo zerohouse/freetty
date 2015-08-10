@@ -69,9 +69,20 @@
 }
 
 .addNew {
-    width: 260px;
-    display: inline-block;
-    margin: 10px;
+    float: left;
+    width: 44%;
+    margin: 3%
+}
+
+@media (max-width: 600px) {
+    .addNew {
+        width: 90%;
+        margin: 5%
+    }
+}
+
+.addNew {
+    float: left;
     border: 4px dotted #ccc;
     vertical-align: bottom;
     height: 428px;

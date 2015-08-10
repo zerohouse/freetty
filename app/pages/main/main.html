@@ -21,32 +21,6 @@
     </div>
 </header>
 
-<section class="jumbotron search-bar navbar-collapse collapse" ng-class="{'navbar-fixed-top':scrollCondition}">
-    <div class="container">
-        <div class="input-group">
-            {{query.location.formatted_address}}
-            <input ng-model="query.keyword" placeholder="서비스 검색" type="text" class="form-control">
-            <location-search input-class="form-control" placeholder="지역" top="34px"
-                             location="query.location"></location-search>
-
-            <div ng-click="date=true;time=false;$event.stopPropagation()" type="text"
-                 class="form-control" ng-class="{'border-active':date}">
-                <span ng-show="query.date">{{query.date}}</span><span class="placeholder" ng-show="!query.date">날짜 (Any date)</span>
-            </div>
-            <date-picker ng-model="query.date" ng-show="date" on-date-selected="date=false"></date-picker>
-            <div ng-class="{'border-active':time}" type="text" class="form-control"
-                 ng-click="date=false;time=true;$event.stopPropagation()">
-                <span ng-show="query.time">{{query.time.toTime()}}</span>
-                <span class="placeholder" ng-show="!query.time">시간 (Any date)</span>
-            </div>
-            <div class="timer" ng-show="time" ng-click="$event.stopPropagation()">
-                <slider class="main-slider" floor="32" ceiling="88" format="toTime" ng-model="query.time"></slider>
-            </div>
-            <div class="input-group-addon" ng-click="search()">검색</div>
-        </div>
-    </div>
-</section>
-
 
 <section class="bg-primary" id="about" style="padding-top: 10%; padding-bottom: 10%;">
     <div class="container">
@@ -57,7 +31,7 @@
                 <p class="text-faded">내가 거주하는 지역에 고객평가와 자격검증으로 믿을 수 있는 뷰티아티스트들의 프로필과 수백 가지 포트폴리오를 무제한으로 검색하며 나와 맞는 아티스트를
                     직접 비교, 선택하고 직거래할 수 있는 오픈 마켓 채널을 24시간 제공합니다.“뷰티서비스를 받기 위해 더 이상 '어디'로 갈지 고민하지 마세요, 이제 '누구'를 만나야 할지
                     FREETTY가 알려드리겠습니다."</p>
-                <a href="#services" class="btn btn-default btn-xl page-scroll">FREETTY 이용방법</a>
+                <a du-smooth-scroll="services" class="btn btn-default btn-xl page-scroll">FREETTY 이용방법</a>
             </div>
         </div>
     </div>
@@ -77,7 +51,7 @@
             <div class="col-lg-3 col-md-6 text-center">
                 <div class="service-box">
 
-                    <div class="wow bounceIn" style="visibility: visible; animation-name: bounceIn;">
+                    <div class="wow bounceIn">
                         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="113.375px" height="113.382px" viewBox="0 0 113.375 113.382" enable-background="new 0 0 113.375 113.382" xml:space="preserve">
 <g>
 	<path fill="#ED435B" d="M111.376,42.254h-58.42c-1.109,0-2.01,0.9-2.01,2.01c0,1.11,0.9,2.01,2.01,2.01h56.412v18.097H52.956
@@ -467,7 +441,10 @@
     <div class="container text-center">
         <div class="call-to-action">
             <h2>뷰티서비스의 미래를 지금 만나보세요!</h2>
-            <a class="btn btn-default btn-xl wow tada" style="visibility: visible; animation-name: tada;">지금 등록하기!</a>
+            <a class="btn btn-default btn-xl wow tada" style="visibility: visible; animation-name: tada;"
+               ng-show="!rootUser.logged" ng-click="popup('register', $event)">지금 등록하기!</a>
+            <a class="btn btn-default btn-xl wow tada" style="visibility: visible; animation-name: tada;"
+               ng-show="rootUser.logged" ui-sref="search">포트폴리오 보러가기</a>
         </div>
     </div>
 </aside>

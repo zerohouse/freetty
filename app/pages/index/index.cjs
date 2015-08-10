@@ -2,6 +2,8 @@ app.controller('index', function ($scope, user, popup, $state, req) {
     $scope.rootUser = user;
     $scope.popup = popup;
 
+    $scope.query = {location: {}};
+
     $scope.$watch(function () {
         return $state.current;
     }, function (current) {

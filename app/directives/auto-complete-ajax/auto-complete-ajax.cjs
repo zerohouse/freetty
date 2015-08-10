@@ -1,17 +1,37 @@
-app.directive('autoCompleteAjax', function (alert) {
+app.directive('autoCompleteAjax', function (alert, req, $timeout) {
 
     return {
         restrict: 'E',
         templateUrl: '/app/directives/auto-complete-ajax/auto-complete-ajax.html',
         scope: {
             ngModel: '=',
-            data: '=',
             keyword: '=',
             placeholder: '@',
             limit: '@',
             selectedClass: '@'
         },
+        link: function (s, e, a) {
+            var input = e.children('input')[0];
+            e.on('click', function () {
+                $timeout(function () {
+                    input.focus();
+                }, 200);
+            });
+        },
         controller: function ($scope) {
+
+            $scope.$watch('keyword', function (keyword) {
+                if (keyword == undefined)
+                    return;
+                if (keyword == "") {
+                    $scope.tagResults = [];
+                    return;
+                }
+                req.get('/api/keywords', {keyword: keyword}).success(function (res) {
+                    $scope.tagResults = res;
+                });
+            });
+
 
             document.body.addEventListener('click', function () {
                 $scope.HIDE();

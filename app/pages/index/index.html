@@ -32,20 +32,31 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a ui-sref="search">Portfolio</a></li>
+                <li id="search">
+                    <a ui-sref="search"><i class="fa fa-search"></i></a>
+                    <!--<span class="input-group">-->
+                    <!--<location-search top="24px"-->
+                    <!--left="-26px" placeholder="지역"-->
+                    <!--location="query.location"></location-search>-->
+
+                    <!--</span>-->
+                </li>
+
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li ng-show="!rootUser.logged"><a ng-click="popup('login', $event)">로그인</a></li>
                 <li ng-show="!rootUser.logged"><a ng-click="popup('register', $event)">회원가입</a></li>
-                <li class="login-profile" ng-show="rootUser.logged">
-                    <span user-info="rootUser._id"></span>
-                    <span class="more">
-                        <i class="fa fa-caret-down"></i></span>
-                    <ul class="list-group">
-                        <li class="list-group-item" ng-click="logout()">로그아웃</li>
+                <li class="dropdown" ng-show="rootUser.logged">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">{{rootUser.name}}<span class="caret"></span></a>
+                    <ul class="dropdown-menu arrow-div">
+                        <li ui-sref="profile({_id:rootUser._id})">내 프로필</li>
+                        <li ng-click="logout()">로그아웃</li>
                     </ul>
                 </li>
             </ul>
+
+
         </div>
         <!-- /.navbar-collapse -->
     </div>
