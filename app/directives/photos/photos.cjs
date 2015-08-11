@@ -38,7 +38,7 @@ app.directive('photos', function ($compile) {
                 $scope.select = $scope.photos.indexOf(photo);
             }
 
-            if ($scope.photos.length == 0) {
+            if ($scope.photos == undefined || $scope.photos.length == 0) {
                 $scope.$watch('photos', function () {
                     if ($scope.photos == undefined)
                         return;

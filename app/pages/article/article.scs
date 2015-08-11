@@ -26,6 +26,7 @@
 
 .padder {
     padding: 20px 0px;
+    overflow: auto;
 }
 
 .description {

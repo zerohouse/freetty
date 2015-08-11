@@ -1,8 +1,6 @@
 app.get('/api/keywords', function (req, res) {
-    var query = Keyword.find({keyword: new RegExp(".*" + req.passed.keyword + ".*")}).sort({hits: -1}).limit(5).exec(function (err, result) {
+    Keyword.find({keyword: new RegExp(".*" + req.passed.keyword + ".*")}).sort({hits: -1}).limit(5).exec(function (err, result) {
         res.send(result);
     });
 });
-
-
 

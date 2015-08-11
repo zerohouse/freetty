@@ -1,11 +1,12 @@
+.nav-block {
+    height: 50px;
+    width: 100%;
+    display: block;
+}
+
 [ui-view]#main {
     width: 100%;
     height: 100%;
-}
-
-.nav-block {
-    display: block;
-    height: 50px;
 }
 
 .nav [user-info] .wrap {
