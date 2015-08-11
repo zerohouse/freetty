@@ -1,0 +1,7 @@
+var Message = mongoose.model('message', mongoose.Schema({
+    from: {type: String, index: true},
+    to: {type: String, index: true},
+    message: String,
+    read: Boolean,
+    date: Date
+}));

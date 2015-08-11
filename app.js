@@ -114,6 +114,13 @@ var Keyword = mongoose.model('keyword', mongoose.Schema({
 }));
 
 
+var Message = mongoose.model('message', mongoose.Schema({
+    from: {type: String, index: true},
+    to: {type: String, index: true},
+    message: String,
+    read: Boolean,
+    date: Date
+}));
 var Reply = mongoose.model('reply', mongoose.Schema({
     articleId: {type: String, index: true},
     reply: String,
@@ -135,158 +142,14 @@ var User = mongoose.model('user', mongoose.Schema({
     date: Date,
     lat: Number,
     lng: Number,
-    formatted_address: String
+    formatted_address: String,
+    newMessage: Boolean
 }));
 
 User.schema.path('email').validate(function (value) {
     return /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i.test(value);
 }, 'Invalid email');
 
-
-app.get('/api/user/session', function (req, res) {
-    if (req.session.user == undefined) {
-        res.send(false);
-        return;
-    }
-    res.send(req.session.user);
-});
-app.get('/api/user', function (req, res) {
-    var query = {};
-    if (req.passed.email)
-        query.email = req.passed.email;
-    if (req.passed._id)
-        query._id = req.passed._id;
-    if (req.passed.url)
-        query.url = req.passed.url;
-    User.findOne(query, function (err, result) {
-        var resu = {};
-        resu.err = err;
-        if (result != null)
-            result.password = undefined;
-        resu.result = result;
-        res.send(resu);
-    });
-});
-
-app.get('/api/user/list', function (req, res) {
-    User.findOne(req.passed, function (er, result) {
-        res.send(result)
-    });
-});
-
-
-app.post('/api/user/upload', function (req, res) {
-    if (req.files.file == undefined) {
-        res.send('err');
-        return;
-    }
-    var filename = req.files.file.name;
-    var update = {photo: filename};
-    User.update(JSON.parse(req.passed.data), update, function (err, result) {
-        res.send(filename);
-    });
-});
-
-app.get('/api/user/logout', function (req, res) {
-    req.session.destroy();
-    res.send(true);
-});
-app.post('/api/article/like', function (req, res) {
-    if (req.session.user == undefined) {
-        res.send({err: '로그인이 필요한 서비스입니다.'});
-        return;
-    }
-    try {
-        var _id = new ObjectID(req.passed._id);
-    }
-    catch (e) {
-        res.send(e);
-        return;
-    }
-    Article.update({_id: _id}, {$push: {likes: req.session.user._id}}, function (err, result) {
-        res.send(result);
-    });
-});
-
-
-app.post('/api/article/dislike', function (req, res) {
-    if (req.session.user == undefined) {
-        res.send({err: '로그인이 필요한 서비스입니다.'});
-        return;
-    }
-    try {
-        var _id = new ObjectID(req.passed._id);
-    }
-    catch (e) {
-        res.send(e);
-        return;
-    }
-    Article.update({_id: _id}, {$pop: {likes: req.session.user._id}}, function (err, result) {
-        res.send(result);
-    });
-});
-
-app.get('/api/reply', function (req, res) {
-    Reply.find({articleId: req.passed.articleId}).sort({'date': -1}).limit(req.passed.limit).skip(req.passed.skip).exec(function (err, results) {
-        res.send(results);
-    });
-});
-
-app.post('/api/reply', function (req, res) {
-    if (req.session.user == undefined) {
-        var response = {};
-        response.err = '로그인이 필요한 서비스입니다.';
-        res.send(response);
-        return;
-    }
-    var reply = new Reply(req.passed);
-    reply.date = new Date();
-    reply.writer = req.session.user._id;
-    reply.save(function (err, result) {
-        res.send(reply);
-        Article.update({_id: new ObjectID(req.passed.articleId)}, {$inc: {reply: 1}}).exec();
-    });
-});
-
-app.post('/api/reply/delete', function (req, res) {
-    if (req.session.user == undefined) {
-        var response = {};
-        response.err = '로그인이 필요한 서비스입니다.';
-        res.send(response);
-        return;
-    }
-    try {
-        var _id = new ObjectID(req.passed._id);
-    }
-    catch (e) {
-        res.send(e);
-        return;
-    }
-    Reply.remove({_id: _id, writer: req.session.user._id}, function (err, result) {
-        res.send(result);
-        Article.update({_id: new ObjectID(req.passed.articleId)}, {$inc: {reply: -1}}).exec();
-    });
-
-});
-
-app.put('/api/reply', function (req, res) {
-    if (req.session.user == undefined) {
-        res.send('로그인이 필요한 서비스입니다.');
-        return;
-    }
-    try {
-        var _id = new ObjectID(req.passed._id);
-    }
-    catch (e) {
-        res.send(e);
-        return;
-    }
-    req.passed.date = new Date();
-    Reply.update({_id: _id, writer: req.session.user._id}, req.passed, function (err, result) {
-        res.send(result);
-    });
-
-});
 
 app.get('/api/article', function (req, res) {
     try {
@@ -429,16 +292,11 @@ app.post('/api/article/list', function (req, res) {
 );
 
 
-app.post('/api/url/check', function (req, res) {
-    var result = {};
+app.post('/api/article/like', function (req, res) {
     if (req.session.user == undefined) {
-        result.err = '권한이 없습니다.';
-        res.send(result);
+        res.send({err: '로그인이 필요한 서비스입니다.'});
         return;
     }
-
-    User.findOn
-
     try {
         var _id = new ObjectID(req.passed._id);
     }
@@ -446,18 +304,29 @@ app.post('/api/url/check', function (req, res) {
         res.send(e);
         return;
     }
-
-    if (req.passed.url == "")
-        delete req.passed.url;
-
-    req.passed.licences = undefined;
-
-    User.update({_id: _id}, req.passed, function (err, result) {
-        req.session.user = req.passed;
-        req.session.save();
+    Article.update({_id: _id}, {$push: {likes: req.session.user._id}}, function (err, result) {
         res.send(result);
     });
 });
+
+
+app.post('/api/article/dislike', function (req, res) {
+    if (req.session.user == undefined) {
+        res.send({err: '로그인이 필요한 서비스입니다.'});
+        return;
+    }
+    try {
+        var _id = new ObjectID(req.passed._id);
+    }
+    catch (e) {
+        res.send(e);
+        return;
+    }
+    Article.update({_id: _id}, {$pop: {likes: req.session.user._id}}, function (err, result) {
+        res.send(result);
+    });
+});
+
 app.get('/api/keywords', function (req, res) {
     Keyword.find({keyword: new RegExp(".*" + req.passed.keyword + ".*")}).sort({hits: -1}).limit(5).exec(function (err, result) {
         res.send(result);
@@ -465,40 +334,93 @@ app.get('/api/keywords', function (req, res) {
 });
 
 
-app.post('/api/user/login', function (req, res) {
-    var query = {};
-    query.email = req.passed.email;
-    User.findOne(query, function (er, result) {
-        var login = {};
-        if (result == null) {
-            login.err = "가입하지 않은 이메일입니다.";
-            res.send(login);
-            return;
-        }
-        if (result.password != req.passed.password) {
-            login.err = "패스워드가 다릅니다.";
-            res.send(login);
-            return;
-        }
-        result.password = undefined;
-        res.send(result);
-        req.session.user = result;
-        req.session.save(function (res) {
-        });
+app.get('/api/message', function (req, res) {
+    if (req.session.user == undefined) {
+        res.send({err: '로그인이 필요한 서비스입니다.'});
+        return;
+    }
+    Message.find({$or: [{to: req.session.user._id}, {from: req.session.user._id}]}).sort({'date': -1}).limit(req.passed.limit).skip(req.passed.skip).exec(function (err, results) {
+        res.send(results);
+        User.update({_id: new ObjectID(req.session.user._id)}, {newMessage: false}).exec();
     });
 });
 
-app.post('/api/user', function (req, res) {
-    req.passed.introduce = {};
-    req.passed.date = new Date();
-    var user = new User(req.passed);
-    user.save(function (err, result) {
-        var resu = {};
-        resu.result = result;
-        resu.err = err;
-        res.send(resu);
+app.post('/api/message', function (req, res) {
+    if (req.session.user == undefined) {
+        res.send({err: '로그인이 필요한 서비스입니다.'});
+        return;
+    }
+    var message = new Message(req.passed);
+    message.date = new Date();
+    message.from = req.session.user._id;
+    message.save(function (err, result) {
+        res.send(message);
+        User.update({_id: new ObjectID(req.passed.to)}, {newMessage: true}).exec();
     });
 });
+
+app.get('/api/reply', function (req, res) {
+    Reply.find({articleId: req.passed.articleId}).sort({'date': -1}).limit(req.passed.limit).skip(req.passed.skip).exec(function (err, results) {
+        res.send(results);
+    });
+});
+
+app.post('/api/reply', function (req, res) {
+    if (req.session.user == undefined) {
+        var response = {};
+        response.err = '로그인이 필요한 서비스입니다.';
+        res.send(response);
+        return;
+    }
+    var reply = new Reply(req.passed);
+    reply.date = new Date();
+    reply.writer = req.session.user._id;
+    reply.save(function (err, result) {
+        res.send(reply);
+        Article.update({_id: new ObjectID(req.passed.articleId)}, {$inc: {reply: 1}}).exec();
+    });
+});
+
+app.post('/api/reply/delete', function (req, res) {
+    if (req.session.user == undefined) {
+        var response = {};
+        response.err = '로그인이 필요한 서비스입니다.';
+        res.send(response);
+        return;
+    }
+    try {
+        var _id = new ObjectID(req.passed._id);
+    }
+    catch (e) {
+        res.send(e);
+        return;
+    }
+    Reply.remove({_id: _id, writer: req.session.user._id}, function (err, result) {
+        res.send(result);
+        Article.update({_id: new ObjectID(req.passed.articleId)}, {$inc: {reply: -1}}).exec();
+    });
+
+});
+
+app.put('/api/reply', function (req, res) {
+    if (req.session.user == undefined) {
+        res.send('로그인이 필요한 서비스입니다.');
+        return;
+    }
+    try {
+        var _id = new ObjectID(req.passed._id);
+    }
+    catch (e) {
+        res.send(e);
+        return;
+    }
+    req.passed.date = new Date();
+    Reply.update({_id: _id, writer: req.session.user._id}, req.passed, function (err, result) {
+        res.send(result);
+    });
+
+});
+
 (function () {
     var iconv = require('iconv-lite');
     var urlencode = require('urlencode');
@@ -579,9 +501,81 @@ app.post('/api/user', function (req, res) {
             return;
         });
     });
-
-
 })();
+app.post('/api/user/login', function (req, res) {
+    var query = {};
+    query.email = req.passed.email;
+    User.findOne(query, function (er, result) {
+        var login = {};
+        if (result == null) {
+            login.err = "가입하지 않은 이메일입니다.";
+            res.send(login);
+            return;
+        }
+        if (result.password != req.passed.password) {
+            login.err = "패스워드가 다릅니다.";
+            res.send(login);
+            return;
+        }
+        result.password = undefined;
+        res.send(result);
+        req.session.user = result;
+        req.session.save(function (res) {
+        });
+    });
+});
+
+app.get('/api/user/logout', function (req, res) {
+    req.session.destroy();
+    res.send(true);
+});
+app.post('/api/user', function (req, res) {
+    req.passed.introduce = {};
+    req.passed.date = new Date();
+    var user = new User(req.passed);
+    user.save(function (err, result) {
+        var resu = {};
+        resu.result = result;
+        resu.err = err;
+        res.send(resu);
+    });
+});
+app.post('/api/url/check', function (req, res) {
+    var result = {};
+    if (req.session.user == undefined) {
+        result.err = '권한이 없습니다.';
+        res.send(result);
+        return;
+    }
+
+    User.findOn
+
+    try {
+        var _id = new ObjectID(req.passed._id);
+    }
+    catch (e) {
+        res.send(e);
+        return;
+    }
+
+    if (req.passed.url == "")
+        delete req.passed.url;
+
+    req.passed.licences = undefined;
+
+    User.update({_id: _id}, req.passed, function (err, result) {
+        req.session.user = req.passed;
+        req.session.save();
+        res.send(result);
+    });
+});
+app.get('/api/user/session', function (req, res) {
+    if (req.session.user == undefined) {
+        res.send(false);
+        return;
+    }
+    res.send(req.session.user);
+});
 app.put('/api/user', function (req, res) {
     var result = {};
     if (req.session.user == undefined) {
@@ -614,6 +608,43 @@ app.put('/api/user', function (req, res) {
         res.send(result);
     });
 });
+app.get('/api/user', function (req, res) {
+    var query = {};
+    if (req.passed.email)
+        query.email = req.passed.email;
+    if (req.passed._id)
+        query._id = req.passed._id;
+    if (req.passed.url)
+        query.url = req.passed.url;
+    User.findOne(query, function (err, result) {
+        var resu = {};
+        resu.err = err;
+        if (result != null)
+            result.password = undefined;
+        resu.result = result;
+        res.send(resu);
+    });
+});
+
+app.get('/api/user/list', function (req, res) {
+    User.findOne(req.passed, function (er, result) {
+        res.send(result)
+    });
+});
+
+
+app.post('/api/user/upload', function (req, res) {
+    if (req.files.file == undefined) {
+        res.send('err');
+        return;
+    }
+    var filename = req.files.file.name;
+    var update = {photo: filename};
+    User.update(JSON.parse(req.passed.data), update, function (err, result) {
+        res.send(filename);
+    });
+});
+
 app.get('/*', function (req, res) {
     res.sendFile(path.join(__dirname + '/app/pages/index/index.html'));
 });

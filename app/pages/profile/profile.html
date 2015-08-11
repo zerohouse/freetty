@@ -4,7 +4,7 @@
         <div class="col-sm-4">
             <div class="row">
                 <div class="panel-body">
-                    <h4 mod-textarea="user.name" mod-save="save" mod-right="isRootUser()"></h4>
+                    <h4 mod-default="이름" mod-input="user.name" mod-save="save" mod-right="isRootUser()"></h4>
 
                     <span ng-show="user.url || urlMod">http://freetty.com/</span><span
                         mod-textarea="user.url" mod-default="url을 설정해주세요." placeholder="url"
@@ -25,7 +25,7 @@
             </div>
             <div class="row bottom-space">
                 <div class="half">
-                    <div class="btn btn-default full-width">Message</div>
+                    <div class="btn btn-default full-width" ui-sref="message">Message</div>
                 </div>
                 <div class="half">
                     <a class="btn btn-default full-width">Follow</a>

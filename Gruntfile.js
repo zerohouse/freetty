@@ -28,10 +28,10 @@ module.exports = function (grunt) {
             server: {
                 src: [
                     '**/*.sjs',
-                    '!app/server/end.sjs',
+                    '!app.server/end.sjs',
                     '**/*.model',
                     '**/*.route',
-                    'app/server/end.sjs',
+                    'app.server/end.sjs',
                 ],
                 dest: 'app.js'
             }

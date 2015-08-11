@@ -1,0 +1,54 @@
+<div class="container">
+    <div class="nav-block"></div>
+    <div class="row">
+        <div class="nav-block"></div>
+        <ul class="nav nav-tabs">
+            <li ng-class="{active:isState('')}"><a ng-click="setState('')">전체 메시지</a></li>
+            <li ng-repeat="user in userList" ng-class="{active:isState(user._id)}">
+                <a ng-click="setState(user._id)">{{user.name}}</a>
+            </li>
+        </ul>
+        <div ng-show="isState('')">
+            <div class="row border-bottom bottom-space" ng-repeat="user in userList">
+                <div class="col-sm-3 center">
+                    <div user-info user="user"></div>
+                </div>
+                <div class="col-sm-9">
+                    <div class="panel-body" ng-click="setState(user._id)">
+                        <h4>{{user.name}}</h4>
+                        <small ng-show="messages[user._id][0].from==rootUser._id"><i class="fa fa-reply"></i></small>
+                        {{messages[user._id][0].message}}
+                        <div>
+                            <small>{{messages[user._id][0].date.toDate().toString()}}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div ng-show="!isState('')" class="chat-wrapper">
+            <div class="row border-bottom" ng-repeat="message in messages[state] |orderBy:'date'">
+                <div class="col-sm-3 center" ng-class="{'float-right':rootUser._id == message.from}">
+                    <div user-info="message.from"></div>
+                </div>
+                <div class="col-sm-9" ng-class="{'align-right':rootUser._id == message.from}">
+                    <div class="panel-body">
+                        {{message.message}}
+                        <div>
+                            <small>{{message.date.toDate().toString()}}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-show="!isState('')" class="row">
+            <div class="col-sm-offset-1 col-sm-10 top-padding-m">
+                <div class="input-group">
+                    <textarea placeholder="내용을 작성해주세요." class="form-control" ng-model="messageBody"></textarea>
+
+                    <div class="input-group-addon btn btn-default" ng-click="sendMessage()">메세지 보내기</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

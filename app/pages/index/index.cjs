@@ -20,4 +20,10 @@ app.controller('index', function ($scope, user, popup, $state, req) {
             location.reload();
         });
     };
+    $scope.toArtist = function (user) {
+        if (user.type == undefined || user.type == '')
+            user.type = 'artist-register-step1';
+        $state.go(user.type);
+        popup.hide();
+    };
 });

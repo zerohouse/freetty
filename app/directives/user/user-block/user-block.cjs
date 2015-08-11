@@ -4,6 +4,7 @@ app.directive('userBlock', function (users) {
         restrict: 'A',
         templateUrl: '/app/directives/user/user-block/user-block.html',
         scope: {
+            user: '=',
             userBlock: '='
         },
         controller: function ($scope, popup) {

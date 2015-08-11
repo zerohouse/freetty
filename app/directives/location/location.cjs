@@ -34,6 +34,7 @@ app.directive('location', function () {
 
                 $timeout(function () {
                     $scope.marker = new google.maps.Marker({
+                        scrollwheel: false,
                         position: {lat: $scope.user.lat, lng: $scope.user.lng},
                         map: $scope.map
                     });

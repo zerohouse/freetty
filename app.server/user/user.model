@@ -13,7 +13,8 @@ var User = mongoose.model('user', mongoose.Schema({
     date: Date,
     lat: Number,
     lng: Number,
-    formatted_address: String
+    formatted_address: String,
+    newMessage: Boolean
 }));
 
 User.schema.path('email').validate(function (value) {

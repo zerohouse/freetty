@@ -21,6 +21,12 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             templateUrl: "/app/pages/search/search.html",
             nav: "affixed"
         })
+        .state('message', {
+            url: "/service/message",
+            controller: "message",
+            templateUrl: "/app/pages/message/message.html",
+            nav: "affixed"
+        })
         .state('profile', {
             url: "/:url?state",
             controller: "profile",

@@ -1,27 +1,37 @@
 <div class="profile" ng-controller="profile.popup">
     <div class="row">
         <div class="half">
-            <img class="full-width" ng-src="{{photo}}">
+            <img class="full-width" ngf-accept="'image/*'" ng-model="files" ngf-select="true" ngf-drop="true"
+                 ng-src="{{photo}}" ng-show="isRootUser(user)">
+            <img class="full-width" ng-src="{{photo}}" ng-show="!isRootUser(user)">
         </div>
-        <div class="half">
-            <h2>{{user.name}}</h2>
+        <div class="half" ng-show="!message">
+            <h4 mod-input="user.name" mod-default="이름" mod-save="save" mod-right="isRootUser(user)"></h4>
 
             <div class="font-small  bottom-space-s" ng-repeat="s in user.introduce.specialty | limitTo : 2">
                 <i class="fa fa-star"></i> {{s}}
             </div>
-            <div class="introduce-body">{{user.introduce.aboutme}}</div>
+
+            <div class="el" mod-default="자기소개" placeholder="자기소개"
+                 mod-textarea="user.introduce.aboutme" mod-save="save"
+                 mod-right="isRootUser(user)"></div>
+
             <span ng-show="user.url">http://freetty.com/</span>{{user.url}}
         </div>
+        <div class="half" ng-show="message">
+            <h3 class="input-label">To. {{user.name}}</h3>
+            <textarea placeholder="메시지" class="form-control" ng-model="messageBody"></textarea>
+            <a class="btn btn-primary" ng-click="sendMessage()">보내기</a>
+
+        </div>
     </div>
-    <div class="row">
+    <div class="row" ng-show="!isRootUser(user)">
         <div class="half">
-            <div class="btn btn-default full-width">메세지</div>
+            <div class="btn btn-default full-width" ng-click="message=true">메세지</div>
         </div>
         <div class="half">
             <a ng-show="user.type=='provider'" class="btn btn-default full-width"
                ng-click="profilePage(user)">페이지</a>
-            <a ng-show="user.type!='provider' && isRootUser(user)" class="btn btn-default full-width"
-               ng-click="toArtist(user)">아티스트 등록하기</a>
         </div>
     </div>
 </div>

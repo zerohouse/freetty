@@ -2,7 +2,7 @@
     <div class="col-sm-3">
         <div user-info="reply.writer" ui-sref="profile({url:reply.writer})"></div>
     </div>
-    <div class="col-sm-9 top-padding-m">
+    <div class="col-sm-9 top-padding-m reply-body">
         <span mod-textarea="reply.reply" mod-save="save" placeholder="내용을 작성해주세요." mod-right="isMyReply()"
               mod="mod"></span>
         <small ng-show="!mod" ng-click="delete(reply)" ng-show="isMyReply()">삭제</small>

@@ -91,12 +91,15 @@
     right: 8px;
     background: #f1f1f1;
     padding: 3px;
-    text-align: center;
 }
 
 .arrow-div li {
     padding: 10px;
     margin: 5px;
+}
+
+li.divider {
+    padding: 0
 }
 
 .arrow-div li:hover {

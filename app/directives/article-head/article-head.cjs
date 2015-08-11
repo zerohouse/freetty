@@ -12,7 +12,7 @@ app.directive('articleHead', function (users, user) {
                 if ($scope.article == undefined)
                     return;
                 if (!user.lat || !$scope.article.lat) {
-                    $scope.distance = "위치 정보가 없습니다.";
+                    $scope.distance = "";
                     return;
                 }
                 var l1 = $scope.article;

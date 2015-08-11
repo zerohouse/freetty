@@ -18,3 +18,7 @@
 .top-padding-m {
     padding-top: 20px;
 }
+
+.reply-body {
+    text-align: justify;
+}

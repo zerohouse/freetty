@@ -15,6 +15,8 @@ app.controller('profile', function ($scope, users, user, $stateParams, Upload, r
         });
     };
 
+
+
     $scope.urlSave = function () {
         req.put('/api/user', $scope.user).success(function (res) {
             if (res.ok == 0) {

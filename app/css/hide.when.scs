@@ -1,0 +1,17 @@
+@media (max-width: 768px) {
+    .hide-when-sm {
+        display: none;
+    }
+}
+
+@media (max-width: 1024px) {
+    .hide-when-md {
+        display: none;
+    }
+}
+
+@media (max-width: 1280px) {
+    .hide-when-lg {
+        display: none;
+    }
+}

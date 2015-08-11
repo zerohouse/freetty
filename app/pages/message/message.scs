@@ -1,0 +1,24 @@
+.float-right {
+    float: right
+}
+
+.align-right {
+    text-align: right;
+}
+
+small {
+    color: #aaa;
+}
+
+.chat-wrapper {
+    overflow: hidden;
+    border-top: none;
+    padding: 20px;
+    overflow-y: scroll;
+    height: 400px;
+}
+
+.chat-wrapper > div {
+    margin: 0 15px;
+    padding-bottom: 20px;
+}

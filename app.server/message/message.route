@@ -1,0 +1,24 @@
+app.get('/api/message', function (req, res) {
+    if (req.session.user == undefined) {
+        res.send({err: '로그인이 필요한 서비스입니다.'});
+        return;
+    }
+    Message.find({$or: [{to: req.session.user._id}, {from: req.session.user._id}]}).sort({'date': -1}).limit(req.passed.limit).skip(req.passed.skip).exec(function (err, results) {
+        res.send(results);
+        User.update({_id: new ObjectID(req.session.user._id)}, {newMessage: false}).exec();
+    });
+});
+
+app.post('/api/message', function (req, res) {
+    if (req.session.user == undefined) {
+        res.send({err: '로그인이 필요한 서비스입니다.'});
+        return;
+    }
+    var message = new Message(req.passed);
+    message.date = new Date();
+    message.from = req.session.user._id;
+    message.save(function (err, result) {
+        res.send(message);
+        User.update({_id: new ObjectID(req.passed.to)}, {newMessage: true}).exec();
+    });
+});
