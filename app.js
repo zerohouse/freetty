@@ -250,8 +250,6 @@ app.post('/api/article/list', function (req, res) {
         var limit = req.passed.limit;
         if (limit == undefined)
             limit = 6;
-        if (limit > 10)
-            limit = 6;
 
 
         var query = Article.find(condition).sort({'date': -1}).limit(limit).skip(req.passed.skip);

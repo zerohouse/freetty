@@ -58,7 +58,6 @@ app.directive('locationSearch', function () {
                     $timeout.cancel(this.ajax);
                     this.ajax = $timeout(function () {
                         var key = $($scope.input).val();
-                        console.log(key);
                         if (key == "") {
                             $scope.results = [];
                             return;

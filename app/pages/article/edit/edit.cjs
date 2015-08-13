@@ -43,12 +43,12 @@ app.controller('edit', function (req, $scope, $stateParams, Upload, user, alert,
         $scope.$watch(function () {
             return $scope.article.selectedServices;
         }, function () {
-            var total = {price: 0, duration: 0};
+            var total = {price: 0, discount: 0};
             var result = [];
             $scope.article.selectedServices.forEach(function (service) {
                 result.push(service);
                 total.price += parseInt(service.price);
-                total.duration += parseInt(service.duration);
+                total.discount += parseInt(service.discount);
             });
             $scope.article.total = total;
             $scope.article.price = total.price;
@@ -56,6 +56,23 @@ app.controller('edit', function (req, $scope, $stateParams, Upload, user, alert,
             computeDiscount();
         }, true);
     });
+
+    function computeDiscount() {
+        if ($scope.article == undefined)
+            return;
+        if ($scope.article.total == undefined)
+            return;
+        var value = parseInt($scope.article.discount.value);
+        if (isNaN(value))
+            return;
+        if ($scope.article.discount.type == 'p') {
+            $scope.article.total.discountPrice = parseInt($scope.article.total.price * (100 - value) / 100);
+            $scope.article.price = $scope.article.total.discountPrice;
+            return;
+        }
+        $scope.article.total.discountPrice = $scope.article.total.price - value;
+        $scope.article.price = $scope.article.total.discountPrice;
+    }
 
 
     $scope.done = function () {
@@ -120,23 +137,6 @@ app.controller('edit', function (req, $scope, $stateParams, Upload, user, alert,
         });
     });
 
-    function computeDiscount() {
-        if ($scope.article == undefined)
-            return;
-        if ($scope.article.total == undefined)
-            return;
-        var value = parseInt($scope.article.discount.value);
-        if (isNaN(value))
-            return;
-        if ($scope.article.discount.type == 'p') {
-            $scope.article.total.discountPrice = parseInt($scope.article.total.price * (100 - value) / 100);
-            return;
-        }
-
-        $scope.article.price = total.discountPrice;
-        $scope.article.total.discountPrice = $scope.article.total.price - value;
-
-    }
 
     $scope.userSave = function () {
         req.put('/api/user', user).success(function (res) {

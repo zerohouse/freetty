@@ -1,3 +1,8 @@
+Array.prototype.contains = function (item) {
+    return this.indexOf(item) != -1;
+};
+
+
 var mongoose = require('mongoose');
 
 mongoose.connect('mongodb://localhost:27017/freetty');
@@ -42,14 +47,15 @@ var Article = mongoose.model('article', mongoose.Schema({
 
 
 var p1 = {
-    "lat": 37.476559,
-    "lng": 126.981633
+    "lat": 37.73809800000001,
+    "lng": 127.0336819
 };
 
 var p2 = {
-    "lat": 37.3908894,
-    "lng": 127.0967915
+    "lat": 37.3942527,
+    "lng": 126.9568209
 };
+
 
 var images = [
     '1.jpg', '2.jpg', '3.jpg',
@@ -71,7 +77,7 @@ process.argv.forEach(function (val, index, array) {
 
 
 function makeArticles(length) {
-    var tags = ["블링블링", "남자컷", "샤방샤방", "파오후", "굼척굼척", "프리티", "열펌", "남성컷", "다운펌"];
+    var tags = ["블링블링", "남자컷", "샤방샤방", "샤방샤방", "30분", "변신", "헤어", "여성", "프리티", "열펌", "남성컷", "다운펌"];
 
     var article = {
         "done": true,
@@ -89,7 +95,7 @@ function makeArticles(length) {
         "lat": 37.3908894,
         "body": "남성헤어컷입니다. 남자는 컷이죠 #블링블링 #남자컷",
         "price": 75000,
-        "total": {"price": 75000, "duration": 10, "discountPrice": 67500},
+        "total": {"price": 75000, "discount": 10, "discountPrice": 67500},
         "discount": {"type": "p", "value": "10"}
     };
 
@@ -101,13 +107,23 @@ function makeArticles(length) {
             article.provider = ranEl(result)._id;
             article.photos = [];
             article.photos.push(ranEl(images));
-            article.photos.push(ranEl(images));
-            article.photos.push(ranEl(images));
+            var e = ranEl(images);
+            if (!article.photos.contains(e))
+                article.photos.push(e);
+            if (!article.photos.contains(e))
+                article.photos.push(e);
+            if (!article.photos.contains(e))
+                article.photos.push(e);
             article.tags = [];
             article.tags.push(ranEl(tags));
-            article.tags.push(ranEl(tags));
+            var e = ranEl(tags);
+            if (!article.tags.contains(e))
+                article.tags.push(e);
+            if (!article.tags.contains(e))
+                article.tags.push(e);
             article.lat = ranBetween(p1.lat, p2.lat);
             article.lng = ranBetween(p1.lng, p2.lng);
+            article.price = parseInt(ranBetween(10, 500)) * 1000;
 
             var newArticle = new Article(article);
             newArticle.save();
@@ -120,7 +136,6 @@ function makeUsers(length) {
     var j = 0;
     var user = {
         "password": "asdfasdf",
-        "name": "디자이너박",
         "date": new Date(),
         "licenses": [],
         "fields": [],
@@ -130,7 +145,6 @@ function makeUsers(length) {
         "formatted_address": "대한민국 경기도 성남시 분당구 판교동",
         "introduce": {
             "contact": {"phone": "010-6766-2010", "email": "parksungho86@gmail.com"},
-            "aboutme": "디좌너 팍입니다. 헤어 바버",
             "specialty": ["헤어", "네일아트"],
             "product": ["펜틴"],
             "lang": ["中國語"],
@@ -165,9 +179,10 @@ function makeUsers(length) {
     var url = "test";
 
     for (var i = 0; i < length; i++) {
+        user.name = ranName(6 + i % 3);
         user.email = email + i;
         user.url = url + i;
-
+        user.introduce.aboutme = ranName(100, (i * 5) % 100);
         user.photo = ranEl(images);
         var userNew = new User(user);
         userNew.save();
