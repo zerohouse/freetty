@@ -70,6 +70,8 @@ app.directive('locationSearch', function () {
                 };
 
                 $scope.selectLocation = function () {
+                    if ($scope.results == undefined)
+                        return;
                     var selected = $scope.results[$scope.selected];
                     if (selected == undefined)
                         return;

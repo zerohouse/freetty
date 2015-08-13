@@ -21,9 +21,8 @@
 }
 
 #map-controls location-search {
-    display: block;
+    display: inline-block;
     width: 240px;
-    float: right;
 }
 
 .margin-right-m {
