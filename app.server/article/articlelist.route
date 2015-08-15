@@ -17,7 +17,7 @@ app.post('/api/article/list', function (req, res) {
 
         var query = Article.find(condition).sort({'date': -1}).limit(limit).skip(req.passed.skip);
 
-        if (req.passed.location) {
+        if (req.passed.location && req.passed.location.lat.gte != req.passed.location.lat.lte) {
             query = query.where('lat').gte(req.passed.location.lat.gte).lte(req.passed.location.lat.lte);
             query = query.where('lng').gte(req.passed.location.lng.gte).lte(req.passed.location.lng.lte);
         }

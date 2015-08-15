@@ -124,7 +124,6 @@ function makeArticles(length) {
             article.lat = ranBetween(p1.lat, p2.lat);
             article.lng = ranBetween(p1.lng, p2.lng);
             article.price = parseInt(ranBetween(10, 500)) * 1000;
-
             var newArticle = new Article(article);
             newArticle.save();
         }
@@ -187,6 +186,7 @@ function makeUsers(length) {
         var userNew = new User(user);
         userNew.save();
     }
+    process.exit();
 }
 
 

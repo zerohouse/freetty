@@ -16,6 +16,9 @@
                  mod-textarea="user.introduce.aboutme" mod-save="save"
                  mod-right="isRootUser(user)"></div>
 
+            <location-search save="save" ng-show="isRootUser()" placeholder="지역" top="34px"
+                             location="user"></location-search>
+
             <span ng-show="user.url">http://freetty.com/</span>{{user.url}}
         </div>
         <div class="half" ng-show="message">

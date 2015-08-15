@@ -13,10 +13,11 @@ app.config(function ($stateProvider, $urlRouterProvider) {
         .state('main', {
             url: "/",
             controller: "main",
-            templateUrl: "/app/pages/main/main.html",
+            templateUrl: "/app/pages/main/main.html"
         })
         .state('search', {
-            url: "/service/search",
+            url: "/service/search?keyword" +
+            "",
             controller: "search",
             templateUrl: "/app/pages/search/search.html",
             nav: "affixed"

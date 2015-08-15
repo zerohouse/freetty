@@ -4,7 +4,7 @@
         <td colspan="5">
             <span mod-input="key" mod-save="save" mod-default="서비스 유형"
                   mod-right="modService" placeholder="서비스 유형"></span>
-            <span class="font-m vert-align" ng-show="modService" ng-click="remove(key)">서비스 삭제</span>
+            <span class="font-m vert-align" ng-show="modService" ng-click="remove(key)">서비스 유형 삭제</span>
 
             <span ng-show="!modService">
                 <span class="btn-s" ng-show="!hide[key]" ng-click="hide[key]=true">[접기]</span>
@@ -16,20 +16,30 @@
     <tbody ng-show="!hide[key] || modService">
     <tr ng-click="select.toggle(service)" mod-right="modService" service-array="services" service-row
         select="select" service="service" ng-show="service.done || modService" ng-repeat="service in services">
-
-
     </tr>
     <tr ng-show="modService">
         <td colspan="5" ng-click="services.push({})">새로운 서비스 <i class="fa fa-plus"></i></td>
     </tr>
     </tbody>
 </table>
+
+<table class="table table-hover" ng-show="isEmpty(services)">
+    <thead>
+    <tr>
+        <td colspan="5">
+            서비스 유형이 없습니다. 서비스를 추가해주세요.
+        </td>
+    </tr>
+    </thead>
+</table>
+
 <div ng-show="modService">
     <table class="table table-hover">
         <thead>
         <tr>
             <div class="input-group">
-                <input class="form-control" placeholder="새 서비스 타입" ng-model="newTypeName"><a
+                <input class="form-control" ng-enter="newType(newTypeName)" placeholder="새 서비스 타입"
+                       ng-model="newTypeName"><a
                     class="input-group-addon" ng-click="newType(newTypeName)">서비스 타입 추가</a>
             </div>
         </tr>

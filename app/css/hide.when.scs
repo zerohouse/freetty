@@ -1,6 +1,23 @@
+.show-when-sm {
+    display: none;
+}
+
+.show-when-md {
+    display: none;
+}
+
+.show-when-lg {
+    display: none;
+}
+
 @media (max-width: 768px) {
+
     .hide-when-sm {
         display: none;
+    }
+
+    .show-when-sm {
+        display: block;
     }
 }
 
@@ -8,10 +25,18 @@
     .hide-when-md {
         display: none;
     }
+
+    .show-when-md {
+        display: block;
+    }
 }
 
 @media (max-width: 1280px) {
     .hide-when-lg {
         display: none;
+    }
+
+    .show-when-lg {
+        display: block;
     }
 }

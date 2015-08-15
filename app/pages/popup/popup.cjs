@@ -1,15 +1,14 @@
 (function () {
 
     var scope;
+    var pop;
 
     app.factory('popup', function () {
         var popup = {};
 
-        var pop = function (val, e) {
+        pop = function (val) {
             popup.show = true;
             popup.state = val;
-            if (e && e.stopPropagation)
-                e.stopPropagation();
         };
 
         pop.isShow = function () {
@@ -24,17 +23,35 @@
             popup.show = false;
         };
 
-        pop.setUser = function (user) {
-            scope.user = user;
-        };
-
 
         return pop;
     });
 
+    app.directive('profilePopup', function () {
+        return {
+            restrict: 'A',
+            link: function (s, e, a) {
+                e.bind('click', function () {
+                    pop('profile');
+                    scope.user = s.$eval(a.profilePopup);
+                });
+            }
+        }
+    });
+
+    app.directive('popup', function () {
+        return {
+            restrict: 'A',
+            link: function (s, e, a) {
+                e.bind('click', function () {
+                    pop(a.popup);
+                });
+            }
+        }
+    });
+
 
     app.controller('popup', function ($scope, popup) {
-
         scope = $scope;
 
         $scope.url = {};
@@ -45,9 +62,9 @@
         $scope.classes = {};
         $scope.classes.login = $scope.classes.register = $scope.classes.license = 'window-s';
         $scope.classes.profile = 'window-m';
-
-
         $scope.popup = popup;
 
     });
+
+
 })();

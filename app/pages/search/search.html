@@ -5,28 +5,24 @@
 
     <div id="map-controls">
 
-        <span class="margin-right-m" ng-click="here()"><i class="fa fa-map-marker"></i> 현재 위치</span>
+        <span class="margin-right-m" ng-click="here()"><i class="fa fa-map-marker"></i> 여기</span>
 
         <input type="checkbox" class="" ng-model="getItemsWhenChangeBounds">
-        <span class="margin-right-m">지도에 맞춰 데이터 불러오기</span>
+        <span class="margin-right-m">여기서 찾기</span>
         <span ng-show="!getItemsWhenChangeBounds" class="label label-info"
               ng-click="getArticlesFromHere()">지금 위치에서 검색</span>
-
-
-        <div class="top-margin-s">
-            <i class="fa fa-search"></i>
-            <location-search placeholder="지역검색" location="location"></location-search>
-        </div>
+        <i class="fa fa-search"></i>
+        <location-search placeholder="검색" location="location"></location-search>
     </div>
 
-    <div id="search-map"></div>
+    <div id="search-map" ng-class="{'hide-when-sm':!detail}" class="fixed-when-sm"></div>
 </div>
 
 <div class="left-container">
     <div class="panel-body">
-        <div class="row border-bottom">
-            <div class="col-sm-3 hide-when-sm">
-                <div class="panel-body">
+        <div class="row border-bottom" ng-class="{'hide-when-sm':!detail}">
+            <div class="col-sm-3">
+                <div class="panel-body hide-when-sm">
                     검색어
                 </div>
             </div>
@@ -54,9 +50,9 @@
                 </div>
             </div>
         </div>
-        <div class="row border-bottom">
-            <div class="col-sm-3 hide-when-sm">
-                <div class="panel-body">
+        <div class="row border-bottom" ng-class="{'hide-when-sm':!detail}">
+            <div class="col-sm-3">
+                <div class="panel-body hide-when-sm">
                     가격
                 </div>
             </div>
@@ -69,12 +65,38 @@
                 </div>
             </div>
         </div>
-        <div ng-show="!noMore" ng-click="get()">더보기</div>
+        <div class="row border-bottom" ng-class="{'hide-when-sm':!detail}">
+            <div class="btn-group btn-group-justified">
+                <a class="btn btn-default" ng-class="{active:isSort('price')}"
+                   ng-click="sortBy('price');">
+                    가격 <i class="fa" ng-show="isSort('price')"
+                          ng-class="{'fa-chevron-up' : !sort.asc, 'fa-chevron-down':sort.asc}"></i>
+                </a>
+                <a class="btn btn-default" ng-class="{active:isSort('likes')}"
+                   ng-click="sortBy('likes');">
+                    좋아요 <i class="fa" ng-show="isSort('likes')"
+                           ng-class="{'fa-chevron-up' : !sort.asc, 'fa-chevron-down':sort.asc}"></i>
+                </a>
+                <a class="btn btn-default" ng-class="{active:isSort('distance')}"
+                   ng-click="sortBy('distance');">
+                    거리 <i class="fa" ng-show="isSort('distance')"
+                          ng-class="{'fa-chevron-up' : !sort.asc, 'fa-chevron-down':sort.asc}"></i>
+                </a>
+            </div>
+
+        </div>
+
+        <div class="show-when-sm">
+            <span ng-click="detailSearch()" ng-show="!detail"><span class="btn btn-primary detail-show-btn">검색 <i
+                    class="fa fa-search"></i></span></span>
+            <span ng-click="detailHide()" ng-show="detail"><span class="btn btn-primary detail-hide-btn">닫기 <i
+                    class="fa fa-times"></i></span></span>
+        </div>
     </div>
 
     <div class="panel-body center">
-        <article-head ng-repeat="article in articles" article="article"></article-head>
-
+        <article-head ng-repeat="article in articles | orderBy:sort.order()" article="article"></article-head>
+        <div ng-show="!noMore" ng-click="more();">더보기</div>
     </div>
 
 </div>

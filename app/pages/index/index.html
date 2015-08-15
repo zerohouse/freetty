@@ -31,27 +31,27 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li id="search">
-                    <a ui-sref="search"> Styles <i class="fa fa-search"></i> </a>
-                    <!--<span class="input-group">-->
-                    <!--<location-search top="24px"-->
-                    <!--left="-26px" placeholder="지역"-->
-                    <!--location="query.location"></location-search>-->
-
-                    <!--</span>-->
+                <!--<li id="search">-->
+                <!--<a ui-sref="search">-->
+                <!--<input type="text" ng-model="keyword" placeholder="검색어">-->
+                <!--<i class="fa fa-search"></i> </a>-->
+                <!--</li>-->
+                <li>
+                    <a ui-sref="search">
+                        Portfolio </a>
                 </li>
 
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li ng-show="!rootUser.logged"><a ng-click="popup('login', $event)">로그인</a></li>
-                <li ng-show="!rootUser.logged"><a ng-click="popup('register', $event)">회원가입</a></li>
+                <li ng-show="!rootUser.logged"><a popup="login">로그인</a></li>
+                <li ng-show="!rootUser.logged"><a popup="login">회원가입</a></li>
                 <li class="dropdown" ng-show="rootUser.logged">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false">{{rootUser.name}} <span class="red font-m"
                                                                      ng-show="rootUser.newMessage">new</span> <span
                             class="caret"></span></a>
                     <ul class="dropdown-menu arrow-div">
-                        <li ng-click="profile()">내 프로필</li>
+                        <li profile-popup="rootUser">내 프로필</li>
                         <li ng-show="rootUser.type=='provider'" ui-sref="profile({url:rootUser._id})">내 페이지</li>
                         <li ng-show="rootUser.type!='provider'" ng-click="toArtist()">아티스트 등록하기</li>
                         <li class="divider"></li>

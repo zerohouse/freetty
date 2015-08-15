@@ -8,12 +8,7 @@ app.directive('userInfo', function (users) {
             userInfo: '=',
             prefix: '@'
         },
-        controller: function ($scope, popup) {
-
-            $scope.userPopup = function (user) {
-                popup('profile');
-                popup.setUser(user);
-            };
+        controller: function ($scope) {
 
             $scope.$watch('userInfo', function () {
                 if ($scope.userInfo == undefined)

@@ -7,12 +7,8 @@ app.directive('userBlock', function (users) {
             user: '=',
             userBlock: '='
         },
-        controller: function ($scope, popup) {
+        controller: function ($scope) {
 
-            $scope.userPopup = function (user) {
-                popup('profile');
-                popup.setUser(user);
-            };
 
             $scope.$watch('userBlock', function () {
                 if ($scope.userBlock == undefined)

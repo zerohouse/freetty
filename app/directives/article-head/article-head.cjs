@@ -6,6 +6,7 @@ app.directive('articleHead', function (users, user) {
         },
         templateUrl: "/app/directives/article-head/article-head.html",
         controller: function ($scope) {
+
             $scope.users = users;
 
             $scope.$watch('article', function () {
@@ -17,7 +18,8 @@ app.directive('articleHead', function (users, user) {
                 }
                 var l1 = $scope.article;
                 var l2 = user;
-                $scope.distance = parseInt(getDistance(l1.lat, l1.lng, l2.lat, l2.lng) * 10) / 10 + "km";
+                $scope.article.distance = parseInt(getDistance(l1.lat, l1.lng, l2.lat, l2.lng) * 10) / 10;
+                $scope.distance = $scope.article.distance + "km";
             });
 
             function getDistance(lat1, lon1, lat2, lon2) {

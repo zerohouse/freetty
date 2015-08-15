@@ -1,6 +1,6 @@
-<span ng-click="userPopup(user)">
+<span>
     <span class="wrap">
-    <img ng-src="{{photo}}">
+    <img profile-popup="user" ng-src="{{photo}}">
     </span>
-    <span class="name"><span class="prefix">{{prefix}}</span>{{user.name}}</span>
+    <span class="name" profile-popup="user"><span class="prefix">{{prefix}}</span>{{user.name}}</span>
 </span>

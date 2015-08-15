@@ -50,7 +50,6 @@ app.directive('location', function () {
 
                 if (!$scope.mod)
                     return;
-                $scope.modSave();
                 $scope.mod = false;
             });
 

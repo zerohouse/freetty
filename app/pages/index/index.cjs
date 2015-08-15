@@ -1,11 +1,6 @@
-app.controller('index', function ($scope, user, popup, $state, req) {
+app.controller('index', function ($scope, user, $state, req) {
     $scope.rootUser = user;
-    $scope.popup = popup;
 
-    $scope.profile = function () {
-        popup('profile', user);
-        popup.user = user;
-    };
 
     $scope.query = {location: {}};
 
@@ -20,10 +15,11 @@ app.controller('index', function ($scope, user, popup, $state, req) {
             location.reload();
         });
     };
+
     $scope.toArtist = function () {
         if (user.type == undefined || user.type == '')
             user.type = 'artist-register-step1';
         $state.go(user.type);
-        popup.hide();
     };
+
 });

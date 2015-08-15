@@ -1,4 +1,5 @@
 <div class='img-wrapper'>
+
     <img loaded ng-src="{{photoUrl}}">
 
     <div ng-show='loading' class='img-loading'>
@@ -10,5 +11,5 @@
         <div ng-click="right()" class="arrow right"><i class="fa fa-angle-right"></i></div>
     </div>
 
-    <div class='img-wall' ng-class="{'dark':loading}"></div>
+    <div ui-sref="article({_id:articleId})" class='img-wall' ng-class="{'dark':loading}"></div>
 </div>

@@ -2,7 +2,7 @@ app.directive('locationSearch', function () {
         return {
             restrict: 'E',
             templateUrl: '/app/directives/location-search/location-search.html',
-            scope: {location: '=', top: '@', left: '@', placeholder: '@', inputClass: '@'},
+            scope: {location: '=', top: '@', left: '@', placeholder: '@', inputClass: '@', save: '='},
             link: function (s, e, a) {
                 s.input = e.children('input')[0];
                 e.on('click', function () {
@@ -80,6 +80,8 @@ app.directive('locationSearch', function () {
                     $scope.location.lng = selected.geometry.location.lng;
                     $scope.search = false;
                     $scope.mod = false;
+                    if ($scope.save)
+                        $scope.save();
                 };
 
             }

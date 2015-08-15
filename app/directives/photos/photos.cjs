@@ -2,7 +2,9 @@ app.directive('photos', function ($compile) {
     return {
         restrict: 'A',
         scope: {
-            photos: "="
+            photoClick: '=',
+            photos: "=",
+            articleId: '='
         },
         templateUrl: '/app/directives/photos/photos.html',
         controller: function ($scope) {

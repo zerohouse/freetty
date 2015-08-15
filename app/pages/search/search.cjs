@@ -1,5 +1,6 @@
-app.controller('search', function ($scope, req, $timeout, user, $compile, param) {
-
+app.controller('search', function ($scope, req, $timeout, user, $compile, param, $document, $window) {
+    doc = $document;
+    win = $window;
     var location, map;
 
     $scope.getItemsWhenChangeBounds = true;
@@ -8,9 +9,11 @@ app.controller('search', function ($scope, req, $timeout, user, $compile, param)
     var infowindow = null;
     var loading = false;
 
-    $scope.$watch('query', function (query) {
-        $scope.get(true);
-    }, true);
+    $scope.more = function () {
+        if ($scope.noMore)
+            return;
+        $scope.get();
+    };
 
     var ajax;
 
@@ -23,12 +26,17 @@ app.controller('search', function ($scope, req, $timeout, user, $compile, param)
                 $scope.page = 0;
                 $scope.noMore = false;
             }
-            $scope.query.skip = $scope.page * $scope.query.limit;
+
+            var query = {};
+            angular.copy($scope.query, query);
+
+            query.skip = $scope.page * $scope.query.limit;
             if (reset)
                 $scope.articles = [];
 
-            req.post('/api/article/list', $scope.query).success(function (res) {
-                resetMarkers();
+            req.post('/api/article/list', query).success(function (res) {
+                if (reset)
+                    resetMarkers();
                 $scope.queryModifyed = false;
                 if (!res.forEach)
                     return;
@@ -36,7 +44,7 @@ app.controller('search', function ($scope, req, $timeout, user, $compile, param)
                     $scope.articles.push(each);
                     addMarker(each);
                 });
-                if (res.length < $scope.query.limit)
+                if (res.length < query.limit)
                     $scope.noMore = true;
                 $scope.page++;
 
@@ -86,7 +94,7 @@ app.controller('search', function ($scope, req, $timeout, user, $compile, param)
     $scope.query = param.getParam();
     if ($scope.query == undefined)
         $scope.query = {};
-    $scope.query.limit = 20;
+    $scope.query.limit = 10;
     $scope.query.price = {min: 0, max: 600000};
 
     $timeout(function () {
@@ -104,12 +112,16 @@ app.controller('search', function ($scope, req, $timeout, user, $compile, param)
             } : {lat: user.lat, lng: user.lng, formmated_address: user.formmated_address};
         var mapOptions = {
             panControl: false,
+            mapTypeControl: false,
             streetViewControl: false,
-            zoomControl: false,
+            zoomControl: true,
+            zoomControlOptions: {
+                position: google.maps.ControlPosition.RIGHT_BOTTOM
+            },
             center: location,
             zoom: 15,
-            minZoom: 15,
-            maxZoom: 15
+            minZoom: 10,
+            maxZoom: 18
         };
         map = $scope.map = new google.maps.Map(document.getElementById('search-map'),
             mapOptions);
@@ -144,6 +156,13 @@ app.controller('search', function ($scope, req, $timeout, user, $compile, param)
 
         $timeout(function () {
             loading = false;
+
+            $scope.$watch('query', function (query) {
+                $scope.get(true);
+            }, true);
+
+            $scope.get(true);
+
         }, 1000);
     }
 
@@ -157,5 +176,74 @@ app.controller('search', function ($scope, req, $timeout, user, $compile, param)
             map.setCenter($scope.location);
         });
     };
+
+
+    //[TODO] 리팩토링 > 코드 개망.
+    //스크롤 중에는 이벤트 안검.
+    $scope.detailSearch = function () {
+        $scope.detail = true;
+        $scope.scrolling = true;
+        $document.scrollTop($('.left-container .panel-body:first-child').height() + $('#search-map').height());
+        $timeout(function () {
+            $document.scrollTopAnimated(0).then(function () {
+                $timeout(function () {
+                    google.maps.event.trigger(map, 'resize');
+                    $scope.scrolling = false;
+                }, 100);
+            });
+        });
+    };
+
+    $scope.detailHide = function () {
+        $scope.detail = false;
+    };
+
+    // 스크롤 이벤트
+    // 스크롤이 1026이상이면 디테일 서치창 숨김
+    // 스크롤이 문서 헤이트와 같아지면 더 불러옴.
+    angular.element(window).bind('scroll', function () {
+        var win = $(window);
+        var doc = $(document);
+        var height = win.scrollTop() + win.height();
+        if (height === doc.height())
+            $scope.more();
+
+        if (win.scrollTop() > 432 && $scope.detail) {
+            $scope.detailHide();
+            $document.scrollTop(0);
+            $scope.$apply();
+        }
+    });
+
+    //화면클댸
+    angular.element($('.left-container')).bind('scroll', function () {
+        var win = $('.left-container');
+        var height = win[0].scrollHeight - win.height();
+        if (win.scrollTop() === height)
+            $scope.more();
+    });
+
+
+    //소팅
+    var sort = $scope.sort = {};
+
+    $scope.sortBy = function (val) {
+        if (val == sort.type) {
+            sort.asc = !sort.asc;
+            return;
+        }
+        sort.type = val;
+    };
+
+    $scope.isSort = function (val) {
+        return val == sort.type;
+    };
+
+    sort.order = function () {
+        if (sort.asc)
+            return sort.type;
+        return "-" + sort.type;
+    }
+
 
 });

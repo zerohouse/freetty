@@ -22,7 +22,6 @@
 
 #map-controls location-search {
     display: inline-block;
-    width: 240px;
 }
 
 .margin-right-m {
@@ -38,7 +37,15 @@ price-range.form-control .slider {
     left: 0;
 }
 
+.search-collapse {
+    display: none;
+}
+
 @media (min-width: 768px) {
+
+    .search-collapse {
+        display: block;
+    }
 
     .left-container, .right-container {
         position: fixed;
@@ -65,10 +72,25 @@ price-range.form-control .slider {
 
 }
 
+.gm-style-iw > div {
+    overflow: hidden !important;
+}
+
 .top-margin-s {
     margin-top: 5px;
 }
 
 .block {
     display: block;
+}
+
+.detail-show-btn {
+    position: fixed;
+    right: 15px;
+    z-index: 10;
+}
+
+.detail-hide-btn {
+    margin-top: 10px;
+    float: right;
 }
