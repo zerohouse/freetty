@@ -22,7 +22,6 @@
             <h3 class="input-label">To. {{user.name}}</h3>
             <textarea placeholder="메시지" class="form-control" ng-model="messageBody"></textarea>
             <a class="btn btn-primary" ng-click="sendMessage()">보내기</a>
-
         </div>
     </div>
     <div class="row" ng-show="!isRootUser(user)">

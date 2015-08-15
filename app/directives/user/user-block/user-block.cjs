@@ -9,9 +9,9 @@ app.directive('userBlock', function (users) {
         },
         controller: function ($scope, popup) {
 
-            $scope.moveTo = function (user) {
+            $scope.userPopup = function (user) {
                 popup('profile');
-                popup.user = user;
+                popup.setUser(user);
             };
 
             $scope.$watch('userBlock', function () {

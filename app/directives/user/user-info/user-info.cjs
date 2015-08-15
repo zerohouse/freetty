@@ -4,16 +4,17 @@ app.directive('userInfo', function (users) {
         restrict: 'A',
         templateUrl: '/app/directives/user/user-info/user-info.html',
         scope: {
-            user :'=',
+            user: '=',
             userInfo: '=',
             prefix: '@'
         },
         controller: function ($scope, popup) {
 
-            $scope.moveTo = function (user) {
+            $scope.userPopup = function (user) {
                 popup('profile');
-                popup.user = user;
+                popup.setUser(user);
             };
+
             $scope.$watch('userInfo', function () {
                 if ($scope.userInfo == undefined)
                     return;

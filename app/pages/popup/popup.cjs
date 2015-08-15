@@ -1,41 +1,53 @@
-app.factory('popup', function () {
-    var popup = {};
+(function () {
 
-    var pop = function (val, e) {
-        popup.show = true;
-        popup.state = val;
-        if (e && e.stopPropagation)
-            e.stopPropagation();
-    };
+    var scope;
 
-    pop.isShow = function () {
-        return popup.show;
-    };
+    app.factory('popup', function () {
+        var popup = {};
 
-    pop.getState = function () {
-        return popup.state;
-    };
+        var pop = function (val, e) {
+            popup.show = true;
+            popup.state = val;
+            if (e && e.stopPropagation)
+                e.stopPropagation();
+        };
 
-    pop.hide = function () {
-        popup.show = false;
-    };
+        pop.isShow = function () {
+            return popup.show;
+        };
 
+        pop.getState = function () {
+            return popup.state;
+        };
 
-    return pop;
-});
+        pop.hide = function () {
+            popup.show = false;
+        };
 
-app.controller('popup', function ($scope, popup) {
-
-    $scope.url = {};
-    $scope.url.login = $scope.url.register = '/app/pages/popup/login/login.html';
-    $scope.url.license = '/app/pages/popup/license/license.html';
-    $scope.url.profile = '/app/pages/popup/profile.popup/profile.html';
-
-    $scope.classes = {};
-    $scope.classes.login = $scope.classes.register = $scope.classes.license = 'window-s';
-    $scope.classes.profile = 'window-m';
+        pop.setUser = function (user) {
+            scope.user = user;
+        };
 
 
-    $scope.popup = popup;
+        return pop;
+    });
 
-});
+
+    app.controller('popup', function ($scope, popup) {
+
+        scope = $scope;
+
+        $scope.url = {};
+        $scope.url.login = $scope.url.register = '/app/pages/popup/login/login.html';
+        $scope.url.license = '/app/pages/popup/license/license.html';
+        $scope.url.profile = '/app/pages/popup/profile.popup/profile.html';
+
+        $scope.classes = {};
+        $scope.classes.login = $scope.classes.register = $scope.classes.license = 'window-s';
+        $scope.classes.profile = 'window-m';
+
+
+        $scope.popup = popup;
+
+    });
+})();

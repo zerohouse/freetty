@@ -43,23 +43,8 @@ app.controller('profile.popup', function (popup, $scope, $state, user, Upload, a
         });
     });
 
-    $scope.$watch(function () {
-        return popup;
-    }, function (poopup) {
-        if (popup.message) {
-            $scope.message = true;
-            popup.message = false;
-        }
-        if (!popup.user)
-            return;
-
-        $scope.user = poopup.user;
-        $scope.photo = poopup.user.photo == undefined ? app.constants.defaultImg : '/uploads/' + poopup.user.photo;
-        $scope.$watch(function () {
-            return $scope.user.photo;
-        }, function () {
-            $scope.photo = $scope.user.photo == undefined ? app.constants.defaultImg : '/uploads/' + $scope.user.photo;
-        });
+    $scope.$watch('user', function (user) {
+        $scope.photo = user.photo == undefined ? app.constants.defaultImg : '/uploads/' + user.photo;
     }, true);
 
     $scope.profilePage = function (user) {
