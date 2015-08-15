@@ -12,6 +12,10 @@
         $('.navbar-toggle:visible').click();
     });
 
+    $(".arrow-div li").click(function () {
+        $('.navbar-toggle:visible').click();
+    });
+
     // Offset for Main Navigation
     $('nav').affix({
         offset: {

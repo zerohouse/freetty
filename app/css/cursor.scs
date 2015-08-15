@@ -1,0 +1,7 @@
+[ng-click], [back], [profile-popup], [popup] {
+    cursor: pointer;
+}
+
+input[ng-click] {
+    cursor: inherit;
+}

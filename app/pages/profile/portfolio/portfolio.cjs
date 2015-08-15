@@ -1,15 +1,17 @@
-app.controller('profile.portfolio', function ($scope, $stateParams, users, req, $state) {
+app.controller('profile.portfolio', function ($scope, $stateParams, users, req, $state, query) {
 
     $scope.state = $stateParams;
 
+    $scope.query = query;
+
     $scope.get = function () {
-        $scope.query.skip = $scope.page * $scope.query.limit;
-        $scope.query.provider = $scope.user._id;
-        req.post('/api/article/list', $scope.query).success(function (res) {
+        query.skip = $scope.page * query.limit;
+        query.provider = $scope.user._id;
+        req.post('/api/article/list', query).success(function (res) {
             res.forEach(function (each) {
                 $scope.articles.push(each);
             });
-            if (res.length < $scope.query.limit)
+            if (res.length < query.limit)
                 $scope.noMore = true;
             $scope.page++;
         });
@@ -17,8 +19,6 @@ app.controller('profile.portfolio', function ($scope, $stateParams, users, req, 
 
     $scope.articles = [];
     $scope.page = 0;
-    $scope.query = {limit: 6};
-
 
     users($stateParams.url, function (res) {
         if (res == null)

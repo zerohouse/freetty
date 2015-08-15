@@ -13,3 +13,9 @@ var app = angular.module('freetty',
     ]);
 
 app.value('duScrollOffset', 50);
+
+app.run(['$rootScope', function ($rootScope) {
+    $rootScope.$on('$stateChangeSuccess', function (event, to, toParams, from, fromParams) {
+        $rootScope.$previousState = from;
+    });
+}]);

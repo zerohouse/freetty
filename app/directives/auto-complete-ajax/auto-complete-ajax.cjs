@@ -8,7 +8,6 @@ app.directive('autoCompleteAjax', function (alert, req, $timeout) {
             keyword: '=',
             placeholder: '@',
             limit: '@',
-            selectedClass: '@'
         },
         link: function (s, e, a) {
             var input = e.children('input')[0];
@@ -18,7 +17,7 @@ app.directive('autoCompleteAjax', function (alert, req, $timeout) {
                 }, 200);
             });
         },
-        controller: function ($scope) {
+        controller: function ($scope, $state) {
 
             $scope.$watch('keyword', function (keyword) {
                 if (keyword == undefined)
@@ -45,6 +44,7 @@ app.directive('autoCompleteAjax', function (alert, req, $timeout) {
 
             $scope.keydown = function (e) {
                 $scope.show = true;
+
                 switch (e.keyCode) {
                     case 38:
                         $scope.select--;
@@ -85,6 +85,7 @@ app.directive('autoCompleteAjax', function (alert, req, $timeout) {
                 $scope.ngModel.push(select);
                 $scope.keyword = '';
                 $scope.show = false;
+                $state.go('search');
             };
 
             $scope.SHOW = function (e) {
@@ -94,7 +95,6 @@ app.directive('autoCompleteAjax', function (alert, req, $timeout) {
             $scope.HIDE = function () {
                 $scope.show = false;
             };
-
 
         }
 

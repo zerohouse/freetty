@@ -24,6 +24,13 @@
                     </div>
                 </div>
             </div>
+            <div class="row bottom-space" ng-show="isEmpty(userList)">
+                <div class="col-md-12">
+                    <div class="panel-body">
+                        메시지가 없습니다.
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div ng-show="!isState('')" class="chat-wrapper">

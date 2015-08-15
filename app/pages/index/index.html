@@ -31,14 +31,17 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <!--<li id="search">-->
-                <!--<a ui-sref="search">-->
-                <!--<input type="text" ng-model="keyword" placeholder="검색어">-->
-                <!--<i class="fa fa-search"></i> </a>-->
-                <!--</li>-->
-                <li>
+                <li id="search" class="hide-when-sm">
+                    <a>
+                        <auto-complete-ajax keyword="keyword" placeholder="스타일" limit="5"
+                                            ng-model="query.keywords"></auto-complete-ajax>
+                        <i ui-sref="search" class="fa fa-search"></i>
+
+                    </a>
+                </li>
+                <li class="show-when-sm">
                     <a ui-sref="search">
-                        Portfolio </a>
+                        Style <i class="fa fa-search"></i> </a>
                 </li>
 
             </ul>

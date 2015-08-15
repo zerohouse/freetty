@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" ng-controller="artist.register.step1">
     <div class="nav-block"></div>
 
     <div class="row bottom-border margin-bottom">
@@ -75,15 +75,10 @@
 
         <div class="col-md-6">
             <div class="panel-body">
-
-
                 <div class="form-group">
                     <label class="font-m">근무 형태</label> <i class="fa fa-question-circle"></i>
-                    <select ng-model="user.introduce.shop.type" class="form-control">
-                        <option value="free">프리랜서</option>
-                        <option value="free">프리랜서</option>
-                        <option value="free">프리랜서</option>
-                        <option value="free">프리랜서</option>
+                    <select ng-model="user.introduce.shop.type" ng-options="job.name for job in jobTypes"
+                            class="form-control">
                     </select>
                 </div>
             </div>

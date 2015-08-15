@@ -1,0 +1,69 @@
+header {
+    padding-top: 100px;
+    color: white;
+    background-image: url('app/img/header.jpg');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    text-align: center;
+    height: 660px;
+}
+
+.search-bg > div {
+    margin-top: 20px;
+}
+
+.search-bg input, .search-btn {
+    height: 100%;
+    float: left;
+    display: block;
+    padding: 8px 12px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    line-height: 1.428571429;
+    vertical-align: middle;
+}
+
+.search-btn {
+    width: 18%;
+    background-color: #ed435b;
+    letter-spacing: 2px;
+    border-color: transparent;
+    cursor: pointer;
+    color: white;
+    text-align: center;
+}
+
+.search-bg auto-complete-ajax input {
+    width: 82%;
+    background-color: white;
+    color: black;
+}
+
+.search-bg auto-complete-ajax ul {
+    top: 38px;
+    color: black;
+    text-align: left;
+    width: 82%;
+}
+
+.search-bg {
+    padding: 20px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 120px;
+}
+
+@media (min-width: 768px) {
+    .search-bg {
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    header {
+        text-align: left;
+    }
+}
+
+
+

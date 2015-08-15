@@ -1,28 +1,147 @@
 <header>
-    <div class="header-content">
-        <div class="header-content-inner">
-            <h1 class="font-xl">
-                <div>T H E</div>
-                <div>F R E E D O M</div>
-                <div>T O</div>
-                <div>P R E T T Y</div>
-            </h1>
-            <hr>
-            <p>전국 60만 프로 뷰티아티스트의 수많은 포트폴리오를 원하는 스타일에 맞춰 직접 선택하고 예약하세요.
-            </p>
-            <a du-smooth-scroll="about" class="btn btn-primary btn-xx page-scroll">LEARN MORE
-                <div><i class="fa fa-angle-down"></i></div>
-            </a>
-        </div>
+    <div class="container">
+        <h1 class="font-xl">
+            THE<br>FREEDOM<br>TO<br>PRETTY
+        </h1>
+
+        <p>전국 60만 프로 뷰티아티스트의 포트폴리오를 직접 선택하고 예약하세요
+        </p>
+
+        <div du-smooth-scroll="about" class="btn color-default btn-xl page-scroll hide-when-sm">더 알아보기</div>
     </div>
-    <div class="launch-day">
-        <h6>2 0 1 5 1 0 0 1</h6>
-        <h5>{{remainDate}}</h5>
+    <div class="search-bg">
+        <div class="container">
+            <auto-complete-ajax keyword="keyword" placeholder="어떤 스타일을 원하시나요?" limit="5"
+                                ng-model="query.keywords"></auto-complete-ajax>
+            <div class="search-btn" ng-click="search(keyword)">검색</div>
+        </div>
     </div>
 </header>
 
 
-<section class="bg-primary" id="about" style="padding-top: 10%; padding-bottom: 10%;">
+<section id="portfolio">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2 class="section-heading">다양한 뷰티서비스를 한 곳에서</h2>
+                <hr class="primary">
+            </div>
+        </div>
+        <div class="row no-gutter">
+            <div class="col-lg-8 col-sm-6">
+                <a class="portfolio-box" ng-click="search(['Hair', 'Make Up'])"
+                   style="background-image:url(/app/img/portfolio/1.jpg)">
+
+                    <div class="project-name"> HAIR / MAKE-UP</div>
+
+                    <div class="portfolio-box-caption">
+                        <div class="portfolio-box-caption-content">
+                            <div class="project-category text-faded">
+                                헤어, 메이크업 아티스트가 당신의 완벽한 스타일을 완성해 드립니다.
+                                중요한 행사(웨딩/돌잔치/면접/회의 등)를 앞두고 계시다면 시간에 관계없이 집으로 찾아가는 서비스도 가능합니다.
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <a class="portfolio-box color-default" ng-click="search('Selfie')">
+
+                    <div class="project-name"> SELFIE GALLERY</div>
+
+                    <div class="portfolio-box-caption">
+                        <div class="portfolio-box-caption-content">
+                            <div class="project-category text-faded">Take Your Selfie
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <a class="portfolio-box" style="background-image:url(/app/img/portfolio/2.jpg)"
+                   ng-click="search('Lash')">
+
+                    <div class="project-name"> LASH EXTENSION</div>
+
+                    <div class="portfolio-box-caption">
+                        <div class="portfolio-box-caption-content">
+                            <div class="project-category text-faded">이제, 번지고 뭉치는 마스카라와는 안녕! 단 한번의 속눈썹 연장/증모 시술로 한달 이상
+                                지속되는 자신감! 안전한 속눈썹 연장술로 완전히 달라진 자신의 모습에 놀라지 마세요!
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <a class="portfolio-box" style="background-image:url(/app/img/portfolio/3.jpg)"
+                   ng-click="search(['Nail Art', 'Nail Care'])">
+
+                    <div class="project-name">NAIL ART / CARE</div>
+                    <div class="portfolio-box-caption">
+                        <div class="portfolio-box-caption-content">
+                            <div class="project-category text-faded">
+                                완벽한 스타일의 완성은 손끝에서!
+                                기분에 따라 스타일에 따라 수백 가지 화려한 패턴과 그래픽으로 밋밋한 네일에 화려함을 더해보세요!
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <a class="portfolio-box" style="background-image:url(/app/img/portfolio/4.jpg)"
+                   ng-click="search('Lash')">
+
+                    <div class="project-name">BODY &amp; FACE WAXING</div>
+
+                    <div class="portfolio-box-caption">
+                        <div class="portfolio-box-caption-content">
+                            <div class="project-category text-faded">
+                                바디앤 페이스 왁싱으로 깔끔한 자신감을 찾으세요!
+                                털과 함께 피지 등 각종 이물질이 함께 제거되어 피부가 부드럽고 매끄러워집니다. 이제 가려움증과 불쾌한 냄새로부터 자유로워 지세요!
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4 col-sm-6">
+                <a class="portfolio-box" style="background-image:url(/app/img/portfolio/5.jpg)"
+                   ng-click="search('Skin Care')">
+
+                    <div class="project-name">SKIN CARE</div>
+
+                    <div class="portfolio-box-caption">
+                        <div class="portfolio-box-caption-content">
+                            <div class="project-category text-faded">
+                                진정한 아름다움은 아기 같은 젊은 피부로부터!
+                                각종 스트레스로 피부 트러블이 발생 하셨나요? 이제 FREETTY의 검증된 전문 테라피스트들과 함께 피부나이를 거꾸로 돌려보세요!
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-8 col-sm-6">
+                <a class="portfolio-box" style="background-image:url(/app/img/portfolio/6.jpg)"
+                   ng-click="search('Tattoo')">
+
+                    <div class="project-name">TATTOO</div>
+
+                    <div class="portfolio-box-caption">
+                        <div class="portfolio-box-caption-content">
+                            <div class="project-category text-faded">
+                                개성표현의 가장 적극적인 방법, 타투!
+                                남들과 똑같은 것이 싫다면 주얼리 타투나 레터링으로.
+                                흉터나 잘못된 문신을 커버업하여 잃어버린 자신감을 찾을 수도 있습니다!
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="bg-primary" id="about">
     <div class="container">
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 text-center">
@@ -37,7 +156,7 @@
     </div>
 </section>
 
-<section id="services" style="padding-top: 10%; padding-bottom: 10%;">
+<section id="services">
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">
@@ -107,8 +226,7 @@
             </div>
             <div class="col-lg-3 col-md-6 text-center">
                 <div class="service-box">
-                    <div class="wow bounceIn" data-wow-delay=".1s"
-                         style="visibility: visible; animation-delay: 0.1s; animation-name: bounceIn;">
+                    <div class="wow bounceIn" data-wow-delay=".1s">
                         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="113.391px" height="113.391px" viewBox="0 0 113.391 113.391" enable-background="new 0 0 113.391 113.391" xml:space="preserve">
 <g>
 	<path fill="#ED435B" d="M83.431,44.851c-10.313,0-18.708,8.393-18.708,18.713c0,10.315,8.395,18.712,18.708,18.712
@@ -187,8 +305,7 @@
             </div>
             <div class="col-lg-3 col-md-6 text-center">
                 <div class="service-box">
-                    <div class="wow bounceIn" data-wow-delay=".2s"
-                         style="visibility: visible; animation-delay: 0.2s; animation-name: bounceIn;">
+                    <div class="wow bounceIn" data-wow-delay=".2s">
                         <svg version="1.1" id="레이어_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="113.391px" height="113.391px" viewBox="0 0 113.391 113.391" enable-background="new 0 0 113.391 113.391" xml:space="preserve">
 <g>
 	<g>
@@ -243,8 +360,7 @@
             </div>
             <div class="col-lg-3 col-md-6 text-center">
                 <div class="service-box">
-                    <div class="wow bounceIn" data-wow-delay=".3s"
-                         style="visibility: visible; animation-delay: 0.3s; animation-name: bounceIn;">
+                    <div class="wow bounceIn" data-wow-delay=".3s">
                         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="113.39px" height="113.39px" viewBox="0 0 113.39 113.39" enable-background="new 0 0 113.39 113.39" xml:space="preserve">
 <g>
 	<path fill="#EE445B" d="M8.301,88.824c-0.779,0-1.412,0.633-1.412,1.414v6.299c0,0.784,0.633,1.414,1.412,1.414
@@ -461,8 +577,7 @@
                 </div>
                 <div class="col-lg-3 col-md-6 text-center">
                     <div class="service-box">
-                        <div class="wow bounceIn" data-wow-delay=".1s"
-                             style="visibility: visible; animation-delay: 0.1s; animation-name: bounceIn;">
+                        <div class="wow bounceIn" data-wow-delay=".1s">
                             <svg version="1.1" id="레이어_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
 	 y="0px" width="113.391px" height="113.391px" viewBox="0 0 113.391 113.391" enable-background="new 0 0 113.391 113.391"
 	 xml:space="preserve">
@@ -523,8 +638,7 @@
                 </div>
                 <div class="col-lg-3 col-md-6 text-center">
                     <div class="service-box">
-                        <div class="wow bounceIn" data-wow-delay=".2s"
-                             style="visibility: visible; animation-delay: 0.2s; animation-name: bounceIn;">
+                        <div class="wow bounceIn" data-wow-delay=".2s">
                             <svg version="1.1" id="레이어_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
 	 y="0px" width="113.391px" height="113.391px" viewBox="0 0 113.391 113.391" enable-background="new 0 0 113.391 113.391"
 	 xml:space="preserve">
@@ -581,8 +695,7 @@
                 </div>
                 <div class="col-lg-3 col-md-6 text-center">
                     <div class="service-box">
-                        <div class="wow bounceIn" data-wow-delay=".3s"
-                             style="visibility: visible; animation-delay: 0.3s; animation-name: bounceIn;">
+                        <div class="wow bounceIn" data-wow-delay=".3s">
                             <svg version="1.1" id="레이어_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
 	 y="0px" width="113.391px" height="113.391px" viewBox="0 0 113.391 113.391" enable-background="new 0 0 113.391 113.391"
 	 xml:space="preserve">
@@ -626,132 +739,6 @@
     </div>
 </section>
 
-<section style="padding-top: 10%; padding-bottom: 1%;" id="portfolio">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 text-center">
-                <h2 class="section-heading">다양한 뷰티 서비스를 한곳에서</h2>
-                <hr class="primary">
-            </div>
-        </div>
-    </div>
-</section>
-
-
-<section class="no-padding">
-    <div class="container-fluid">
-        <div class="row no-gutter">
-            <div class="col-lg-4 col-sm-6">
-                <a class="portfolio-box">
-                    <img src="/app/img/portfolio/1.jpg" class="img-responsive" alt="">
-
-                    <div class="project-name"> HAIR / MAKE-UP</div>
-
-                    <div class="portfolio-box-caption">
-                        <div class="portfolio-box-caption-content">
-                            <div class="project-category text-faded">
-                                헤어, 메이크업 아티스트가 당신의 완벽한 스타일을 완성해 드립니다.
-                                중요한 행사(웨딩/돌잔치/면접/회의 등)를 앞두고 계시다면 시간에 관계없이 집으로 찾아가는 서비스도 가능합니다.
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-4 col-sm-6">
-                <a class="portfolio-box">
-                    <img src="/app/img/portfolio/2.jpg" class="img-responsive" alt="">
-
-                    <div class="project-name"> LASH EXTENSION</div>
-
-                    <div class="portfolio-box-caption">
-                        <div class="portfolio-box-caption-content">
-                            <div class="project-category text-faded">이제, 번지고 뭉치는 마스카라와는 안녕! 단 한번의 속눈썹 연장/증모 시술로 한달 이상
-                                지속되는 자신감! 안전한 속눈썹 연장술로 완전히 달라진 자신의 모습에 놀라지 마세요!
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-4 col-sm-6">
-                <a class="portfolio-box">
-                    <img src="/app/img/portfolio/3.jpg" class="img-responsive" alt="">
-
-                    <div class="project-name">NAIL ART / CARE</div>
-                    <div class="portfolio-box-caption">
-                        <div class="portfolio-box-caption-content">
-                            <div class="project-category text-faded">
-                                완벽한 스타일의 완성은 손끝에서!
-                                기분에 따라 스타일에 따라 수백 가지 화려한 패턴과 그래픽으로 밋밋한 네일에 화려함을 더해보세요!
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-4 col-sm-6">
-                <a class="portfolio-box">
-                    <img src="/app/img/portfolio/4.jpg" class="img-responsive" alt="">
-
-                    <div class="project-name">BODY &amp; FACE WAXING</div>
-
-                    <div class="portfolio-box-caption">
-                        <div class="portfolio-box-caption-content">
-                            <div class="project-category text-faded">
-                                바디앤 페이스 왁싱으로 깔끔한 자신감을 찾으세요!
-                                털과 함께 피지 등 각종 이물질이 함께 제거되어 피부가 부드럽고 매끄러워집니다. 이제 가려움증과 불쾌한 냄새로부터 자유로워 지세요!
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-4 col-sm-6">
-                <a class="portfolio-box">
-                    <img src="/app/img/portfolio/5.jpg" class="img-responsive" alt="">
-
-                    <div class="project-name">SKIN CARE</div>
-
-                    <div class="portfolio-box-caption">
-                        <div class="portfolio-box-caption-content">
-                            <div class="project-category text-faded">
-                                진정한 아름다움은 아기 같은 젊은 피부로부터!
-                                각종 스트레스로 피부 트러블이 발생 하셨나요? 이제 FREETTY의 검증된 전문 테라피스트들과 함께 피부나이를 거꾸로 돌려보세요!
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-lg-4 col-sm-6">
-                <a class="portfolio-box">
-                    <img src="/app/img/portfolio/6.jpg" class="img-responsive" alt="">
-
-                    <div class="project-name">TATTOO</div>
-
-                    <div class="portfolio-box-caption">
-                        <div class="portfolio-box-caption-content">
-                            <div class="project-category text-faded">
-                                개성표현의 가장 적극적인 방법, 타투!
-                                남들과 똑같은 것이 싫다면 주얼리 타투나 레터링으로.
-                                흉터나 잘못된 문신을 커버업하여 잃어버린 자신감을 찾을 수도 있습니다!
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </div>
-</section>
-
-<aside class="bg-dark">
-    <div class="container text-center">
-        <div class="call-to-action">
-            <h2>뷰티서비스의 미래를 지금 만나보세요!</h2>
-            <a class="btn btn-default btn-xl wow tada" style="visibility: visible; animation-name: tada;"
-               ng-show="!rootUser.logged" ng-click="popup('register', $event)">JOIN US</a>
-            <a class="btn btn-default btn-xl wow tada" style="visibility: visible; animation-name: tada;"
-               ng-show="rootUser.logged" ui-sref="search">포트폴리오 보러가기</a>
-        </div>
-    </div>
-</aside>
-
 
 <section id="contact">
     <div class="container">
@@ -762,15 +749,14 @@
                 <p>FREETTY가 만들어가는 뷰티서비스의 새로운 패러다임과 비전에 동참하고 싶다면 언제든 연락주세요.</p>
             </div>
             <div class="col-lg-4 col-lg-offset-2 text-center">
-                <i class="fa fa-phone fa-3x wow bounceIn" style="visibility: visible; animation-name: bounceIn;"></i>
+                <i class="fa fa-phone fa-3x wow bounceIn"></i>
 
                 <p>+82 2 547 6462</p>
             </div>
             <div class="col-lg-4 text-center">
-                <i class="fa fa-envelope-o fa-3x wow bounceIn" data-wow-delay=".1s"
-                   style="visibility: visible; animation-delay: 0.1s; animation-name: bounceIn;"></i>
+                <i class="fa fa-envelope-o fa-3x wow bounceIn" data-wow-delay=".1s"></i>
 
-                <p><a href="mailto:your-email@your-domain.com">freetty@freetty.com</a></p>
+                <p><a href="mailto:freetty@freetty.com">freetty@freetty.com</a></p>
             </div>
         </div>
     </div>

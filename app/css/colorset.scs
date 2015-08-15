@@ -1,0 +1,4 @@
+.color-default {
+    background-color: #ed435b;
+    color: white;
+}

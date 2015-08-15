@@ -9,20 +9,10 @@ h1, h2, h3, h4, h5 {
     font-family: 'Jeju Gothic', sans-serif;
 }
 
-/*!
- * Start Bootstrap - Creative Bootstrap Theme (http://startbootstrap.com)
- * Code licensed under the Apache License v2.0.
- * For details, see http://www.apache.org/licenses/LICENSE-2.0.
- */
-
 html,
 body {
     width: 100%;
     height: 100%;
-}
-
-body {
-    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
 }
 
 hr {
@@ -45,15 +35,6 @@ a {
 a:hover,
 a:focus {
     color: #f16664;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    font-family: Arial, Helvetica, sans-serif;
 }
 
 p {
@@ -89,7 +70,6 @@ aside {
 
 .navbar-default {
     border-color: rgba(34, 34, 34, .05);
-    font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
     background-color: #fff;
     -webkit-transition: all .35s;
     -moz-transition: all .35s;
@@ -98,7 +78,6 @@ aside {
 
 .navbar-default .navbar-header .navbar-brand {
     text-transform: uppercase;
-    font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
     font-weight: 700;
     color: #ed435b;
 }
@@ -208,71 +187,6 @@ aside {
     }
 }
 
-header {
-    position: relative;
-    width: 100%;
-    text-align: center;
-    color: #fff;
-    background-position: center;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    background-size: cover;
-    -o-background-size: cover;
-}
-
-header .header-content {
-    position: relative;
-    width: 100%;
-    padding: 100px 15px;
-    text-align: center;
-}
-
-header .header-content .header-content-inner h1 {
-    margin-top: 0;
-    margin-bottom: 0;
-    text-transform: uppercase;
-    font-weight: 700;
-}
-
-header .header-content .header-content-inner hr {
-    margin: 30px auto;
-}
-
-header .header-content .header-content-inner p {
-    margin-bottom: 18px;
-    font-size: 16px;
-    font-weight: 300;
-    color: rgba(255, 255, 255, .7);
-}
-
-@media (min-width: 768px) {
-    header {
-        min-height: 100%;
-    }
-
-    header .header-content {
-        position: absolute;
-        top: 50%;
-        padding: 0 50px;
-        -webkit-transform: translateY(-65%);
-        -ms-transform: translateY(-65%);
-        transform: translateY(-65%);
-    }
-
-    header .header-content .header-content-inner {
-        margin-right: auto;
-        margin-left: auto;
-        max-width: 1000px;
-    }
-
-    header .header-content .header-content-inner p {
-        margin-right: auto;
-        margin-left: auto;
-        max-width: 80%;
-        font-size: 18px;
-    }
-}
-
 .section-heading {
     margin-top: 0;
 }
@@ -295,8 +209,12 @@ header .header-content .header-content-inner p {
 .portfolio-box {
     display: block;
     position: relative;
-    margin: 0 auto;
-    max-width: 650px;
+    margin: 10px;
+    box-shadow: 1px 1px 1px silver;
+    height: 260px;
+    overflow: hidden;
+    background-position: center;
+    background-size: cover;
 }
 
 .portfolio-box .portfolio-box-caption {
@@ -327,7 +245,6 @@ header .header-content .header-content-inner p {
 .portfolio-box .portfolio-box-caption .portfolio-box-caption-content .project-category,
 .portfolio-box .portfolio-box-caption .portfolio-box-caption-content .project-name {
     padding: 0 15px;
-    font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
 }
 
 .portfolio-box .portfolio-box-caption .portfolio-box-caption-content .project-category {
@@ -473,63 +390,11 @@ fieldset[disabled] .btn-primary.active {
     border: 0;
     border-radius: 300px;
     text-transform: uppercase;
-    font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
     font-weight: 700;
 }
 
 .btn-xl {
     padding: 15px 30px;
-}
-
-.btn-xx {
-    padding: 10px 30px 3px 30px;
-    line-height: 10px;
-    background-color: transparent;
-}
-
-::-moz-selection {
-    text-shadow: none;
-    color: #fff;
-    background: #222;
-}
-
-::selection {
-    text-shadow: none;
-    color: #fff;
-    background: #222;
-}
-
-img::selection {
-    color: #fff;
-    background: 0 0;
-}
-
-img::-moz-selection {
-    color: #fff;
-    background: 0 0;
-}
-
-body {
-    webkit-tap-highlight-color: #222;
-}
-
-#page-top #about .container .row .col-lg-8.col-lg-offset-2.text-center .section-heading {
-    font-family: Nanum Gothic;
-}
-
-.launch-day {
-    position: absolute;
-    bottom: 10px;
-    width: 100%;
-    text-align: center;
-}
-
-.launch-day h6 {
-    color: #ED435B;
-}
-
-.launch-day h5 {
-    color: #CCC;
 }
 
 .project-name {
@@ -559,7 +424,7 @@ body {
 }
 
 .project-category {
-    margin-top: 100px;
+    margin-top: 120px;
     font-size: 14px !important;
     font-weight: normal !important;
 }
@@ -575,3 +440,4 @@ body {
         opacity: 1 !important;
     }
 }
+

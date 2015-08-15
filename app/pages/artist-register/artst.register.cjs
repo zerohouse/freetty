@@ -1,10 +1,13 @@
-app.controller('artist.register', function ($scope, popup, $state, user, req, alert) {
+app.controller('artist.register', function ($scope, popup, $state, user, req, alert, condition) {
 
     $scope.user = user;
 
     $scope.popup = popup;
 
     $scope.save = function (state) {
+        if (state)
+            if (!condition.all())
+                return;
         user.type = state;
         req.put('/api/user', $scope.user).success(function (res) {
             if (res.err) {

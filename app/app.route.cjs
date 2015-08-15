@@ -16,14 +16,14 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             templateUrl: "/app/pages/main/main.html"
         })
         .state('search', {
-            url: "/service/search?keyword" +
+            url: "/service/search" +
             "",
             controller: "search",
             templateUrl: "/app/pages/search/search.html",
             nav: "affixed"
         })
         .state('message', {
-            url: "/service/message",
+            url: "/service/message?state",
             controller: "message",
             templateUrl: "/app/pages/message/message.html",
             nav: "affixed"
@@ -32,13 +32,13 @@ app.config(function ($stateProvider, $urlRouterProvider) {
             url: "/:url?state",
             controller: "profile",
             templateUrl: "/app/pages/profile/profile.html",
-            nav: "affixed",
+            nav: "affixed"
         })
         .state('article', {
             controller: "article",
             templateUrl: "/app/pages/article/article.html",
             url: "/article/:_id?scroll",
-            nav: "affixed",
+            nav: "affixed"
         })
         .state('edit', {
             nav: "affixed",

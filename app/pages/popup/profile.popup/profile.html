@@ -5,6 +5,7 @@
                  ng-src="{{photo}}" ng-show="isRootUser(user)">
             <img class="full-width" ng-src="{{photo}}" ng-show="!isRootUser(user)">
         </div>
+
         <div class="half" ng-show="!message">
             <h4 mod-input="user.name" mod-default="이름" mod-save="save" mod-right="isRootUser(user)"></h4>
 
@@ -16,7 +17,7 @@
                  mod-textarea="user.introduce.aboutme" mod-save="save"
                  mod-right="isRootUser(user)"></div>
 
-            <location-search save="save" ng-show="isRootUser()" placeholder="지역" top="34px"
+            <location-search save="save" ng-show="isRootUser(user)" placeholder="지역" top="34px"
                              location="user"></location-search>
 
             <span ng-show="user.url">http://freetty.com/</span>{{user.url}}
@@ -24,7 +25,7 @@
         <div class="half" ng-show="message">
             <h3 class="input-label">To. {{user.name}}</h3>
             <textarea placeholder="메시지" class="form-control" ng-model="messageBody"></textarea>
-            <a class="btn btn-primary" ng-click="sendMessage()">보내기</a>
+            <a class="btn btn-primary btn btn-primary full-width top-margin" ng-click="sendMessage()">보내기</a>
         </div>
     </div>
     <div class="row" ng-show="!isRootUser(user)">

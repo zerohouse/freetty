@@ -1,3 +1,5 @@
+//쿼리로 바꿔서 글로벌 쿼리 실행해야될듯.ㅔ
+
 app.factory('param', function () {
     var param = {};
 

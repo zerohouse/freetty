@@ -51,7 +51,8 @@ price-range.form-control .slider {
         position: fixed;
         top: 50px;
         bottom: 0;
-        overflow: auto;
+        overflow-y: auto;
+        overflow-x: hidden;
     }
 
     .left-container {

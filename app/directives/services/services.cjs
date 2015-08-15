@@ -9,10 +9,8 @@ app.directive('services', function () {
             modService: '='
         },
         templateUrl: '/app/directives/services/services.html',
-        controller: function ($scope) {
-            $scope.isEmpty = function (obj) {
-                return angular.equals({}, obj);
-            };
+        controller: function ($scope, util) {
+            util($scope)
 
             if ($scope.services == undefined)
                 $scope.services = {};

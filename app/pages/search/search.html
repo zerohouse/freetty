@@ -20,35 +20,37 @@
 
 <div class="left-container">
     <div class="panel-body">
-        <div class="row border-bottom" ng-class="{'hide-when-sm':!detail}">
+        <div class="row border-bottom" ng-class="{'hide-when-sm':!detail}" ng-show="query.keywords.length>0">
             <div class="col-sm-3">
                 <div class="panel-body hide-when-sm">
-                    검색어
+                    스타일
                 </div>
             </div>
             <div class="col-sm-9">
                 <div class="panel-body">
-                    <auto-complete-ajax data="tagResults" top="35" keyword="keyword" placeholder="검색어" limit="5"
-                                        selected-class="" ng-model="query.keywords"></auto-complete-ajax>
-                </div>
-                <div class="panel-body" ng-show="query.keywords.length>1">
-                    검색어들을
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="searchType" value="or" ng-model="query.searchType"
-                                   ng-init="query.searchType='or'">
-                            하나라도 포함한 (OR)
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="searchType" value="and" ng-model="query.searchType">
-                            모두 포함한 (AND)
-                        </label>
-                    </div>
-                    서비스를 찾습니다.
+                    <a ng-repeat="el in query.keywords" class="bottom-space-s margin-right-s">{{el}}
+                        <i class="fa fa-times" ng-click="query.keywords.remove(el, true)"></i></a>
+                    <auto-complete-ajax class="show-when-sm" keyword="keyword" placeholder="검색어" limit="5"
+                                        ng-model="query.keywords"></auto-complete-ajax>
                 </div>
             </div>
+            <!--<div class="col-sm-4">-->
+            <!--<div class="panel-body" ng-show="query.keywords.length>1">-->
+            <!--<div class="radio">-->
+            <!--<label>-->
+            <!--<input type="radio" name="searchType" value="or" ng-model="query.searchType"-->
+            <!--ng-init="query.searchType='or'">-->
+            <!--하나라도 포함한 (OR)-->
+            <!--</label>-->
+            <!--</div>-->
+            <!--<div class="radio">-->
+            <!--<label>-->
+            <!--<input type="radio" name="searchType" value="and" ng-model="query.searchType">-->
+            <!--모두 포함한 (AND)-->
+            <!--</label>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</div>-->
         </div>
         <div class="row border-bottom" ng-class="{'hide-when-sm':!detail}">
             <div class="col-sm-3">
@@ -77,7 +79,12 @@
                     좋아요 <i class="fa" ng-show="isSort('likes')"
                            ng-class="{'fa-chevron-up' : !sort.asc, 'fa-chevron-down':sort.asc}"></i>
                 </a>
-                <a class="btn btn-default" ng-class="{active:isSort('distance')}"
+
+                <a ng-show="!rootUser.lat" class="btn btn-default">
+                    <small profile-popup="rootUser">지역를 입력해주세요.</small>
+                </a>
+
+                <a ng-show="rootUser.lat" class="btn btn-default" ng-class="{active:isSort('distance')}"
                    ng-click="sortBy('distance');">
                     거리 <i class="fa" ng-show="isSort('distance')"
                           ng-class="{'fa-chevron-up' : !sort.asc, 'fa-chevron-down':sort.asc}"></i>
@@ -96,7 +103,7 @@
 
     <div class="panel-body center">
         <article-head ng-repeat="article in articles | orderBy:sort.order()" article="article"></article-head>
-        <div ng-show="!noMore" ng-click="more();">더보기</div>
+        <div ng-show="!noMore" ng-click="more();" style="clear:both;">더보기</div>
     </div>
 
 </div>

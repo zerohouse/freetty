@@ -1,7 +1,10 @@
-app.controller('message', function ($scope, req, user, users, $timeout) {
+app.controller('message', function ($scope, req, user, users, $timeout, util, $stateParams) {
+    util($scope);
+
     $scope.messages = {};
     $scope.userList = {};
-    $scope.state = '';
+    $scope.state = $stateParams.state == undefined ? '' : $stateParams.state;
+
 
     $scope.setState = function (state) {
         $scope.state = state;
@@ -16,7 +19,11 @@ app.controller('message', function ($scope, req, user, users, $timeout) {
         ch.scrollTop(ch[0].scrollHeight);
     };
 
+    $timeout(scroll, 200);
+
     $scope.sendMessage = function () {
+        if ($scope.messageBody == undefined || $scope.messageBody == '')
+            return;
         req.post('/api/message', {message: $scope.messageBody, to: $scope.state}).success(function (res) {
             if (res.err) {
                 alert(res.err);

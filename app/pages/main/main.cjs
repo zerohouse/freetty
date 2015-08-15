@@ -1,25 +1,20 @@
-app.controller('main', function ($scope, req, $timeout, param, $state) {
+app.controller('main', function ($scope, req, $timeout, param, $state, query) {
 
-    document.body.addEventListener('click', function () {
-        $scope.date = false;
-        $scope.time = false;
-    });
+    $scope.search = function (keywords) {
+        if (keywords == undefined || keywords == '') {
+            $state.go('search');
+            return;
+        }
+        if (keywords.constructor == Array) {
+            query.keywords = keywords;
+            $state.go('search');
+            return;
+        }
+        query.keywords = [];
+        query.keywords.push(keywords);
+        $state.go('search');
+    };
 
-    $scope.query = {location: {}};
-
-
-    var date = new Date(2015, 9, 1);
-    $timeout(update, 500);
-
-    function update() {
-        var remain = new Date(date - new Date());
-        var sec = remain / 1000;
-        var min = sec / 60;
-        var hours = min / 60;
-        var days = hours / 24;
-        $scope.remainDate = parseInt(days) + "d " + parseInt(hours) % 24 + "h " + parseInt(min) % 60 + "m " + parseInt(sec) % 60 + "s";
-        $timeout(update, 500);
-    }
 
     $(document).ready(function () {
         window.requestAnimationFrame(scroll);
@@ -50,11 +45,6 @@ app.controller('main', function ($scope, req, $timeout, param, $state) {
 
     // Initialize WOW.js Scrolling Animations
     new WOW().init();
-
-    $scope.search = function () {
-        param.setParam($scope.query);
-        $state.go('search');
-    }
 
 
 });

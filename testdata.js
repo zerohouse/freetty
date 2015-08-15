@@ -77,7 +77,7 @@ process.argv.forEach(function (val, index, array) {
 
 
 function makeArticles(length) {
-    var tags = ["블링블링", "남자컷", "샤방샤방", "샤방샤방", "30분", "변신", "헤어", "여성", "프리티", "열펌", "남성컷", "다운펌"];
+    var tags = ["블링블링", "남자컷", "샤방샤방", "샤방샤방", "Skin Care", "Nail Care", "Nail Art", "Lash", "Waxing", "Make up", "Selfie", "Tattoo", 'Hair'];
 
     var article = {
         "done": true,
@@ -186,7 +186,6 @@ function makeUsers(length) {
         var userNew = new User(user);
         userNew.save();
     }
-    process.exit();
 }
 
 

@@ -1,5 +1,5 @@
 .show-when-sm {
-    display: none;
+    display: none !important;
 }
 
 .show-when-md {
@@ -13,17 +13,17 @@
 @media (max-width: 768px) {
 
     .hide-when-sm {
-        display: none;
+        display: none !important;
     }
 
     .show-when-sm {
-        display: block;
+        display: block !important;
     }
 }
 
 @media (max-width: 1024px) {
     .hide-when-md {
-        display: none;
+        display: none !important;
     }
 
     .show-when-md {

@@ -1,8 +1,7 @@
-app.controller('index', function ($scope, user, $state, req) {
+app.controller('index', function ($scope, user, $state, req, query) {
     $scope.rootUser = user;
 
-
-    $scope.query = {location: {}};
+    $scope.query = query;
 
     $scope.$watch(function () {
         return $state.current;

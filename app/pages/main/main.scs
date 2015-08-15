@@ -41,6 +41,10 @@ header {
 
 .font-xl {
     font-size: 65px;
+    font-family: 'Helveticaneueltstd bd 1', sans-serif;
+    line-height: 55px;
+    font-weight: 400;
+    letter-spacing: 4px;
 }
 
 section {
@@ -48,10 +52,7 @@ section {
     padding-bottom: 10%;
 }
 
-
-
-
-
-
-
-
+.bottom-no-space {
+    padding-bottom: 0;
+    margin-bottom: 0;
+}

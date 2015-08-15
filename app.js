@@ -265,7 +265,7 @@ app.post('/api/article/list', function (req, res) {
                 Keyword.update({keyword: req.passed.keywords[i]}, {$inc: {hits: 1}}, {upsert: true}).exec();
             }
 
-            var regex = req.passed.searchType == "or" ? new RegExp(or(req.passed.keywords)) : new RegExp(and(req.passed.keywords));
+            var regex = req.passed.searchType == "and" ? new RegExp(and(req.passed.keywords)) : new RegExp(or(req.passed.keywords));
             query = query.and({$or: [{head: {$regex: regex}}, {selectedServices: {$regex: regex}}, {tags: {$regex: regex}}]});
             function and(a) {
                 return "(=?.*" + a.join(".*)(?=.*") + ".*)"

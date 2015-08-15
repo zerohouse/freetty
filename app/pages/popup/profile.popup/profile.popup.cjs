@@ -1,5 +1,6 @@
 app.controller('profile.popup', function (popup, $scope, $state, user, Upload, alert, req) {
 
+
     $scope.save = function (nop) {
         if (nop)
             return;
@@ -19,6 +20,8 @@ app.controller('profile.popup', function (popup, $scope, $state, user, Upload, a
             }
             $scope.messageBody = '';
             $scope.message = false;
+            $state.go('message', {state: $scope.user._id});
+            popup.hide();
         });
     };
 
@@ -44,6 +47,10 @@ app.controller('profile.popup', function (popup, $scope, $state, user, Upload, a
     });
 
     $scope.$watch('user', function (user) {
+        if (user._id == undefined) {
+            popup('login');
+            return;
+        }
         $scope.photo = user.photo == undefined ? app.constants.defaultImg : '/uploads/' + user.photo;
     }, true);
 

@@ -1,22 +1,18 @@
-app.controller('search', function ($scope, req, $timeout, user, $compile, param, $document, $window) {
-    doc = $document;
-    win = $window;
-    var location, map;
+app.controller('search', function ($scope, req, $timeout, user, $compile, query, $document) {
 
     $scope.getItemsWhenChangeBounds = true;
-
     var markers = $scope.markers = [];
     var infowindow = null;
     var loading = false;
-
     $scope.more = function () {
-        if ($scope.noMore)
-            return;
-        $scope.get();
+        $scope.sort.type = undefined;
+        $timeout(function () {
+            if ($scope.noMore)
+                return;
+            $scope.get();
+        });
     };
-
     var ajax;
-
     $scope.get = function (reset) {
         if (loading)
             return;
@@ -30,14 +26,13 @@ app.controller('search', function ($scope, req, $timeout, user, $compile, param,
             var query = {};
             angular.copy($scope.query, query);
 
-            query.skip = $scope.page * $scope.query.limit;
+            query.skip = $scope.page * query.limit;
             if (reset)
                 $scope.articles = [];
 
             req.post('/api/article/list', query).success(function (res) {
                 if (reset)
                     resetMarkers();
-                $scope.queryModifyed = false;
                 if (!res.forEach)
                     return;
                 res.forEach(function (each) {
@@ -47,7 +42,6 @@ app.controller('search', function ($scope, req, $timeout, user, $compile, param,
                 if (res.length < query.limit)
                     $scope.noMore = true;
                 $scope.page++;
-
                 function resetMarkers() {
                     markers.forEach(function (marker) {
                         marker.setMap(null);
@@ -79,10 +73,6 @@ app.controller('search', function ($scope, req, $timeout, user, $compile, param,
                             }, 1000);
                         });
                     });
-                    google.maps.event.addListener(marker, 'mouseover', function () {
-                    });
-                    google.maps.event.addListener(marker, 'mouseout', function () {
-                    });
                 }
             });
         }, 400);
@@ -91,25 +81,18 @@ app.controller('search', function ($scope, req, $timeout, user, $compile, param,
 
     $scope.articles = [];
     $scope.page = 0;
-    $scope.query = param.getParam();
-    if ($scope.query == undefined)
-        $scope.query = {};
-    $scope.query.limit = 10;
-    $scope.query.price = {min: 0, max: 600000};
+    $scope.query = query;
 
     $timeout(function () {
         initialize();
     });
 
     function initialize() {
-        loading = true;
-        if ($scope.query && $scope.query.location && $scope.query.location.lat)
-            location = $scope.location = $scope.query.location;
-        else
-            location = $scope.location = user.lat == undefined ? {
-                lat: 37.49794199999999,
-                lng: 127.027621
-            } : {lat: user.lat, lng: user.lng, formmated_address: user.formmated_address};
+        var loading = true;
+        var location = $scope.location = user.lat == undefined ? {
+            lat: 37.49794199999999,
+            lng: 127.027621
+        } : {lat: user.lat, lng: user.lng, formmated_address: user.formmated_address};
         var mapOptions = {
             panControl: false,
             mapTypeControl: false,
@@ -141,7 +124,7 @@ app.controller('search', function ($scope, req, $timeout, user, $compile, param,
             $timeout.cancel(this.change);
             this.change = $timeout(function () {
                 var bound = map.getBounds();
-                $scope.query.location = {
+                query.location = {
                     lat: {gte: bound.Ia.G, lte: bound.Ia.j},
                     lng: {gte: bound.Ca.j, lte: bound.Ca.G},
                 };
@@ -219,7 +202,7 @@ app.controller('search', function ($scope, req, $timeout, user, $compile, param,
     angular.element($('.left-container')).bind('scroll', function () {
         var win = $('.left-container');
         var height = win[0].scrollHeight - win.height();
-        if (win.scrollTop() === height)
+        if (win.scrollTop() + 100 > height)
             $scope.more();
     });
 
