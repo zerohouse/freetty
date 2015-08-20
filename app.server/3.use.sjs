@@ -5,10 +5,6 @@ app.use(function (req, res, next) {
     res.charset = "utf-8";
     next();
 });
-app.use('/node_modules', express.static('node_modules'));
-app.use('/dist', express.static('dist'));
-app.use('/app', express.static('app'));
-app.use('/uploads', express.static('uploads'));
 
 app.use(bodyParser.json());
 app.use(function (req, res, next) {

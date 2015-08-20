@@ -30,10 +30,6 @@ app.use(function (req, res, next) {
     res.charset = "utf-8";
     next();
 });
-app.use('/node_modules', express.static('node_modules'));
-app.use('/dist', express.static('dist'));
-app.use('/app', express.static('app'));
-app.use('/uploads', express.static('uploads'));
 
 app.use(bodyParser.json());
 app.use(function (req, res, next) {
@@ -647,7 +643,7 @@ app.get('/*', function (req, res) {
     res.sendFile(path.join(__dirname + '/app/pages/index/index.html'));
 });
 
-http.listen(80, function () {
-    logger.info('listening on *:80');
+http.listen(3000, function () {
+    logger.info('listening on *:3000');
 });
 
